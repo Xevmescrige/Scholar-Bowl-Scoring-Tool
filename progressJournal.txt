@@ -1,0 +1,3 @@
+February 25-26: ~5 hours - Researched GUI development in Java using Swing.  I learned the basics of using layout managers as well as their behavior as containers, as well as some basic methods included in the WindowBuilder and Swing libraries.  The starting screen for the utility was created where users can set the names of the players and teams, at least visually.
+
+February 27 ~2 hours - Started programming the buttons to accept a user input and that would set the button text to the input - this is currently useless but later I'll implement a spreadsheet that takes from the button's text, or the variable containing it.  I'm having trouble with creating a separate method that calls the prompt, so for now I'll just stick to doing it all locally.
