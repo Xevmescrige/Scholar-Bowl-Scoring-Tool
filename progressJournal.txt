@@ -1,3 +1,26 @@
-February 25-26: ~5 hours - Researched GUI development in Java using Swing.  I learned the basics of using layout managers as well as their behavior as containers, as well as some basic methods included in the WindowBuilder and Swing libraries.  The starting screen for the utility was created where users can set the names of the players and teams, at least visually.
+February 25-26, 2017 ~5 hours 
+	*Researched GUI development in Java using Swing
+		*I learned the basics of using layout managers as well as their behavior as containers, as well as some basic methods included in the WindowBuilder and Swing libraries.  The starting screen for the utility was created where users can set the names of the players and teams, at least visually.
 
-February 27 ~2 hours - Started programming the buttons to accept a user input and that would set the button text to the input - this is currently useless but later I'll implement a spreadsheet that takes from the button's text, or the variable containing it.  I'm having trouble with creating a separate method that calls the prompt, so for now I'll just stick to doing it all locally.
+February 27, 2017 ~2 hours 
+	*Started programming the buttons to accept a user input and that would set the button text to the input 
+		*this is currently useless but later I'll implement a spreadsheet that takes from the button's text, or the variable containing it.  I'm having trouble with creating a separate method that calls the prompt, so for now I'll just stick to doing it all locally.
+
+February 18, 2018 ~6 hours 
+	*Pulled project back onto current computer, updated Eclipse IDE and finished reinstalling it
+		*Didn't realize that wrong version of Java was running, x32 version was incompatible with x64 Eclipse IDE
+		*Need to reinstall Swing viewer
+		*Ask O'Keefe about whether or not there'd be any situation in which you'd finish a round before 20
+	*Added "End Round button as well as logic for it to only show up on question 20+
+		*Will need to add logic for actually ending the round and exporting the scores
+		*Doing this button through the Java editor instead of relying on the WindowBuilder editor helped me develop a bit of an understanding how this works
+			*Line order's annoyingly important - so is the way I have conditionals inside of actionListeners
+			*Turns out button definition doesn't actually display them - this is useful for only having the button show up at the end of the round
+	*Started adding logic for the button to do things
+	*Researched API for exporting an array of arrays to a spreadsheet
+		*Will be using JXLS
+		*Apparently I need to install Maven and set this up as a dependency of the project
+	*Created spreadsheet for scoring tool usage, set up array to go with it
+		*I still have no idea what I'm doing -- will need to read into JXLS a bit more
+		*I also don't quite understand what a Maven project is - just that I need it to declare JXLS a dependency
+	*

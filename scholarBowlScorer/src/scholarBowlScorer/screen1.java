@@ -246,6 +246,13 @@ public class screen1 extends JFrame {
 		lblTeamA.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTeamA.setHorizontalAlignment(SwingConstants.CENTER);
 		tAPlayers.add(lblTeamA);
+		
+		JButton btnFinish = new JButton("END ROUND");
+		btnFinish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
 
 		JPanel tAPBtns = new JPanel();
 		tAPlayers.add(tAPBtns);
@@ -339,14 +346,19 @@ public class screen1 extends JFrame {
 				c.show(contentPane, "qP");
 				if (questionNum <= 19) {
 					questionNum += 1;
-				} else if (questionNum >= 20) {
+					if (questionNum == 20) {
+						menuBar_scoreScreen.add(btnFinish);
+					}
+				} 
+				else if (questionNum >= 20) {
+					
 					if (JOptionPane.showConfirmDialog(contentPane,
 							"Are you sure you want to go past question " + questionNum
 									+ "?  If this is not your intention, click the \"FINISH\" button",
 							"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						questionNum += 1;
 					}
-
+					
 				}
 				lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum)));
 			}
