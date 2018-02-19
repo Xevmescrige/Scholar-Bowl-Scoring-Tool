@@ -23,4 +23,10 @@ February 18, 2018 ~6 hours
 	*Created spreadsheet for scoring tool usage, set up array to go with it
 		*I still have no idea what I'm doing -- will need to read into JXLS a bit more
 		*I also don't quite understand what a Maven project is - just that I need it to declare JXLS a dependency
-	*
+		*I'll probably have to change the variable names later, for now there're just placeholders
+		*Not sure if I need to use arrays or objects or if it's my choice
+	*Adjusted team/name-setting buttons to properly display changes on other screens
+		*Line order's a pain - the designer editor initializes the variable in the same place everything else about that element is defined
+			*This causes any logic that's written in other portions of the code that happen to be before the initialization be unable to compile
+			*Fixed by moving all initializations to beginning
+	*Set up constructor and save/load methods for the round info -- this will be exported to the first line of the spreadsheet later on

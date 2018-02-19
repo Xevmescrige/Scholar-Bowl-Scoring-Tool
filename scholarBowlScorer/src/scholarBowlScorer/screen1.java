@@ -86,7 +86,35 @@ public class screen1 extends JFrame {
 		Panel teamBPanel = new Panel();
 		contentPane.add(teamBPanel, "tAB");
 		teamBPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JButton btnPPA1 = new JButton("P1");
+		JButton btnPPA2 = new JButton("P2");
+		JButton btnPPA3 = new JButton("P3");
+		JButton btnPPA4 = new JButton("P4");
+		JButton btnPPB1 = new JButton("P1");
+		JButton btnPPB2 = new JButton("P2");
+		JButton btnPPB3 = new JButton("P3");
+		JButton btnPPB4 = new JButton("P4");
+		
+		JLabel lblTeamA = new JLabel("TEAM A");
+		JLabel lblTeamB = new JLabel("TEAM B");
+		
+		JButton btnTeamA = new JButton("TEAM A");
+		JButton btnTeamB = new JButton("TEAM B");
+		
+		JButton btnStartMatch = new JButton("START MATCH");
+		JButton btnSetTeamA = new JButton("SET TEAM A NAME");
+		JButton btnAP1 = new JButton("PLAYER 1");
+		JButton btnAP2 = new JButton("PLAYER 2");
+		JButton btnAP3 = new JButton("PLAYER 3");
+		JButton btnAP4 = new JButton("PLAYER 4");
+		JButton btnSetTeamB = new JButton("SET TEAM B NAME");
+		JButton btnBP1 = new JButton("PLAYER 1");
+		JButton btnBP2 = new JButton("PLAYER 2");
+		JButton btnBP3 = new JButton("PLAYER 3");
+		JButton btnBP4 = new JButton("PLAYER 4");
 
+		RoundID round = new RoundID("", "", "", "", "");
 		JButton buttonTNBack = new JButton("<-- BACK");
 		buttonTNBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +125,7 @@ public class screen1 extends JFrame {
 		});
 		menuBar_setname.add(buttonTNBack);
 
-		JButton btnTeamA = new JButton("TEAM A");
+		
 		btnTeamA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -107,7 +135,7 @@ public class screen1 extends JFrame {
 
 		menuBar_setname.add(btnTeamA);
 
-		JButton btnTeamB = new JButton("TEAM B");
+		
 		btnTeamB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -121,7 +149,7 @@ public class screen1 extends JFrame {
 		menuBar_setname.add(lblSetNames);
 		menuBar_setname.add(btnTeamB);
 
-		JButton btnStartMatch = new JButton("START MATCH");
+		
 		btnStartMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -133,44 +161,48 @@ public class screen1 extends JFrame {
 			}
 		});
 		menuBar_setname.add(btnStartMatch);
-
-		JButton btnSetTeamA = new JButton("SET TEAM A NAME");
+		
 		btnSetTeamA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String teamAName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM A'S NAME HERE");
 				btnTeamA.setText(teamAName);
+				lblTeamA.setText(teamAName);
 			}
 		});
 		tAPTP.add(btnSetTeamA);
-
-		JButton btnAP1 = new JButton("PLAYER 1");
+		
 		btnAP1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnAP1.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String AP1name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnAP1.setText(AP1name);
+				btnPPA1.setText(AP1name);
 			}
 		});
 		tAPBP.add(btnAP1);
-
-		JButton btnAP2 = new JButton("PLAYER 2");
+		
 		btnAP2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnAP2.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String AP2name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnAP2.setText(AP2name);
+				btnPPA2.setText(AP2name);
 			}
 		});
 		tAPBP.add(btnAP2);
-
-		JButton btnAP3 = new JButton("PLAYER 3");
+		
 		btnAP3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnAP3.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String AP3name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnAP3.setText(AP3name);
+				btnPPA3.setText(AP3name);
 			}
 		});
 		tAPBP.add(btnAP3);
-
-		JButton btnAP4 = new JButton("PLAYER 4");
+		
 		btnAP4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnAP4.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String AP4name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnAP4.setText(AP4name);
+				btnPPA4.setText(AP4name);
 			}
 		});
 		tAPBP.add(btnAP4);
@@ -178,12 +210,12 @@ public class screen1 extends JFrame {
 		Panel tBPTP = new Panel();
 		teamBPanel.add(tBPTP);
 		tBPTP.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JButton btnSetTeamB = new JButton("SET TEAM B NAME");
+		
 		btnSetTeamB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String teamBName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM B'S NAME");
 				btnTeamB.setText(teamBName);
+				lblTeamB.setText(teamBName);
 			}
 		});
 		tBPTP.add(btnSetTeamB);
@@ -191,35 +223,39 @@ public class screen1 extends JFrame {
 		JPanel tBPBP = new JPanel();
 		teamBPanel.add(tBPBP);
 		tBPBP.setLayout(new GridLayout(0, 4, 0, 0));
-
-		JButton btnBP1 = new JButton("PLAYER 1");
+		
 		btnBP1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnBP1.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String BP1name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnBP1.setText(BP1name);
+				btnPPB1.setText(BP1name);
 			}
 		});
 		tBPBP.add(btnBP1);
-
-		JButton btnBP2 = new JButton("PLAYER 2");
+		
 		btnBP2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnBP2.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String BP2name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnBP2.setText(BP2name);
+				btnPPB2.setText(BP2name);
 			}
 		});
 		tBPBP.add(btnBP2);
-
-		JButton btnBP3 = new JButton("PLAYER 3");
+		
 		btnBP3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				btnBP3.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String BP3name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnBP3.setText(BP3name);
+				btnPPB3.setText(BP3name);
 			}
 		});
 		tBPBP.add(btnBP3);
-
-		JButton btnBP4 = new JButton("PLAYER 4");
+		
 		btnBP4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnBP4.setText((String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME"));
+				String BP4name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				btnBP4.setText(BP4name);
+				btnPPB4.setText(BP4name);
 			}
 		});
 		tBPBP.add(btnBP4);
@@ -242,7 +278,7 @@ public class screen1 extends JFrame {
 		questionPanel.add(tAPlayers);
 		tAPlayers.setLayout(new BoxLayout(tAPlayers, BoxLayout.Y_AXIS));
 
-		JLabel lblTeamA = new JLabel("TEAM A");
+		
 		lblTeamA.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTeamA.setHorizontalAlignment(SwingConstants.CENTER);
 		tAPlayers.add(lblTeamA);
@@ -250,7 +286,7 @@ public class screen1 extends JFrame {
 		JButton btnFinish = new JButton("END ROUND");
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				//Code to export to xls?
 			}
 		});
 
@@ -258,23 +294,22 @@ public class screen1 extends JFrame {
 		tAPlayers.add(tAPBtns);
 		tAPBtns.setLayout(new GridLayout(0, 4, 0, 0));
 
-		JButton btnPPA1 = new JButton("P1");
+		
 		tAPBtns.add(btnPPA1);
 
-		JButton btnPPA2 = new JButton("P2");
+		
 		tAPBtns.add(btnPPA2);
 
-		JButton btnPPA3 = new JButton("P3");
+		
 		tAPBtns.add(btnPPA3);
 
-		JButton btnPPA4 = new JButton("P4");
+		
 		tAPBtns.add(btnPPA4);
 
 		JPanel tBPlayers = new JPanel();
 		questionPanel.add(tBPlayers);
 		tBPlayers.setLayout(new BoxLayout(tBPlayers, BoxLayout.Y_AXIS));
-
-		JLabel lblTeamB = new JLabel("TEAM B");
+		
 		lblTeamB.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamB.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tBPlayers.add(lblTeamB);
@@ -283,22 +318,40 @@ public class screen1 extends JFrame {
 		tBPlayers.add(tBPBtns);
 		tBPBtns.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JButton btnPPB1 = new JButton("P1");
+		
 		tBPBtns.add(btnPPB1);
 
-		JButton btnPPB2 = new JButton("P2");
+		
 		tBPBtns.add(btnPPB2);
 
-		JButton btnPPB3 = new JButton("P3");
+		
 		tBPBtns.add(btnPPB3);
 
-		JButton btnPPB4 = new JButton("P4");
+		
 		tBPBtns.add(btnPPB4);
 
 		JButton btnSaveCurrentSettings = new JButton("SAVE CURRENT INPUT");
+		btnSaveCurrentSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				round.rroom = tfRoom.getText();
+				round.rpacket = tfPacket.getText();
+				round.rrnumber = tfRound.getText();
+				round.rmod = tfModerator.getText();
+				round.rskeep = tfScoreKeeper.getText();
+			}
+		});
 		menuBar_setup.add(btnSaveCurrentSettings);
 
 		JButton btnLoadSettings = new JButton("LOAD INPUT");
+		btnLoadSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfRoom.setText(round.rroom); 
+				tfPacket.setText(round.rpacket); 
+				tfRound.setText(round.rrnumber); 
+				tfModerator.setText(round.rmod); 
+				tfScoreKeeper.setText(round.rskeep); 
+			}
+		});
 		menuBar_setup.add(btnLoadSettings);
 
 		JButton btnNext = new JButton("NEXT -->");
