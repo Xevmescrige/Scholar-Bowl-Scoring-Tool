@@ -166,6 +166,7 @@ public class screen1 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String teamAName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM A'S NAME HERE");
 				btnTeamA.setText(teamAName);
+				btnSetTeamA.setText(teamAName);
 				lblTeamA.setText(teamAName);
 			}
 		});
@@ -215,6 +216,7 @@ public class screen1 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String teamBName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM B'S NAME");
 				btnTeamB.setText(teamBName);
+				btnSetTeamB.setText(teamBName);
 				lblTeamB.setText(teamBName);
 			}
 		});
