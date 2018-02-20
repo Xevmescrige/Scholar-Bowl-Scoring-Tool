@@ -48,14 +48,29 @@ public class screen1 extends JFrame {
 			}
 		});
 	}
-
+	int scoresA = 0;
+	int scoresB = 0;
+	public String teamAName = "TEAM A";
+	public String teamBName = "TEAM B";
 	public int questionNum = 0;
 	public int playerNum = 0;
 	public double[][] scores = new double[20][12]; //12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are for B.
 	
+	public static void printArray(double mat[][])
+    {
+        for (double[] row : mat)
+            System.out.println(Arrays.toString(row));
+    }
+	
 	public void add_score(double value) 
 	{
 		scores[questionNum][playerNum] += value; 
+		if((playerNum >= 0)&&(playerNum <=5)) {
+			scoresA += value;
+		}
+		else if((playerNum >= 6)&&(playerNum <=11)) {
+			scoresB += value;
+		}
 	}
 	public void playerAnswered(JLabel label, String player) {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -70,8 +85,8 @@ public class screen1 extends JFrame {
 		JMenuBar Menu = getJMenuBar();
 		Menu.setVisible(true);
 	}
-	//nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
-	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button) {
+	//nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button, JLabel label2, JLabel label3) {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
 		c.show(contentPane, "qP");
 		if (questionNum <= 18) {
@@ -96,6 +111,8 @@ public class screen1 extends JFrame {
 			
 		}
 		label.setText("QUESTION: " + (Integer.toString(questionNum+1)));
+		label2.setText(teamAName.toUpperCase() + ": " + scoresA);
+		label3.setText(teamBName.toUpperCase() + ": " + scoresB);
 	}
 	
 	/**
@@ -169,7 +186,7 @@ public class screen1 extends JFrame {
 		
 		btnAnsCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(Arrays.deepToString(scores));
+				printArray(scores);
 			}
 		});
 		
@@ -230,7 +247,13 @@ public class screen1 extends JFrame {
 		JButton btnNextQuestion = new JButton("NEXT QUESTION -->");
 		JButton btnFinish = new JButton("END ROUND");
 		
-		JLabel lblQNumber = new JLabel("QUESTION: " + questionNum+1);
+		JLabel lblQNumber = new JLabel("QUESTION: 1");
+		JLabel lblTAScore = new JLabel("TEAM A SCORE:");
+		lblTAScore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTAScore.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JLabel lblTBScore = new JLabel("TEAM B SCORE:");
+		lblTBScore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTBScore.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		
 		RoundID round = new RoundID("", "", "", "", "");
@@ -248,28 +271,28 @@ public class screen1 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				add_score(10);
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 			}
 		});
 		btnAnsI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(0.001);
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 			}
 		});
 		btnAnsN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(-5);
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 			}
 		});
 		btnAnsP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(15);
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 			}
 		});
 		btnTeamA.addActionListener(new ActionListener() {
@@ -299,6 +322,8 @@ public class screen1 extends JFrame {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "qP");
 				setJMenuBar(menuBar_scoreScreen);
+				lblTAScore.setText(teamAName.toUpperCase() + ": " + scoresA);
+				lblTBScore.setText(teamBName.toUpperCase() + ": " + scoresB);
 				if (btnStartMatch.getText() == "START MATCH") {
 					btnStartMatch.setText("RETURN TO MATCH");
 				}
@@ -308,7 +333,7 @@ public class screen1 extends JFrame {
 		
 		btnSetTeamA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String teamAName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM A'S NAME HERE");
+				teamAName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM A'S NAME HERE");
 				btnTeamA.setText(teamAName);
 				btnSetTeamA.setText(teamAName);
 				lblTeamA.setText(teamAName);
@@ -358,7 +383,7 @@ public class screen1 extends JFrame {
 		
 		btnSetTeamB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String teamBName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM B'S NAME");
+				teamBName = (String) JOptionPane.showInputDialog(contentPane, "ENTER TEAM B'S NAME");
 				btnTeamB.setText(teamBName);
 				btnSetTeamB.setText(teamBName);
 				lblTeamB.setText(teamBName);
@@ -414,11 +439,18 @@ public class screen1 extends JFrame {
 		JPanel questionPanel = new JPanel();
 		contentPane.add(questionPanel, "qP");
 		questionPanel.setLayout(new GridLayout(3, 1, 0, 0));
-
 		
-		questionPanel.add(lblQNumber);
+		JPanel qInfoPanel = new JPanel();
+		questionPanel.add(qInfoPanel);
+		qInfoPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		qInfoPanel.add(lblTAScore);
+
+		qInfoPanel.add(lblQNumber);
 		lblQNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQNumber.setFont(new Font("Tahoma", Font.PLAIN, 26));
+
+		qInfoPanel.add(lblTBScore);
 
 		JPanel tAPlayers = new JPanel();
 		questionPanel.add(tAPlayers);
@@ -603,7 +635,7 @@ public class screen1 extends JFrame {
 
 		btnNextQuestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 			}
 		});
 		menuBar_scoreScreen.add(btnNextQuestion);

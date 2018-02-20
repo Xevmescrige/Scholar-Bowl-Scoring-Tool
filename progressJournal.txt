@@ -73,8 +73,22 @@ February 20, 2018
 			*Will also need to be able to do a score check (though this should be implemented for all stages of the game)
 		*Decided that I needed to add the player's name to the answer screen to help the scorekeeper
 		*Temporarily added debugging feature to 'Cancel' button under answer screen that prints out contents of array
+			*There was temporarily a bug where the first row of the array wouldn't be filled, but that was because I had questionNum start at 1 instead of 0.
+				*That's been fixed, just needed to adjust everything else to print as questionNum+1
+					*This caused a rather negligible issue where question 1 displays as 01, will need to figure out how to fix it later
 			*It works, now to finish up the GUI and start the logic to output the array to a spreadsheet
 				*Attached is a screenshot of the log with the array printed out (progress_capture1.png)
-				
+	*Found a better array-printer on stackexchange
+		public static void printArray(double mat[][])
+ 		 {
+      		 	 for (double[] row : mat)
+           		 System.out.println(Arrays.toString(row));
+   		 }
+		Which loops through each row of the array, converts it to a string, and prints it
+	*Added screenshots of currently available screens
+		*sample_setroom.png - Example of the room configuration screen
+		*sample_setnames.png - Example of the team and player name configuration screen
+		*sample_questionscreen.png - Mid-match example
+		*sample_answer.png - Example of player screen			
 
 
