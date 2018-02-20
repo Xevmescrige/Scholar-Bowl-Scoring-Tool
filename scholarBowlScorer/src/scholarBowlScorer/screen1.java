@@ -49,11 +49,51 @@ public class screen1 extends JFrame {
 	}
 
 	public int questionNum = 1;
+	public int playerNum = 0;
 	public double[][] scores = new double[20][12]; //12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are for B.
 	
-	public void add_score(int player_ID) 
+	public void add_score(double value) 
 	{
-		scores[questionNum][player_ID] += 10; //Add logic to actually do scores later
+		scores[questionNum][playerNum] += value; 
+	}
+	public void playerAnswered() {
+		CardLayout c = (CardLayout) (contentPane.getLayout());
+		c.show(contentPane, "ap1");
+		JMenuBar Menu = getJMenuBar();
+		Menu.setVisible(false);
+	}
+	public void answeredNext() {
+		CardLayout c = (CardLayout) (contentPane.getLayout());
+		c.show(contentPane, "qP");
+		JMenuBar Menu = getJMenuBar();
+		Menu.setVisible(true);
+	}
+	//nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button) {
+		CardLayout c = (CardLayout) (contentPane.getLayout());
+		c.show(contentPane, "qP");
+		if (questionNum <= 19) {
+			if (questionNum == 10) {
+				c.show(contentPane, "htp1");
+			}
+			else if (questionNum == 20) {
+				menubar.add(button);
+			}
+			else {
+				questionNum += 1;
+			}
+		} 
+		else if (questionNum >= 20) {
+			
+			if (JOptionPane.showConfirmDialog(contentPane,
+					"Are you sure you want to go past question " + questionNum
+							+ "?  If this is not your intention, click the \"END ROUND\" button",
+					"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				questionNum += 1;
+			}
+			
+		}
+		label.setText("QUESTION: " + (Integer.toString(questionNum)));
 	}
 	
 	/**
@@ -96,6 +136,32 @@ public class screen1 extends JFrame {
 		JPanel halftimePanel = new JPanel();
 		contentPane.add(halftimePanel, "htp1");
 		halftimePanel.setLayout(new GridLayout(5, 2, 0, 0));
+		
+		JPanel answerPanel = new JPanel();
+		JPanel aPane1 = new JPanel();
+		JPanel aPane2 = new JPanel();
+		JPanel aPane3 = new JPanel();
+		answerPanel.add(aPane1);
+		answerPanel.add(aPane2);
+		answerPanel.add(aPane3);
+		aPane1.setLayout(new GridLayout(2, 0, 0, 0));
+		aPane2.setLayout(new GridLayout(1, 1, 0, 0));
+		aPane3.setLayout(new GridLayout(2, 0, 0, 0));
+		answerPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		JButton btnAnsC = new JButton("Correct");
+		JButton btnAnsI = new JButton("Incorrect - No Neg");
+		JButton btnAnsN = new JButton("Neg");
+		JButton btnAnsP = new JButton("Power");
+		JButton btnAnsCancel = new JButton("Cancel");
+		contentPane.add(answerPanel, "ap1");
+		aPane1.add(btnAnsC);
+		aPane2.add(btnAnsCancel);
+		aPane3.add(btnAnsI);
+		aPane3.add(btnAnsN);
+		aPane1.add(btnAnsP);
+		
+		halftimePanel.setLayout(new GridLayout(0, 4, 0, 0));
+		
 		
 		JButton btnPPA1 = new JButton("P1");
 		JButton btnPPA2 = new JButton("P2");
@@ -151,6 +217,9 @@ public class screen1 extends JFrame {
 		JButton btnPQ = new JButton("<-- PREVIOUS QUESTION");
 		JButton btnViewScoreboard = new JButton("VIEW SCOREBOARD");
 		JButton btnNextQuestion = new JButton("NEXT QUESTION -->");
+		JButton btnFinish = new JButton("END ROUND");
+		
+		JLabel lblQNumber = new JLabel("QUESTION: " + questionNum);
 
 		
 		RoundID round = new RoundID("", "", "", "", "");
@@ -164,7 +233,34 @@ public class screen1 extends JFrame {
 		});
 		menuBar_setname.add(buttonTNBack);
 
-		
+		btnAnsC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_score(10);
+				answeredNext();
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+			}
+		});
+		btnAnsI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_score(0.001);
+				answeredNext();
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+			}
+		});
+		btnAnsN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_score(-5);
+				answeredNext();
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+			}
+		});
+		btnAnsP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add_score(15);
+				answeredNext();
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
+			}
+		});
 		btnTeamA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -308,7 +404,7 @@ public class screen1 extends JFrame {
 		contentPane.add(questionPanel, "qP");
 		questionPanel.setLayout(new GridLayout(3, 1, 0, 0));
 
-		JLabel lblQNumber = new JLabel("QUESTION: " + questionNum);
+		
 		questionPanel.add(lblQNumber);
 		lblQNumber.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQNumber.setFont(new Font("Tahoma", Font.PLAIN, 26));
@@ -322,7 +418,7 @@ public class screen1 extends JFrame {
 		lblTeamA.setHorizontalAlignment(SwingConstants.CENTER);
 		tAPlayers.add(lblTeamA);
 		
-		JButton btnFinish = new JButton("END ROUND");
+
 		btnFinish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Code to export to xls?
@@ -335,15 +431,50 @@ public class screen1 extends JFrame {
 
 		
 		tAPBtns.add(btnPPA1);
-
+		btnPPA1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 0;
+				playerAnswered();
+			}
+		});
 		
 		tAPBtns.add(btnPPA2);
-
+		btnPPA2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 1;
+				playerAnswered();
+			}
+		});
 		
 		tAPBtns.add(btnPPA3);
-
+		btnPPA3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 2;
+				playerAnswered();
+			}
+		});
 		
 		tAPBtns.add(btnPPA4);
+		btnPPA4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 3;
+				playerAnswered();
+			}
+		});
+		
+		btnPPA5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 4;
+				playerAnswered();
+			}
+		});
+		
+		btnPPA6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 5;
+				playerAnswered();
+			}
+		});
 
 		JPanel tBPlayers = new JPanel();
 		questionPanel.add(tBPlayers);
@@ -358,12 +489,50 @@ public class screen1 extends JFrame {
 		tBPBtns.setLayout(new GridLayout(1, 0, 0, 0));
 
 		tBPBtns.add(btnPPB1);
+		btnPPB1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 6;
+				playerAnswered();
+			}
+		});
 		
 		tBPBtns.add(btnPPB2);
+		btnPPB2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 7;
+				playerAnswered();
+			}
+		});
 
 		tBPBtns.add(btnPPB3);
+		btnPPB3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 8;
+				playerAnswered();
+			}
+		});
 		
 		tBPBtns.add(btnPPB4);
+		btnPPB4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 9;
+				playerAnswered();
+			}
+		});
+		
+		btnPPB5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 10;
+				playerAnswered();
+			}
+		});
+		
+		btnPPB6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				playerNum = 11;
+				playerAnswered();
+			}
+		});
 		
 		btnSaveCurrentSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -423,30 +592,7 @@ public class screen1 extends JFrame {
 
 		btnNextQuestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout c = (CardLayout) (contentPane.getLayout());
-				c.show(contentPane, "qP");
-				if (questionNum <= 19) {
-					if (questionNum == 10) {
-						c.show(contentPane, "htp1");
-					}
-					else if (questionNum == 20) {
-						menuBar_scoreScreen.add(btnFinish);
-					}
-					else {
-						questionNum += 1;
-					}
-				} 
-				else if (questionNum >= 20) {
-					
-					if (JOptionPane.showConfirmDialog(contentPane,
-							"Are you sure you want to go past question " + questionNum
-									+ "?  If this is not your intention, click the \"END ROUND\" button",
-							"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						questionNum += 1;
-					}
-					
-				}
-				lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum)));
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish);
 			}
 		});
 		menuBar_scoreScreen.add(btnNextQuestion);
