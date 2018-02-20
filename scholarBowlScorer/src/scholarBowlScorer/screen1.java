@@ -1,6 +1,6 @@
 package scholarBowlScorer;
 
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,7 +16,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Panel;
 import java.awt.CardLayout;
-import java.awt.FlowLayout;
+//import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -49,7 +49,13 @@ public class screen1 extends JFrame {
 	}
 
 	public int questionNum = 1;
-
+	public double[][] scores = new double[20][12]; //12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are for B.
+	
+	public void add_score(int player_ID) 
+	{
+		scores[questionNum][player_ID] += 10; //Add logic to actually do scores later
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -79,7 +85,7 @@ public class screen1 extends JFrame {
 		teamAPanel.add(tAPTP);
 		tAPTP.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JPanel tAPBP = new JPanel();
+		Panel tAPBP = new Panel();
 		teamAPanel.add(tAPBP);
 		tAPBP.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -87,14 +93,22 @@ public class screen1 extends JFrame {
 		contentPane.add(teamBPanel, "tAB");
 		teamBPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		JPanel halftimePanel = new JPanel();
+		contentPane.add(halftimePanel, "htp1");
+		halftimePanel.setLayout(new GridLayout(5, 2, 0, 0));
+		
 		JButton btnPPA1 = new JButton("P1");
 		JButton btnPPA2 = new JButton("P2");
 		JButton btnPPA3 = new JButton("P3");
 		JButton btnPPA4 = new JButton("P4");
+		JButton btnPPA5 = new JButton("P5");
+		JButton btnPPA6 = new JButton("P6");
 		JButton btnPPB1 = new JButton("P1");
 		JButton btnPPB2 = new JButton("P2");
 		JButton btnPPB3 = new JButton("P3");
 		JButton btnPPB4 = new JButton("P4");
+		JButton btnPPB5 = new JButton("P5");
+		JButton btnPPB6 = new JButton("P6");
 		
 		JLabel lblTeamA = new JLabel("TEAM A");
 		JLabel lblTeamB = new JLabel("TEAM B");
@@ -108,12 +122,37 @@ public class screen1 extends JFrame {
 		JButton btnAP2 = new JButton("PLAYER 2");
 		JButton btnAP3 = new JButton("PLAYER 3");
 		JButton btnAP4 = new JButton("PLAYER 4");
+		JButton btnAP5 = new JButton("PLAYER 5");
+		JButton btnAP6 = new JButton("PLAYER 6");
+
 		JButton btnSetTeamB = new JButton("SET TEAM B NAME");
 		JButton btnBP1 = new JButton("PLAYER 1");
 		JButton btnBP2 = new JButton("PLAYER 2");
 		JButton btnBP3 = new JButton("PLAYER 3");
 		JButton btnBP4 = new JButton("PLAYER 4");
+		JButton btnBP5 = new JButton("PLAYER 5");
+		JButton btnBP6 = new JButton("PLAYER 6");
+		
+		JLabel lblRoom = new JLabel("ROOM:");
+		tfRoom = new JTextField();
+		JLabel lblModerator = new JLabel("MODERATOR:");
+		tfModerator = new JTextField();
+		JLabel lblRound = new JLabel("ROUND:");
+		tfRound = new JTextField();
+		JLabel lblPacket = new JLabel("PACKET:");
+		tfPacket = new JTextField();
+		JLabel lblScorekeeper = new JLabel("SCOREKEEPER:");
+		tfScoreKeeper = new JTextField();
+		
+		JButton btnSaveCurrentSettings = new JButton("SAVE CURRENT INPUT");
+		JButton btnLoadSettings = new JButton("LOAD INPUT");
+		JButton btnNext = new JButton("NEXT -->");
+		JButton btnSBack = new JButton("<-- BACK TO SETUP");
+		JButton btnPQ = new JButton("<-- PREVIOUS QUESTION");
+		JButton btnViewScoreboard = new JButton("VIEW SCOREBOARD");
+		JButton btnNextQuestion = new JButton("NEXT QUESTION -->");
 
+		
 		RoundID round = new RoundID("", "", "", "", "");
 		JButton buttonTNBack = new JButton("<-- BACK");
 		buttonTNBack.addActionListener(new ActionListener() {
@@ -135,7 +174,6 @@ public class screen1 extends JFrame {
 
 		menuBar_setname.add(btnTeamA);
 
-		
 		btnTeamB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -149,7 +187,6 @@ public class screen1 extends JFrame {
 		menuBar_setname.add(lblSetNames);
 		menuBar_setname.add(btnTeamB);
 
-		
 		btnStartMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -320,19 +357,14 @@ public class screen1 extends JFrame {
 		tBPlayers.add(tBPBtns);
 		tBPBtns.setLayout(new GridLayout(1, 0, 0, 0));
 
-		
 		tBPBtns.add(btnPPB1);
-
 		
 		tBPBtns.add(btnPPB2);
 
-		
 		tBPBtns.add(btnPPB3);
-
 		
 		tBPBtns.add(btnPPB4);
-
-		JButton btnSaveCurrentSettings = new JButton("SAVE CURRENT INPUT");
+		
 		btnSaveCurrentSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				round.rroom = tfRoom.getText();
@@ -343,8 +375,7 @@ public class screen1 extends JFrame {
 			}
 		});
 		menuBar_setup.add(btnSaveCurrentSettings);
-
-		JButton btnLoadSettings = new JButton("LOAD INPUT");
+		
 		btnLoadSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tfRoom.setText(round.rroom); 
@@ -356,7 +387,6 @@ public class screen1 extends JFrame {
 		});
 		menuBar_setup.add(btnLoadSettings);
 
-		JButton btnNext = new JButton("NEXT -->");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -367,7 +397,6 @@ public class screen1 extends JFrame {
 		menuBar_setup.add(btnNext);
 		// setJMenuBar(menuBar_scoreScreen);
 
-		JButton btnSBack = new JButton("<-- BACK TO SETUP");
 		btnSBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -377,7 +406,6 @@ public class screen1 extends JFrame {
 		});
 		menuBar_scoreScreen.add(btnSBack);
 
-		JButton btnPQ = new JButton("<-- PREVIOUS QUESTION");
 		btnPQ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (questionNum > 1) {
@@ -391,25 +419,28 @@ public class screen1 extends JFrame {
 		});
 		menuBar_scoreScreen.add(btnPQ);
 
-		JButton btnViewScoreboard = new JButton("VIEW SCOREBOARD");
 		menuBar_scoreScreen.add(btnViewScoreboard);
 
-		JButton btnNextQuestion = new JButton("NEXT QUESTION -->");
 		btnNextQuestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "qP");
 				if (questionNum <= 19) {
-					questionNum += 1;
-					if (questionNum == 20) {
+					if (questionNum == 10) {
+						c.show(contentPane, "htp1");
+					}
+					else if (questionNum == 20) {
 						menuBar_scoreScreen.add(btnFinish);
+					}
+					else {
+						questionNum += 1;
 					}
 				} 
 				else if (questionNum >= 20) {
 					
 					if (JOptionPane.showConfirmDialog(contentPane,
 							"Are you sure you want to go past question " + questionNum
-									+ "?  If this is not your intention, click the \"FINISH\" button",
+									+ "?  If this is not your intention, click the \"END ROUND\" button",
 							"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 						questionNum += 1;
 					}
@@ -422,39 +453,29 @@ public class screen1 extends JFrame {
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
-		JLabel lblRoom = new JLabel("ROOM:");
+		
 		matchDetailsPanel.add(lblRoom);
 
-		tfRoom = new JTextField();
 		matchDetailsPanel.add(tfRoom);
 		tfRoom.setColumns(10);
 
-		JLabel lblModerator = new JLabel("MODERATOR:");
 		matchDetailsPanel.add(lblModerator);
 
-		tfModerator = new JTextField();
 		matchDetailsPanel.add(tfModerator);
 		tfModerator.setColumns(10);
 
-		JLabel lblRound = new JLabel("ROUND:");
 		matchDetailsPanel.add(lblRound);
 
-		tfRound = new JTextField();
 		matchDetailsPanel.add(tfRound);
 		tfRound.setColumns(10);
 
-		JLabel lblPacket = new JLabel("PACKET:");
 		matchDetailsPanel.add(lblPacket);
 
-		tfPacket = new JTextField();
 		matchDetailsPanel.add(tfPacket);
 		tfPacket.setColumns(10);
 
-		JLabel lblScorekeeper = new JLabel("SCOREKEEPER:");
 		matchDetailsPanel.add(lblScorekeeper);
 
-		tfScoreKeeper = new JTextField();
 		matchDetailsPanel.add(tfScoreKeeper);
 		tfScoreKeeper.setColumns(10);
 

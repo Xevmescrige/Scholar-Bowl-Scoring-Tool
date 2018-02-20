@@ -20,13 +20,56 @@ February 18, 2018 ~6 hours
 	*Researched API for exporting an array of arrays to a spreadsheet
 		*Will be using JXLS
 		*Apparently I need to install Maven and set this up as a dependency of the project
-	*Created spreadsheet for scoring tool usage, set up array to go with it
+	*Created spreadsheet for scoring tool usage
 		*I still have no idea what I'm doing -- will need to read into JXLS a bit more
 		*I also don't quite understand what a Maven project is - just that I need it to declare JXLS a dependency
 		*I'll probably have to change the variable names later, for now there're just placeholders
-		*Not sure if I need to use arrays or objects or if it's my choice
+		*Not sure if I need to use arrays or objects/classes or if it's my choice
 	*Adjusted team/name-setting buttons to properly display changes on other screens
 		*Line order's a pain - the designer editor initializes the variable in the same place everything else about that element is defined
 			*This causes any logic that's written in other portions of the code that happen to be before the initialization be unable to compile
 			*Fixed by moving all initializations to beginning
 	*Set up constructor and save/load methods for the round info -- this will be exported to the first line of the spreadsheet later on
+	*Spent a while just messing with what I have of the GUI currently - it's a bit cumbersome to use and some parts of it are rather irritating but if needed, that will be fixed later
+		*I'll probably need to do some "field testing" later on
+February 19, 2018 ~1 hour
+	*Discussed project with Mr. McKenzie
+		*Mainly just talked about my progress on the project (or lack thereof)
+		*Asked him about what Maven was -- he knew but was unsure about how to describe it
+			*I should probably look into that a bit more
+		*Also talked about how I was doing my documentation (e.g. time logs, reflections, etc.)
+	*Not too terribly concerned with time to finish project - I believe I can achieve 50 hours or more by the end of 2 weeks, especially now that Robotics is coming to a close
+February 20, 2018
+	*Set up an array to temporarily hold the scores
+		*Fairly primitive, and looking back through my code I'll need to spend some time adding comments
+			*Otherwise everything becomes way too difficult to understand/remember
+		*There seems to be a lot of ways to do a 2-D array, most of which I've forgotten
+			*There's also ways that work but are not desirable by the community as a whole, probably for aesthetic reasons?
+				*e.g. int[][] arrayName = new int[dimension1][dimension2];
+				*as a shorthand to 
+					int[][] arrayName = new int[dimension1][];
+					multi[n] = new int[dimension2];
+					multi[n+1] = new int[dimension2];
+					multi[n+2] = new int[dimension2];
+					multi[n+...] = new int[dimension2];
+					multi[dimension1-1] = new int[dimension2];  
+				*What's interesting about using the latter method is that you can have each 'second dimension' have a different size
+		*Eventually I'll need to set up a loop to go through and count the number of negs/powers that each player gets for stats purposes
+			*I feel like my code is currently terribly inefficient
+		*Maybe (in tournaments without negs) I can still track incorrectly answered questions as a hundredth of a point
+			*That way there's no real bearing on the score (I can floor it or cast it back to an int) while I'm still able to track it
+			*This also means that I'll need to convert any instance of int in the score to double
+				*No reason to wait until later to do this so I just did it now
+	*"Cleaned up" code a bit
+		*I should probably read up on traditional formatting conventions
+	*Tried creating a function for adding scores to score array
+		*Turns out you can't have a function declaration within another one (i.e. screen1()) - oops
+		*Writing it as a function so that I can call it on button presses, rather than having to copy-paste it for each actionListener and wasting space
+	*TO DO: I forgot about half-time, add another screen for that and then set up substitutions
+		*I've added buttons for players 5 and 6 for both teams, I'm thinking that on the half-time screen buttons for players that've been subbed out can be hidden
+		*No idea how I want the half-tme screen to look at all, probably need to design it
+			*Going to need a button that progresses past question 10 since it's currently stuck as soon as it gets to 10
+				*Also need to test past question 20 since I've changed the logic for how the question number is modified
+			*Will also need to be able to do a score check (though this should be implemented for all stages of the game)
+				
+
