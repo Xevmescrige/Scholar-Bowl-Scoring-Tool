@@ -71,5 +71,10 @@ February 20, 2018
 			*Going to need a button that progresses past question 10 since it's currently stuck as soon as it gets to 10
 				*Also need to test past question 20 since I've changed the logic for how the question number is modified
 			*Will also need to be able to do a score check (though this should be implemented for all stages of the game)
+		*Decided that I needed to add the player's name to the answer screen to help the scorekeeper
+		*Temporarily added debugging feature to 'Cancel' button under answer screen that prints out contents of array
+			*It works, now to finish up the GUI and start the logic to output the array to a spreadsheet
+				*Attached is a screenshot of the log with the array printed out (progress_capture1.png)
 				
+
 

@@ -19,6 +19,7 @@ import java.awt.CardLayout;
 //import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -48,7 +49,7 @@ public class screen1 extends JFrame {
 		});
 	}
 
-	public int questionNum = 1;
+	public int questionNum = 0;
 	public int playerNum = 0;
 	public double[][] scores = new double[20][12]; //12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are for B.
 	
@@ -56,11 +57,12 @@ public class screen1 extends JFrame {
 	{
 		scores[questionNum][playerNum] += value; 
 	}
-	public void playerAnswered() {
+	public void playerAnswered(JLabel label, String player) {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
 		c.show(contentPane, "ap1");
 		JMenuBar Menu = getJMenuBar();
 		Menu.setVisible(false);
+		label.setText(player);
 	}
 	public void answeredNext() {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -72,28 +74,28 @@ public class screen1 extends JFrame {
 	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button) {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
 		c.show(contentPane, "qP");
-		if (questionNum <= 19) {
-			if (questionNum == 10) {
+		if (questionNum <= 18) {
+			if (questionNum == 9) {
 				c.show(contentPane, "htp1");
 			}
-			else if (questionNum == 20) {
+			else if (questionNum == 19) {
 				menubar.add(button);
 			}
 			else {
 				questionNum += 1;
 			}
 		} 
-		else if (questionNum >= 20) {
+		else if (questionNum >= 19) {
 			
 			if (JOptionPane.showConfirmDialog(contentPane,
-					"Are you sure you want to go past question " + questionNum
+					"Are you sure you want to go past question " + (questionNum+1)
 							+ "?  If this is not your intention, click the \"END ROUND\" button",
 					"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				questionNum += 1;
 			}
 			
 		}
-		label.setText("QUESTION: " + (Integer.toString(questionNum)));
+		label.setText("QUESTION: " + (Integer.toString(questionNum+1)));
 	}
 	
 	/**
@@ -112,6 +114,9 @@ public class screen1 extends JFrame {
 		JMenuBar menuBar_setup = new JMenuBar();
 		menuBar_setup.setLayout(new GridLayout(1, 4));
 		contentPane.setLayout(new CardLayout(0, 0));
+		JLabel lblPlayName = new JLabel("");
+		lblPlayName.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPlayName.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel matchDetailsPanel = new JPanel();
 		contentPane.add(matchDetailsPanel, "mdp1");
@@ -145,7 +150,7 @@ public class screen1 extends JFrame {
 		answerPanel.add(aPane2);
 		answerPanel.add(aPane3);
 		aPane1.setLayout(new GridLayout(2, 0, 0, 0));
-		aPane2.setLayout(new GridLayout(1, 1, 0, 0));
+		aPane2.setLayout(new GridLayout(2, 1, 0, 0));
 		aPane3.setLayout(new GridLayout(2, 0, 0, 0));
 		answerPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		JButton btnAnsC = new JButton("Correct");
@@ -159,8 +164,14 @@ public class screen1 extends JFrame {
 		aPane3.add(btnAnsI);
 		aPane3.add(btnAnsN);
 		aPane1.add(btnAnsP);
-		
+		aPane2.add(lblPlayName);
 		halftimePanel.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		btnAnsCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(Arrays.deepToString(scores));
+			}
+		});
 		
 		
 		JButton btnPPA1 = new JButton("P1");
@@ -219,7 +230,7 @@ public class screen1 extends JFrame {
 		JButton btnNextQuestion = new JButton("NEXT QUESTION -->");
 		JButton btnFinish = new JButton("END ROUND");
 		
-		JLabel lblQNumber = new JLabel("QUESTION: " + questionNum);
+		JLabel lblQNumber = new JLabel("QUESTION: " + questionNum+1);
 
 		
 		RoundID round = new RoundID("", "", "", "", "");
@@ -434,7 +445,7 @@ public class screen1 extends JFrame {
 		btnPPA1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 0;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPA1.getText());
 			}
 		});
 		
@@ -442,7 +453,7 @@ public class screen1 extends JFrame {
 		btnPPA2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 1;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPA2.getText());
 			}
 		});
 		
@@ -450,7 +461,7 @@ public class screen1 extends JFrame {
 		btnPPA3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 2;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPA3.getText());
 			}
 		});
 		
@@ -458,21 +469,21 @@ public class screen1 extends JFrame {
 		btnPPA4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 3;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPA4.getText());
 			}
 		});
 		
 		btnPPA5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 4;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPA5.getText());
 			}
 		});
 		
 		btnPPA6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 5;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPA6.getText());
 			}
 		});
 
@@ -492,7 +503,7 @@ public class screen1 extends JFrame {
 		btnPPB1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 6;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPB1.getText());
 			}
 		});
 		
@@ -500,7 +511,7 @@ public class screen1 extends JFrame {
 		btnPPB2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 7;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPB2.getText());
 			}
 		});
 
@@ -508,7 +519,7 @@ public class screen1 extends JFrame {
 		btnPPB3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 8;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPB3.getText());
 			}
 		});
 		
@@ -516,21 +527,21 @@ public class screen1 extends JFrame {
 		btnPPB4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 9;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPB4.getText());
 			}
 		});
 		
 		btnPPB5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 10;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPB5.getText());
 			}
 		});
 		
 		btnPPB6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerNum = 11;
-				playerAnswered();
+				playerAnswered(lblPlayName, btnPPB6.getText());
 			}
 		});
 		
@@ -577,12 +588,12 @@ public class screen1 extends JFrame {
 
 		btnPQ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (questionNum > 1) {
+				if (questionNum > 0) {
 					questionNum -= 1;
-					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum)));
+					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum+1)));
 				} else {
-					questionNum = 1;
-					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum)));
+					questionNum = 0;
+					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum+1)));
 				}
 			}
 		});
