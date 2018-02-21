@@ -388,10 +388,10 @@ public class screen1 extends JFrame {
 				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);	
 				getJMenuBar().setVisible(true);
 				JLabel[][] labels=createLabels();
-		        for (int i=0;i<labels.length;i++){
+		        /*for (int i=0;i<labels.length;i++){
 		        	for (int j=0;j<labels.length;j++)
 		        		answerPanel.add(labels[i][j]);
-		        }
+		        }*/
 			}
 		});
 		
