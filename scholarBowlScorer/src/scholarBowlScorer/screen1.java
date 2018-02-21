@@ -14,7 +14,6 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import java.awt.Panel;
 import java.awt.CardLayout;
 //import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
@@ -54,6 +53,7 @@ public class screen1 extends JFrame {
 	public String teamBName = "TEAM B";
 	public int questionNum = 0;
 	public int playerNum = 0;
+	public boolean currentTeam = true; //true is A, false is B
 	public double[][] scores = new double[20][12]; //12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are for B.
 	
 	public static void printArray(double mat[][])
@@ -78,6 +78,22 @@ public class screen1 extends JFrame {
 		JMenuBar Menu = getJMenuBar();
 		Menu.setVisible(false);
 		label.setText(player);
+	}
+	public void answeredBonus(JLabel thisTeam, JLabel thatTeam) {
+		CardLayout c = (CardLayout) (contentPane.getLayout());
+		c.show(contentPane, "bP");
+		if((playerNum >= 0)&&(playerNum <=5)) {
+			currentTeam = true;
+			thisTeam.setText(teamAName);
+			thatTeam.setText(teamBName);
+		}
+			
+		else if((playerNum >= 6)&&(playerNum <=11)) {
+			currentTeam = false;
+			thisTeam.setText(teamBName);
+			thatTeam.setText(teamAName);
+		}
+		
 	}
 	public void answeredNext() {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -115,6 +131,10 @@ public class screen1 extends JFrame {
 		label3.setText(teamBName.toUpperCase() + ": " + scoresB);
 	}
 	
+	public void bonusDone() {
+		
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -135,41 +155,97 @@ public class screen1 extends JFrame {
 		lblPlayName.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPlayName.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JPanel matchDetailsPanel = new JPanel();
+		JPanel matchDetailsPanel = new JPanel(new GridLayout(5, 2, 0, 0));
 		contentPane.add(matchDetailsPanel, "mdp1");
-		matchDetailsPanel.setLayout(new GridLayout(5, 2, 0, 0));
 
-		Panel teamAPanel = new Panel();
+		JPanel teamAPanel = new JPanel(new GridLayout(2, 1));
 		contentPane.add(teamAPanel, "tAP");
-		teamAPanel.setLayout(new GridLayout(2, 1));
 
-		Panel tAPTP = new Panel();
+		JPanel tAPTP = new JPanel(new GridLayout(0, 1, 0, 0));
 		teamAPanel.add(tAPTP);
-		tAPTP.setLayout(new GridLayout(0, 1, 0, 0));
 
-		Panel tAPBP = new Panel();
+		JPanel tAPBP = new JPanel(new GridLayout(0, 4, 0, 0));
 		teamAPanel.add(tAPBP);
-		tAPBP.setLayout(new GridLayout(0, 4, 0, 0));
 
-		Panel teamBPanel = new Panel();
+		JPanel teamBPanel = new JPanel(new GridLayout(0, 1, 0, 0));
 		contentPane.add(teamBPanel, "tAB");
-		teamBPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel halftimePanel = new JPanel();
 		contentPane.add(halftimePanel, "htp1");
-		halftimePanel.setLayout(new GridLayout(5, 2, 0, 0));
 		
-		JPanel answerPanel = new JPanel();
-		JPanel aPane1 = new JPanel();
-		JPanel aPane2 = new JPanel();
-		JPanel aPane3 = new JPanel();
+		JPanel scorePanel = new JPanel(new GridLayout(0, 1, 0, 0));
+		contentPane.add(scorePanel, "sP");
+		
+		JPanel bonusPanel = new JPanel(new GridLayout(0, 3, 0, 0));
+		contentPane.add(bonusPanel, "bP");
+		
+		JButton bonusConfirm = new JButton();
+		bonusConfirm.setText("CONFIRM");
+		JButton bonusBack = new JButton();
+		bonusBack.setText("BACK");
+		JLabel thisTeamN = new JLabel("ANSWERING TEAM");
+		JLabel thatTeamN = new JLabel("REBOUNDING TEAM");
+		thisTeamN.setHorizontalAlignment(SwingConstants.CENTER);
+		thatTeamN.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel thisTeamBP = new JLabel();
+		JLabel thatTeamBP = new JLabel();
+		thisTeamBP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		thisTeamBP.setHorizontalAlignment(SwingConstants.CENTER);
+		thatTeamBP.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		thatTeamBP.setHorizontalAlignment(SwingConstants.CENTER);
+		thisTeamBP.setText("0");
+		thatTeamBP.setText("0");
+		
+
+		JButton btnRP = new JButton();
+		btnRP.setText("+10");
+		JButton btnRM = new JButton();
+		btnRM.setText("-10");
+		JButton btnLP = new JButton();
+		btnLP.setText("+10");
+		JButton btnLM = new JButton();
+		btnLM.setText("-10");
+		
+		JPanel bleft = new JPanel(new GridLayout(3, 1, 0, 0));
+		JPanel bmiddle = new JPanel(new GridLayout(3, 1, 0, 0));
+		JPanel bright = new JPanel(new GridLayout(3, 1, 0, 0));
+		bonusPanel.add(bleft);
+		bonusPanel.add(bmiddle);
+		bonusPanel.add(bright);
+		
+		String text = "<html>This is a bonus.  Use the plus and minus score buttons to keep track of how many points each team scores on the bonus, then confirm.</html>";
+		JLabel bonusInfo = new JLabel("<html><div style='text-align: center;'>" + text + "</div></html>");
+		bonusInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		
+		JPanel blBot = new JPanel(new GridLayout(0, 2, 0, 0));
+		JPanel brBot = new JPanel(new GridLayout(0, 2, 0, 0));
+		
+		bleft.add(thisTeamN);
+		bleft.add(blBot);
+		bleft.add(thisTeamBP);
+		
+		bright.add(thatTeamN);
+		bright.add(brBot);
+		bright.add(thatTeamBP);
+		
+		bmiddle.add(bonusConfirm);
+		bmiddle.add(bonusInfo);
+		bmiddle.add(bonusBack);
+
+		blBot.add(btnLM);
+		blBot.add(btnLP);
+		brBot.add(btnRM);
+		brBot.add(btnRP);
+		
+		JPanel answerPanel = new JPanel(new GridLayout(0, 3, 0, 0));
+		JPanel aPane1 = new JPanel(new GridLayout(2, 0, 0, 0));
+		JPanel aPane2 = new JPanel(new GridLayout(2, 1, 0, 0));
+		JPanel aPane3 = new JPanel(new GridLayout(2, 0, 0, 0));
 		answerPanel.add(aPane1);
 		answerPanel.add(aPane2);
 		answerPanel.add(aPane3);
-		aPane1.setLayout(new GridLayout(2, 0, 0, 0));
-		aPane2.setLayout(new GridLayout(2, 1, 0, 0));
-		aPane3.setLayout(new GridLayout(2, 0, 0, 0));
-		answerPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		JButton btnAnsC = new JButton("Correct");
 		JButton btnAnsI = new JButton("Incorrect - No Neg");
 		JButton btnAnsN = new JButton("Neg");
@@ -187,6 +263,8 @@ public class screen1 extends JFrame {
 		btnAnsCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				printArray(scores);
+				CardLayout c = (CardLayout) (contentPane.getLayout());
+				c.show(contentPane, "qP");
 			}
 		});
 		
@@ -270,8 +348,10 @@ public class screen1 extends JFrame {
 		btnAnsC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(10);
-				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				playerAnswered(lblPlayName, btnPPA1.getText());
+				//answeredNext();
+				answeredBonus(thisTeamN, thatTeamN);
+				//nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);	
 			}
 		});
 		btnAnsI.addActionListener(new ActionListener() {
@@ -291,8 +371,10 @@ public class screen1 extends JFrame {
 		btnAnsP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(15);
-				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				playerAnswered(lblPlayName, btnPPA1.getText());
+				//answeredNext();
+				answeredBonus(thisTeamN, thatTeamN);
+				//nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 			}
 		});
 		btnTeamA.addActionListener(new ActionListener() {
@@ -377,7 +459,7 @@ public class screen1 extends JFrame {
 		});
 		tAPBP.add(btnAP4);
 
-		Panel tBPTP = new Panel();
+		JPanel tBPTP = new JPanel();
 		teamBPanel.add(tBPTP);
 		tBPTP.setLayout(new GridLayout(0, 1, 0, 0));
 		

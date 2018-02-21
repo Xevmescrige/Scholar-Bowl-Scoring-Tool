@@ -39,7 +39,7 @@ February 19, 2018 ~1 hour
 			*I should probably look into that a bit more
 		*Also talked about how I was doing my documentation (e.g. time logs, reflections, etc.)
 	*Not too terribly concerned with time to finish project - I believe I can achieve 50 hours or more by the end of 2 weeks, especially now that Robotics is coming to a close
-February 20, 2018
+February 20, 2018 ~10 hours
 	*Set up an array to temporarily hold the scores
 		*Fairly primitive, and looking back through my code I'll need to spend some time adding comments
 			*Otherwise everything becomes way too difficult to understand/remember
@@ -89,6 +89,9 @@ February 20, 2018
 		*sample_setroom.png - Example of the room configuration screen
 		*sample_setnames.png - Example of the team and player name configuration screen
 		*sample_questionscreen.png - Mid-match example
-		*sample_answer.png - Example of player screen			
+		*sample_answer.png - Example of player screen	
+	*Added screen for bonuses - very buggy for some reason
+		*Certain components will only occasionally show up, otherwise they'll glitch and disappear
+			*Apparently the issue occurs whenever both Panel and JPanel are used -- I'm surprised this didn't manifest earlier...		
 
 
