@@ -131,9 +131,42 @@ public class screen1 extends JFrame {
 		label3.setText(teamBName.toUpperCase() + ": " + scoresB);
 	}
 	
-	public void bonusDone() {
-		
+	public double[][] bonusArray = new double[20][4]; //column 0-1 for team A, 2-3 for B -- 0, 2 are bonus, 1,3 are rebound
+	public void bonusDone(JLabel ttBP, JLabel thtBP) {
+		if(currentTeam) {
+			double thisScore = Double.parseDouble(ttBP.getText());
+			scoresA += thisScore;
+			bonusArray[questionNum][0] = thisScore;
+			double thatScore = Double.parseDouble(thtBP.getText());
+			scoresB += thatScore;
+			bonusArray[questionNum][3] = thatScore;
+		}
+		else {
+			double thisScore = Double.parseDouble(thtBP.getText());
+			scoresA += thisScore;
+			bonusArray[questionNum][2] = thisScore;
+			double thatScore = Double.parseDouble(ttBP.getText());
+			scoresB += thatScore;
+			bonusArray[questionNum][1] = thatScore;
+		}
 	}
+	
+	public JLabel[][] createLabels(){
+        JLabel[][] labels=new JLabel[10][10];
+        for (int i=0;i<10;i++){
+        	for(int j=0; j<10; j++) {
+        		labels[i][j]=new JLabel("message" + i);
+        	}
+        }
+        return labels;
+    }
+	
+	/*public void showGUI(){
+        JLabel[] labels=createLabels();
+        for (int i=0;i<labels.length;i++){
+            this.add(labels[i]);
+        }
+    }*/
 	
 	/**
 	 * Create the frame.
@@ -141,9 +174,8 @@ public class screen1 extends JFrame {
 	public screen1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 640, 480);
-
+		
 		contentPane = new JPanel();
-
 		JMenuBar menuBar_setname = new JMenuBar();
 		menuBar_setname.setLayout(new GridLayout(1, 5));
 		JMenuBar menuBar_scoreScreen = new JMenuBar();
@@ -239,6 +271,7 @@ public class screen1 extends JFrame {
 		brBot.add(btnRM);
 		brBot.add(btnRP);
 		
+		
 		JPanel answerPanel = new JPanel(new GridLayout(0, 3, 0, 0));
 		JPanel aPane1 = new JPanel(new GridLayout(2, 0, 0, 0));
 		JPanel aPane2 = new JPanel(new GridLayout(2, 1, 0, 0));
@@ -265,6 +298,7 @@ public class screen1 extends JFrame {
 				printArray(scores);
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "qP");
+				getJMenuBar().setVisible(true);
 			}
 		});
 		
@@ -345,6 +379,22 @@ public class screen1 extends JFrame {
 		});
 		menuBar_setname.add(buttonTNBack);
 
+		bonusConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout c = (CardLayout) (contentPane.getLayout());
+				c.show(contentPane, "qP");
+				bonusDone(thisTeamBP, thatTeamBP);
+				printArray(bonusArray);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);	
+				getJMenuBar().setVisible(true);
+				JLabel[][] labels=createLabels();
+		        for (int i=0;i<labels.length;i++){
+		        	for (int j=0;j<labels.length;j++)
+		        		answerPanel.add(labels[i][j]);
+		        }
+			}
+		});
+		
 		btnAnsC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(10);
@@ -518,13 +568,11 @@ public class screen1 extends JFrame {
 		setJMenuBar(menuBar_setup);
 		// setJMenuBar(menuBar_scoreScreen);
 
-		JPanel questionPanel = new JPanel();
+		JPanel questionPanel = new JPanel(new GridLayout(3, 1, 0, 0));
 		contentPane.add(questionPanel, "qP");
-		questionPanel.setLayout(new GridLayout(3, 1, 0, 0));
 		
-		JPanel qInfoPanel = new JPanel();
+		JPanel qInfoPanel = new JPanel(new GridLayout(0, 3, 0, 0));
 		questionPanel.add(qInfoPanel);
-		qInfoPanel.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		qInfoPanel.add(lblTAScore);
 
@@ -534,11 +582,9 @@ public class screen1 extends JFrame {
 
 		qInfoPanel.add(lblTBScore);
 
-		JPanel tAPlayers = new JPanel();
+		JPanel tAPlayers = new JPanel(new GridLayout(0, 1, 0, 0));
 		questionPanel.add(tAPlayers);
-		tAPlayers.setLayout(new BoxLayout(tAPlayers, BoxLayout.Y_AXIS));
 
-		
 		lblTeamA.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTeamA.setHorizontalAlignment(SwingConstants.CENTER);
 		tAPlayers.add(lblTeamA);
@@ -550,9 +596,8 @@ public class screen1 extends JFrame {
 			}
 		});
 
-		JPanel tAPBtns = new JPanel();
+		JPanel tAPBtns = new JPanel(new GridLayout(0, 4, 0, 0));
 		tAPlayers.add(tAPBtns);
-		tAPBtns.setLayout(new GridLayout(0, 4, 0, 0));
 
 		
 		tAPBtns.add(btnPPA1);
@@ -601,9 +646,8 @@ public class screen1 extends JFrame {
 			}
 		});
 
-		JPanel tBPlayers = new JPanel();
+		JPanel tBPlayers = new JPanel(new GridLayout(0, 1, 0, 0));
 		questionPanel.add(tBPlayers);
-		tBPlayers.setLayout(new BoxLayout(tBPlayers, BoxLayout.Y_AXIS));
 		
 		lblTeamB.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTeamB.setFont(new Font("Tahoma", Font.PLAIN, 14));
