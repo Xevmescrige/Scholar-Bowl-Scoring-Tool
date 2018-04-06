@@ -1,3 +1,6 @@
+February 18, 2017 ~1 hour
+	*Discussed idea with Wagner/O'Keefe/McKenzie
+
 February 25-26, 2017 ~5 hours 
 	*Researched GUI development in Java using Swing
 		*I learned the basics of using layout managers as well as their behavior as containers, as well as some basic methods included in the WindowBuilder and Swing libraries.  The starting screen for the utility was created where users can set the names of the players and teams, at least visually.
@@ -5,6 +8,8 @@ February 25-26, 2017 ~5 hours
 February 27, 2017 ~2 hours 
 	*Started programming the buttons to accept a user input and that would set the button text to the input 
 		*this is currently useless but later I'll implement a spreadsheet that takes from the button's text, or the variable containing it.  I'm having trouble with creating a separate method that calls the prompt, so for now I'll just stick to doing it all locally.
+November 28, 2017 ~1 hour
+	*Met with Mr. Wagner
 
 February 18, 2018 ~6 hours 
 	*Pulled project back onto current computer, updated Eclipse IDE and finished reinstalling it
@@ -95,4 +100,37 @@ February 20, 2018 ~10 hours
 			*Apparently the issue occurs whenever both Panel and JPanel are used -- I'm surprised this didn't manifest earlier...		
 	*Started working on displaying a scoresheet of sorts (Not the final excel document)
 		*NOTE TO SELF: REMEMBER TO REMOVE ALL DEBUGGING/MISCELLANEOUS/MESSING AROUND STUFF 
-
+February 21, 2017 ~3 hours
+	*Updated spreadsheet template
+	*Contacted Mr. O'Keefe about the project
+	*Looked over code with our robotics team's programming mentor
+		*Will upload his copy of the code with his comments indicated by his initials (BMR)
+			*File named BMR_Feb21_Comments.txt
+				*Ended up not using his suggestions unfortunately, still rather inexperienced with using enums and couldn't get it to work.
+	*Met with Mr. Wagner
+March 10, 2018 ~2 hours
+	*Updated Project Reflections and Log Sheet
+Between March 17 and 31st ~4 hours
+	*Cleaning up, testing - fairly minimal amount of work done
+	*Started code for bonus screen
+April 3, 2018 ~4 hours
+	*Debug and finish code for the bonus screen
+		*Took way to long to realize that a bug involving teams caused a typo
+		*Debugging this was a pain because the variable names were so similar - learned that writing the -expected- values for things makes debugging a lot easier
+	*Designed half-time screen
+April 5, 2018 ~ 4 hours
+	*Realized that there was an issue in the way I was handling scores - if a scorekeeper were to go back to adjust a score, instead of modifying that question's score, it would add to it.  
+		*Need to re-do scoring logic so that it modifies the table and sets all other values in that row to 0, then to calculate ScoresA/ScoresB by adding the players' scores instead of modifying said variables whenever a question was answered.
+	*Completed implementing half-time screen
+		*Started logic for half-time screen -- will need to figure out how to display the scoresheet without using too much memory
+			*Might need to figure out how to resize/create a new window to do so. 
+	*Noticed that the menubar wasn't working the way it should've -- it didn't display the end round button at all.  
+		*Conditional interactions are confusing
+	*Completed and tested scoreboard logic (except for the scoreboard) - works though there's a potential for a bug if a team has more than six players or if the scorekeeper misclicks.  I'll need to find a way to cancel the interaction.
+			*Fixed by only setting it to do something if the prompt doesn't return null (which happens when it's cancelled)
+		*I'll also need to set up something to indicate that someone didn't play for certain questions as well as substitutions for non-halftimes.
+		*Found a bug where if the same button is clicked twice for a substitution, something fails
+	*Substitution logic is completed - took way too long to find a bug that was the result of me duplicating a block of code.
+April 7, 2018 (TENTATIVE) - ~3 hours
+	*Test the program in an actual tournament
+		*Doing this in conjunction with my own paper scoresheet as well as a scorekeeper's scoresheet - will compare results and effectiveness
