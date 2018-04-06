@@ -160,13 +160,15 @@ public class screen1 extends JFrame {
 	// nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore,
 	// lblTBScore);
 	@SuppressWarnings("deprecation")
-	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button, JLabel label2, JLabel label3) {
+	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button, JLabel label2, JLabel label3, JLabel label4, JLabel label5) {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
 		c.show(contentPane, "qP");
 		if (questionNum <= 18) {
 			if (questionNum == 9) {
 				c.show(contentPane, "htp1");
 				menubar.hide();
+				label4.setText(label2.getText());
+				label5.setText(label3.getText());
 			} else if (questionNum == 18) {
 				menubar.add(button);
 				questionNum += 1;
@@ -535,7 +537,7 @@ public class screen1 extends JFrame {
 				bonusDone(thisTeamBP, thatTeamBP);
 				System.out.println("---------");
 				printArray(bonusArray);
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
 				getJMenuBar().setVisible(true);
 				/*
 				 * JLabel[][] labels=createLabels(); for (int i=0;i<labels.length;i++){ for (int
@@ -558,14 +560,14 @@ public class screen1 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				add_score(0.001);
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
 			}
 		});
 		btnAnsN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(-5);
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
 			}
 		});
 		btnAnsP.addActionListener(new ActionListener() {
@@ -928,7 +930,7 @@ public class screen1 extends JFrame {
 
 		btnNextQuestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
 			}
 		});
 		menuBar_scoreScreen.add(btnNextQuestion);
@@ -1480,6 +1482,7 @@ public class screen1 extends JFrame {
 		});
 
 		htBack.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "qP");
