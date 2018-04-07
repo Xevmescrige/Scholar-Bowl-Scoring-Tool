@@ -49,18 +49,25 @@ public class screen1 extends JFrame {
 		});
 	}
 
-	int scoresA = 0;
-	int scoresB = 0;
-	public String teamAName = "TEAM A";
-	public String teamBName = "TEAM B";
+	static int scoresA = 0;
+	static int scoresB = 0;
+	public static String teamAName = "TEAM A";
+	public static String teamBName = "TEAM B";
 	public int questionNum = 0;
 	public int playerNum = 0;
 	public boolean currentTeam = true; // true is A, false is B
-	public double[][] scores = new double[20][12]; // 12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are for B.
+	public static double[][] scores = new double[20][12]; // 12x20(+) array, arrays 1-6 are team A (4+2subs), 7-12 are
+															// for B.
+	public static String[] Players = new String[12];
+	public static double[][] bonusArray = new double[20][4]; // column 0-1 for team A, 2-3 for B -- 0, 2 are bonus, 1,3
+																// are
+	// rebound
 	public boolean Ap5 = false;
 	public boolean Bp5 = false;
 	public boolean Ap6 = false;
 	public boolean Bp6 = false;
+	public boolean timeout = false;
+	public boolean answered = false;
 
 	public static void printArray(double mat[][]) {
 		for (double[] row : mat)
@@ -68,11 +75,37 @@ public class screen1 extends JFrame {
 	}
 
 	public void add_score(double value) {
-		scores[questionNum][playerNum] += value;
-		if ((playerNum >= 0) && (playerNum <= 5)) {
-			scoresA += value;
-		} else if ((playerNum >= 6) && (playerNum <= 11)) {
-			scoresB += value;
+		for (int i = 0; i < 12; i++) {
+			if (scores[questionNum][i] != 0.01 && i != playerNum) {
+				scores[questionNum][i] = 0;
+			}
+		}
+		scores[questionNum][playerNum] = value;
+	}
+
+	public void update_score() {
+		int subTotalA = 0;
+		int subTotalB = 0;
+		for (int i = 0; i < 12; i++) {
+			if ((i >= 0) && (i <= 5)) {
+				for (int j = 0; j <= questionNum; j++) {
+					subTotalA += scores[j][i];
+				}
+			} else if ((i >= 6) && (i <= 11)) {
+				for (int j = 0; j <= questionNum; j++) {
+					subTotalB += scores[j][i];
+				}
+			}
+		}
+		for (int j = 0; j <= questionNum; j++) {
+			subTotalA += bonusArray[j][0];
+			subTotalA += bonusArray[j][1];
+			scoresA = subTotalA;
+		}
+		for (int j = 0; j <= questionNum; j++) {
+			subTotalB += bonusArray[j][2];
+			subTotalB += bonusArray[j][3];
+			scoresB = subTotalB;
 		}
 	}
 
@@ -160,15 +193,13 @@ public class screen1 extends JFrame {
 	// nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore,
 	// lblTBScore);
 	@SuppressWarnings("deprecation")
-	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button, JLabel label2, JLabel label3, JLabel label4, JLabel label5) {
+	public void nextQuestion(JLabel label, JMenuBar menubar, JButton button, JLabel label2, JLabel label3) {
 		CardLayout c = (CardLayout) (contentPane.getLayout());
 		c.show(contentPane, "qP");
 		if (questionNum <= 18) {
 			if (questionNum == 9) {
 				c.show(contentPane, "htp1");
 				menubar.hide();
-				label4.setText(label2.getText());
-				label5.setText(label3.getText());
 			} else if (questionNum == 18) {
 				menubar.add(button);
 				questionNum += 1;
@@ -189,35 +220,24 @@ public class screen1 extends JFrame {
 		label3.setText(teamBName.toUpperCase() + ": " + scoresB);
 	}
 
-	public double[][] bonusArray = new double[20][4]; // column 0-1 for team A, 2-3 for B -- 0, 2 are bonus, 1,3 are
-														// rebound
-
 	public void bonusDone(JLabel ttBP, JLabel thtBP) {
 		if (currentTeam) {
 			double thisScore = Double.parseDouble(ttBP.getText());
-			scoresA += thisScore;
+			// scoresA += thisScore;
 			bonusArray[questionNum][0] = thisScore;
 			double thatScore = Double.parseDouble(thtBP.getText());
-			scoresB += thatScore;
+			// scoresB += thatScore;
 			bonusArray[questionNum][3] = thatScore;
+			update_score();
 		} else {
 			double thatScore = Double.parseDouble(ttBP.getText());
 			double thisScore = Double.parseDouble(thtBP.getText());
-			scoresA += thisScore;
+			// scoresA += thisScore;
 			bonusArray[questionNum][2] = thatScore;
-			scoresB += thatScore;
+			// scoresB += thatScore;
 			bonusArray[questionNum][1] = thisScore;
+			update_score();
 		}
-	}
-
-	public JLabel[][] createLabels() {
-		JLabel[][] labels = new JLabel[10][10];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				labels[i][j] = new JLabel("message" + i);
-			}
-		}
-		return labels;
 	}
 
 	/*
@@ -236,7 +256,7 @@ public class screen1 extends JFrame {
 		JMenuBar menuBar_setname = new JMenuBar();
 		menuBar_setname.setLayout(new GridLayout(1, 5));
 		JMenuBar menuBar_scoreScreen = new JMenuBar();
-		menuBar_scoreScreen.setLayout(new GridLayout(1, 4));
+		menuBar_scoreScreen.setLayout(new GridLayout(1, 5));
 		JMenuBar menuBar_setup = new JMenuBar();
 		menuBar_setup.setLayout(new GridLayout(1, 4));
 		contentPane.setLayout(new CardLayout(0, 0));
@@ -293,6 +313,17 @@ public class screen1 extends JFrame {
 		htTeamAS.add(htSubAbtn3);
 		htTeamAS.add(htSubAbtn4);
 
+		for (int i = 0; i < 20; i++) {
+			scores[i][4] = 0.01;
+			scores[i][5] = 0.01;
+			scores[i][10] = 0.01;
+			scores[i][11] = 0.01;
+		}
+
+		for (int i = 0; i < 12; i++) {
+			Players[i] = "P" + i;
+		}
+
 		htPanelBot.add(htTeamBS);
 		JButton htSubBbtn1 = new JButton("P1");
 		JButton htSubBbtn2 = new JButton("P2");
@@ -326,6 +357,13 @@ public class screen1 extends JFrame {
 		htSCBot.add(htCont);
 
 		JButton htSCbtn = new JButton("SCOREBOARD");
+		htSCbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				screen2 screen2 = new screen2();
+				screen2.pack();
+				screen2.setVisible(true);
+			}
+		});
 		htSC.add(htTAScorelbl);
 		htSC.add(htSCbtn);
 		htSC.add(htTBScorelbl);
@@ -507,6 +545,7 @@ public class screen1 extends JFrame {
 		JButton btnNext = new JButton("NEXT -->");
 		JButton btnSBack = new JButton("<-- BACK TO SETUP");
 		JButton btnPQ = new JButton("<-- PREVIOUS QUESTION");
+		JButton btnTO = new JButton("TIMEOUT");
 		JButton btnViewScoreboard = new JButton("VIEW SCOREBOARD");
 		JButton btnNextQuestion = new JButton("NEXT QUESTION -->");
 		JButton btnFinish = new JButton("END ROUND");
@@ -528,6 +567,13 @@ public class screen1 extends JFrame {
 				setJMenuBar(menuBar_setup);
 			}
 		});
+		
+		btnViewScoreboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				screen2 frame = new screen2();
+				frame.setVisible(true);
+			}
+		});
 		menuBar_setname.add(buttonTNBack);
 
 		bonusConfirm.addActionListener(new ActionListener() {
@@ -537,8 +583,14 @@ public class screen1 extends JFrame {
 				bonusDone(thisTeamBP, thatTeamBP);
 				System.out.println("---------");
 				printArray(bonusArray);
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 				getJMenuBar().setVisible(true);
+				if (questionNum <= 10) {
+					htTAScorelbl.setText(lblTAScore.getText());
+					htTBScorelbl.setText(lblTBScore.getText());
+				}
+				thisTeamBP.setText("0");
+				thatTeamBP.setText("0");
 				/*
 				 * JLabel[][] labels=createLabels(); for (int i=0;i<labels.length;i++){ for (int
 				 * j=0;j<labels.length;j++) answerPanel.add(labels[i][j]); }
@@ -549,6 +601,7 @@ public class screen1 extends JFrame {
 		btnAnsC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(10);
+				update_score();
 				playerAnswered(lblPlayName, btnPPA1.getText());
 				// answeredNext();
 				answeredBonus(thisTeamN, thatTeamN);
@@ -559,20 +612,33 @@ public class screen1 extends JFrame {
 		btnAnsI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(0.001);
+				update_score();
+				if (!answered) {
+					answered = true;
+				} else if (answered) {
+					answered = false;
+					nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				}
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
 			}
 		});
 		btnAnsN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(-5);
+				update_score();
+				if (!answered) {
+					answered = true;
+				} else if (answered) {
+					answered = false;
+					nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				}
 				answeredNext();
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
 			}
 		});
 		btnAnsP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add_score(15);
+				update_score();
 				playerAnswered(lblPlayName, btnPPA1.getText());
 				// answeredNext();
 				answeredBonus(thisTeamN, thatTeamN);
@@ -632,6 +698,7 @@ public class screen1 extends JFrame {
 				btnAP1.setText(AP1name);
 				btnPPA1.setText(AP1name);
 				htSubAbtn1.setText(AP1name);
+				Players[0] = AP1name;
 			}
 		});
 		tAPBP.add(btnAP1);
@@ -642,6 +709,7 @@ public class screen1 extends JFrame {
 				btnAP2.setText(AP2name);
 				btnPPA2.setText(AP2name);
 				htSubAbtn2.setText(AP2name);
+				Players[1] = AP2name;
 			}
 		});
 		tAPBP.add(btnAP2);
@@ -652,6 +720,7 @@ public class screen1 extends JFrame {
 				btnAP3.setText(AP3name);
 				btnPPA3.setText(AP3name);
 				htSubAbtn3.setText(AP3name);
+				Players[2] = AP3name;
 			}
 		});
 		tAPBP.add(btnAP3);
@@ -662,6 +731,7 @@ public class screen1 extends JFrame {
 				btnAP4.setText(AP4name);
 				btnPPA4.setText(AP4name);
 				htSubAbtn4.setText(AP4name);
+				Players[3] = AP4name;
 			}
 		});
 		tAPBP.add(btnAP4);
@@ -690,6 +760,7 @@ public class screen1 extends JFrame {
 				btnBP1.setText(BP1name);
 				btnPPB1.setText(BP1name);
 				htSubBbtn1.setText(BP1name);
+				Players[6] = BP1name;
 			}
 		});
 		tBPBP.add(btnBP1);
@@ -700,6 +771,7 @@ public class screen1 extends JFrame {
 				btnBP2.setText(BP2name);
 				btnPPB2.setText(BP2name);
 				htSubBbtn2.setText(BP2name);
+				Players[7] = BP2name;
 			}
 		});
 		tBPBP.add(btnBP2);
@@ -710,6 +782,7 @@ public class screen1 extends JFrame {
 				btnBP3.setText(BP3name);
 				btnPPB3.setText(BP3name);
 				htSubBbtn3.setText(BP3name);
+				Players[8] = BP3name;
 			}
 		});
 		tBPBP.add(btnBP3);
@@ -720,6 +793,7 @@ public class screen1 extends JFrame {
 				btnBP4.setText(BP4name);
 				btnPPB4.setText(BP4name);
 				htSubBbtn4.setText(BP4name);
+				Players[9] = BP4name;
 			}
 		});
 		tBPBP.add(btnBP4);
@@ -888,8 +962,13 @@ public class screen1 extends JFrame {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "qP");
 				getJMenuBar().setVisible(true);
-				questionNum += 1;
-				lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum + 1)));
+				if (!timeout) {
+					questionNum += 1;
+					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum + 1)));
+				} else if (timeout) {
+					timeout = false;
+					htlbl.setText("HALFTIME");
+				}
 			}
 		});
 		menuBar_setup.add(btnLoadSettings);
@@ -899,6 +978,8 @@ public class screen1 extends JFrame {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "tAP");
 				setJMenuBar(menuBar_setname);
+				htTAScorelbl.setText(lblTAScore.getText());
+				htTBScorelbl.setText(lblTBScore.getText());
 			}
 		});
 		menuBar_setup.add(btnNext);
@@ -912,16 +993,30 @@ public class screen1 extends JFrame {
 			}
 		});
 		menuBar_scoreScreen.add(btnSBack);
-
+		menuBar_scoreScreen.add(btnTO);
 		btnPQ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (questionNum > 0) {
 					questionNum -= 1;
 					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum + 1)));
+					update_score();
+					lblTAScore.setText(teamAName.toUpperCase() + ": " + scoresA);
+					lblTBScore.setText(teamBName.toUpperCase() + ": " + scoresB);
 				} else {
 					questionNum = 0;
 					lblQNumber.setText("QUESTION: " + (Integer.toString(questionNum + 1)));
 				}
+
+			}
+		});
+		btnTO.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				timeout = true;
+				htlbl.setText("TIMEOUT");
+				CardLayout c = (CardLayout) (contentPane.getLayout());
+				c.show(contentPane, "htp1");
+				menuBar_scoreScreen.hide();
 			}
 		});
 		menuBar_scoreScreen.add(btnPQ);
@@ -930,7 +1025,14 @@ public class screen1 extends JFrame {
 
 		btnNextQuestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore, htTAScorelbl, htTBScorelbl);
+				nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+				update_score();
+				lblTAScore.setText(teamAName.toUpperCase() + ": " + scoresA);
+				lblTBScore.setText(teamBName.toUpperCase() + ": " + scoresB);
+				if (!timeout) {
+					htlbl.setText("HALFTIME");
+				}
+				answered = false;
 			}
 		});
 		menuBar_scoreScreen.add(btnNextQuestion);
@@ -980,8 +1082,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA1);
 								btnPPA5.setText(APname);
 								tAPBtns.add(btnPPA5);
+								Players[4] = APname;
 								Ap5 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][0] = 0.01;
+									scores[i+1][4] = 0;
+								}
 							} else {
 								htSubAbtn6.setText(APname);
 								htTeamAS.remove(htSubAbtn1);
@@ -990,8 +1097,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA1);
 								btnPPA6.setText(APname);
 								tAPBtns.add(btnPPA6);
+								Players[5] = APname;
 								Ap6 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][0] = 0.01;
+									scores[i+1][5] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1002,6 +1114,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubAbtn1, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
 								APName, htTeamAS, tAPBtns, btnPPA1, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5,
 								btnPPA5);
+						if (APName == btnPPA1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][0] = 0.01;
+								scores[i+1][0] = 0;
+							}
+						} else if (APName == btnPPA2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][0] = 0.01;
+								scores[i+1][1] = 0;
+							}
+						} else if (APName == btnPPA3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][0] = 0.01;
+								scores[i+1][2] = 0;
+							}
+						} else if (APName == btnPPA4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][0] = 0.01;
+								scores[i+1][3] = 0;
+							}
+						} else if (APName == btnPPA5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][0] = 0.01;
+								scores[i+1][4] = 0;
+							}
+						} else if (APName == btnPPA6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][0] = 0.01;
+								scores[i+1][5] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
@@ -1010,6 +1153,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn1, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
 							APName, htTeamAS, tAPBtns, btnPPA1, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6);
+					if (APName == btnPPA1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][0] = 0.01;
+							scores[i+1][0] = 0;
+						}
+					} else if (APName == btnPPA2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][0] = 0.01;
+							scores[i+1][1] = 0;
+						}
+					} else if (APName == btnPPA3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][0] = 0.01;
+							scores[i+1][2] = 0;
+						}
+					} else if (APName == btnPPA4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][0] = 0.01;
+							scores[i+1][3] = 0;
+						}
+					} else if (APName == btnPPA5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][0] = 0.01;
+							scores[i+1][4] = 0;
+						}
+					} else if (APName == btnPPA6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][0] = 0.01;
+							scores[i+1][5] = 0;
+						}
+					}
 				}
 
 			}
@@ -1032,8 +1206,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA2);
 								btnPPA5.setText(APname);
 								tAPBtns.add(btnPPA5);
+								Players[4] = APname;
 								Ap5 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][1] = 0.01;
+									scores[i+1][4] = 0;
+								}
 							} else {
 								htSubAbtn6.setText(APname);
 								htTeamAS.remove(htSubAbtn2);
@@ -1042,8 +1221,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA2);
 								btnPPA6.setText(APname);
 								tAPBtns.add(btnPPA6);
+								Players[5] = APname;
 								Ap6 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][1] = 0.01;
+									scores[i+1][5] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1054,6 +1238,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubAbtn2, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
 								APName, htTeamAS, tAPBtns, btnPPA2, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5,
 								btnPPA5);
+						if (APName == btnPPA1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][1] = 0.01;
+								scores[i+1][0] = 0;
+							}
+						} else if (APName == btnPPA2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][1] = 0.01;
+								scores[i+1][1] = 0;
+							}
+						} else if (APName == btnPPA3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][1] = 0.01;
+								scores[i+1][2] = 0;
+							}
+						} else if (APName == btnPPA4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][1] = 0.01;
+								scores[i+1][3] = 0;
+							}
+						} else if (APName == btnPPA5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][1] = 0.01;
+								scores[i+1][4] = 0;
+							}
+						} else if (APName == btnPPA6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][1] = 0.01;
+								scores[i+1][5] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
@@ -1062,6 +1277,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn2, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
 							APName, htTeamAS, tAPBtns, btnPPA2, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6);
+					if (APName == btnPPA1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][1] = 0.01;
+							scores[i+1][0] = 0;
+						}
+					} else if (APName == btnPPA2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][1] = 0.01;
+							scores[i+1][1] = 0;
+						}
+					} else if (APName == btnPPA3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][1] = 0.01;
+							scores[i+1][2] = 0;
+						}
+					} else if (APName == btnPPA4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][1] = 0.01;
+							scores[i+1][3] = 0;
+						}
+					} else if (APName == btnPPA5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][1] = 0.01;
+							scores[i+1][4] = 0;
+						}
+					} else if (APName == btnPPA6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][1] = 0.01;
+							scores[i+1][5] = 0;
+						}
+					}
 				}
 
 			}
@@ -1084,8 +1330,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA3);
 								btnPPA5.setText(APname);
 								tAPBtns.add(btnPPA5);
+								Players[4] = APname;
 								Ap5 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][2] = 0.01;
+									scores[i+1][4] = 0;
+								}
 							} else {
 								htSubAbtn6.setText(APname);
 								htTeamAS.remove(htSubAbtn3);
@@ -1094,8 +1345,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA3);
 								btnPPA6.setText(APname);
 								tAPBtns.add(btnPPA6);
+								Players[5] = APname;
 								Ap6 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][2] = 0.01;
+									scores[i+1][5] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1106,6 +1362,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubAbtn3, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
 								APName, htTeamAS, tAPBtns, btnPPA3, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5,
 								btnPPA5);
+						if (APName == btnPPA1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][2] = 0.01;
+								scores[i+1][0] = 0;
+							}
+						} else if (APName == btnPPA2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][2] = 0.01;
+								scores[i+1][1] = 0;
+							}
+						} else if (APName == btnPPA3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][2] = 0.01;
+								scores[i+1][2] = 0;
+							}
+						} else if (APName == btnPPA4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][2] = 0.01;
+								scores[i+1][3] = 0;
+							}
+						} else if (APName == btnPPA5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][2] = 0.01;
+								scores[i+1][4] = 0;
+							}
+						} else if (APName == btnPPA6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][2] = 0.01;
+								scores[i+1][5] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
@@ -1114,6 +1401,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn3, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
 							APName, htTeamAS, tAPBtns, btnPPA3, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6);
+					if (APName == btnPPA1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][2] = 0.01;
+							scores[i+1][0] = 0;
+						}
+					} else if (APName == btnPPA2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][2] = 0.01;
+							scores[i+1][1] = 0;
+						}
+					} else if (APName == btnPPA3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][2] = 0.01;
+							scores[i+1][2] = 0;
+						}
+					} else if (APName == btnPPA4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][2] = 0.01;
+							scores[i+1][3] = 0;
+						}
+					} else if (APName == btnPPA5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][2] = 0.01;
+							scores[i+1][4] = 0;
+						}
+					} else if (APName == btnPPA6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][2] = 0.01;
+							scores[i+1][5] = 0;
+						}
+					}
 				}
 
 			}
@@ -1136,8 +1454,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA4);
 								btnPPA5.setText(APname);
 								tAPBtns.add(btnPPA5);
+								Players[4] = APname;
 								Ap5 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][3] = 0.01;
+									scores[i+1][4] = 0;
+								}
 							} else {
 								htSubAbtn6.setText(APname);
 								htTeamAS.remove(htSubAbtn4);
@@ -1146,8 +1469,13 @@ public class screen1 extends JFrame {
 								tAPBtns.remove(btnPPA4);
 								btnPPA6.setText(APname);
 								tAPBtns.add(btnPPA6);
+								Players[5] = APname;
 								Ap6 = true;
 								tAPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][3] = 0.01;
+									scores[i+1][5] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1158,6 +1486,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubAbtn4, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
 								APName, htTeamAS, tAPBtns, btnPPA4, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5,
 								btnPPA5);
+						if (APName == btnPPA1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][3] = 0.01;
+								scores[i+1][0] = 0;
+							}
+						} else if (APName == btnPPA2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][3] = 0.01;
+								scores[i+1][1] = 0;
+							}
+						} else if (APName == btnPPA3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][3] = 0.01;
+								scores[i+1][2] = 0;
+							}
+						} else if (APName == btnPPA4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][3] = 0.01;
+								scores[i+1][3] = 0;
+							}
+						} else if (APName == btnPPA5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][3] = 0.01;
+								scores[i+1][4] = 0;
+							}
+						} else if (APName == btnPPA6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][3] = 0.01;
+								scores[i+1][5] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
@@ -1166,6 +1525,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn4, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
 							APName, htTeamAS, tAPBtns, btnPPA4, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6);
+					if (APName == btnPPA1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][3] = 0.01;
+							scores[i+1][0] = 0;
+						}
+					} else if (APName == btnPPA2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][3] = 0.01;
+							scores[i+1][1] = 0;
+						}
+					} else if (APName == btnPPA3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][3] = 0.01;
+							scores[i+1][2] = 0;
+						}
+					} else if (APName == btnPPA4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][3] = 0.01;
+							scores[i+1][3] = 0;
+						}
+					} else if (APName == btnPPA5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][3] = 0.01;
+							scores[i+1][4] = 0;
+						}
+					} else if (APName == btnPPA6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][3] = 0.01;
+							scores[i+1][5] = 0;
+						}
+					}
 				}
 
 			}
@@ -1187,8 +1577,13 @@ public class screen1 extends JFrame {
 							tAPBtns.remove(btnPPA5);
 							btnPPA6.setText(APname);
 							tAPBtns.add(btnPPA6);
+							Players[5] = APname;
 							Ap6 = true;
 							tAPBtns.validate();
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][5] = 0;
+							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
 						Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
@@ -1198,6 +1593,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubAbtn5, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
 								APName, htTeamAS, tAPBtns, btnPPA5, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5,
 								btnPPA6);
+						if (APName == btnPPA1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][0] = 0;
+							}
+						} else if (APName == btnPPA2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][1] = 0;
+							}
+						} else if (APName == btnPPA3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][2] = 0;
+							}
+						} else if (APName == btnPPA4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][3] = 0;
+							}
+						} else if (APName == btnPPA5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][4] = 0;
+							}
+						} else if (APName == btnPPA6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][4] = 0.01;
+								scores[i+1][5] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
@@ -1206,6 +1632,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn5, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
 							APName, htTeamAS, tAPBtns, btnPPA5, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6);
+					if (APName == btnPPA1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][4] = 0.01;
+							scores[i+1][0] = 0;
+						}
+					} else if (APName == btnPPA2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][4] = 0.01;
+							scores[i+1][1] = 0;
+						}
+					} else if (APName == btnPPA3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][4] = 0.01;
+							scores[i+1][2] = 0;
+						}
+					} else if (APName == btnPPA4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][4] = 0.01;
+							scores[i+1][3] = 0;
+						}
+					} else if (APName == btnPPA5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][4] = 0.01;
+							scores[i+1][4] = 0;
+						}
+					} else if (APName == btnPPA6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][4] = 0.01;
+							scores[i+1][5] = 0;
+						}
+					}
 				}
 
 			}
@@ -1219,6 +1676,37 @@ public class screen1 extends JFrame {
 						JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 				replace_sub(htSubAbtn6, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6, APName,
 						htTeamAS, tAPBtns, btnPPA6, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6);
+				if (APName == btnPPA1.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][5] = 0.01;
+						scores[i+1][0] = 0;
+					}
+				} else if (APName == btnPPA2.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][5] = 0.01;
+						scores[i+1][1] = 0;
+					}
+				} else if (APName == btnPPA3.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][5] = 0.01;
+						scores[i+1][2] = 0;
+					}
+				} else if (APName == btnPPA4.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][5] = 0.01;
+						scores[i+1][3] = 0;
+					}
+				} else if (APName == btnPPA5.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][5] = 0.01;
+						scores[i+1][4] = 0;
+					}
+				} else if (APName == btnPPA6.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][5] = 0.01;
+						scores[i+1][5] = 0;
+					}
+				}
 			}
 		});
 
@@ -1239,8 +1727,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB1);
 								btnPPB5.setText(BPname);
 								tBPBtns.add(btnPPB5);
+								Players[10] = BPname;
 								Bp5 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][6] = 0.01;
+									scores[i+1][10] = 0;
+								}
 							} else {
 								htSubBbtn6.setText(BPname);
 								htTeamBS.remove(htSubBbtn1);
@@ -1249,8 +1742,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB1);
 								btnPPB6.setText(BPname);
 								tBPBtns.add(btnPPB6);
+								Players[11] = BPname;
 								Bp6 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][6] = 0.01;
+									scores[i+1][11] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1261,6 +1759,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubBbtn1, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
 								BPName, htTeamBS, tBPBtns, btnPPB1, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5,
 								btnPPB5);
+						if (BPName == btnPPB1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][6] = 0.01;
+								scores[i+1][6] = 0;
+							}
+						} else if (BPName == btnPPB2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][6] = 0.01;
+								scores[i+1][7] = 0;
+							}
+						} else if (BPName == btnPPB3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][6] = 0.01;
+								scores[i+1][8] = 0;
+							}
+						} else if (BPName == btnPPB4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][6] = 0.01;
+								scores[i+1][9] = 0;
+							}
+						} else if (BPName == btnPPB5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][6] = 0.01;
+								scores[i+1][10] = 0;
+							}
+						} else if (BPName == btnPPB6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][6] = 0.01;
+								scores[i+1][11] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
@@ -1269,6 +1798,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn1, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
 							BPName, htTeamBS, tBPBtns, btnPPB1, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5, btnPPB6);
+					if (BPName == btnPPB1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][6] = 0.01;
+							scores[i+1][6] = 0;
+						}
+					} else if (BPName == btnPPB2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][6] = 0.01;
+							scores[i+1][7] = 0;
+						}
+					} else if (BPName == btnPPB3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][6] = 0.01;
+							scores[i+1][8] = 0;
+						}
+					} else if (BPName == btnPPB4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][6] = 0.01;
+							scores[i+1][9] = 0;
+						}
+					} else if (BPName == btnPPB5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][6] = 0.01;
+							scores[i+1][10] = 0;
+						}
+					} else if (BPName == btnPPB6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][6] = 0.01;
+							scores[i+1][11] = 0;
+						}
+					}
 				}
 
 			}
@@ -1291,8 +1851,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB2);
 								btnPPB5.setText(BPname);
 								tBPBtns.add(btnPPB5);
+								Players[10] = BPname;
 								Bp5 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][7] = 0.01;
+									scores[i+1][10] = 0;
+								}
 							} else {
 								htSubBbtn6.setText(BPname);
 								htTeamBS.remove(htSubBbtn2);
@@ -1301,8 +1866,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB2);
 								btnPPB6.setText(BPname);
 								tBPBtns.add(btnPPB6);
+								Players[11] = BPname;
 								Bp6 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][7] = 0.01;
+									scores[i+1][11] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1313,6 +1883,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubBbtn2, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
 								BPName, htTeamBS, tBPBtns, btnPPB2, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5,
 								btnPPB5);
+						if (BPName == btnPPB1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][7] = 0.01;
+								scores[i+1][6] = 0;
+							}
+						} else if (BPName == btnPPB2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][7] = 0.01;
+								scores[i+1][7] = 0;
+							}
+						} else if (BPName == btnPPB3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][7] = 0.01;
+								scores[i+1][8] = 0;
+							}
+						} else if (BPName == btnPPB4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][7] = 0.01;
+								scores[i+1][9] = 0;
+							}
+						} else if (BPName == btnPPB5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][7] = 0.01;
+								scores[i+1][10] = 0;
+							}
+						} else if (BPName == btnPPB6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][7] = 0.01;
+								scores[i+1][11] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
@@ -1321,6 +1922,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn2, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
 							BPName, htTeamBS, tBPBtns, btnPPB2, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5, btnPPB6);
+					if (BPName == btnPPB1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][7] = 0.01;
+							scores[i+1][6] = 0;
+						}
+					} else if (BPName == btnPPB2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][7] = 0.01;
+							scores[i+1][7] = 0;
+						}
+					} else if (BPName == btnPPB3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][7] = 0.01;
+							scores[i+1][8] = 0;
+						}
+					} else if (BPName == btnPPB4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][7] = 0.01;
+							scores[i+1][9] = 0;
+						}
+					} else if (BPName == btnPPB5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][7] = 0.01;
+							scores[i+1][10] = 0;
+						}
+					} else if (BPName == btnPPB6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][7] = 0.01;
+							scores[i+1][11] = 0;
+						}
+					}
 				}
 
 			}
@@ -1343,8 +1975,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB3);
 								btnPPB5.setText(BPname);
 								tBPBtns.add(btnPPB5);
+								Players[10] = BPname;
 								Bp5 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][8] = 0.01;
+									scores[i+1][10] = 0;
+								}
 							} else {
 								htSubBbtn6.setText(BPname);
 								htTeamBS.remove(htSubBbtn3);
@@ -1353,8 +1990,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB3);
 								btnPPB6.setText(BPname);
 								tBPBtns.add(btnPPB6);
+								Players[11] = BPname;
 								Bp6 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][8] = 0.01;
+									scores[i+1][11] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1365,6 +2007,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubBbtn3, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
 								BPName, htTeamBS, tBPBtns, btnPPB3, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5,
 								btnPPB5);
+						if (BPName == btnPPB1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][8] = 0.01;
+								scores[i+1][6] = 0;
+							}
+						} else if (BPName == btnPPB2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][8] = 0.01;
+								scores[i+1][7] = 0;
+							}
+						} else if (BPName == btnPPB3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][8] = 0.01;
+								scores[i+1][8] = 0;
+							}
+						} else if (BPName == btnPPB4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][8] = 0.01;
+								scores[i+1][9] = 0;
+							}
+						} else if (BPName == btnPPB5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][8] = 0.01;
+								scores[i+1][10] = 0;
+							}
+						} else if (BPName == btnPPB6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][8] = 0.01;
+								scores[i+1][11] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
@@ -1373,6 +2046,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn3, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
 							BPName, htTeamBS, tBPBtns, btnPPB3, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5, btnPPB6);
+					if (BPName == btnPPB1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][8] = 0.01;
+							scores[i+1][6] = 0;
+						}
+					} else if (BPName == btnPPB2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][8] = 0.01;
+							scores[i+1][7] = 0;
+						}
+					} else if (BPName == btnPPB3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][8] = 0.01;
+							scores[i+1][8] = 0;
+						}
+					} else if (BPName == btnPPB4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][8] = 0.01;
+							scores[i+1][9] = 0;
+						}
+					} else if (BPName == btnPPB5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][8] = 0.01;
+							scores[i+1][10] = 0;
+						}
+					} else if (BPName == btnPPB6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][8] = 0.01;
+							scores[i+1][11] = 0;
+						}
+					}
 				}
 
 			}
@@ -1395,8 +2099,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB4);
 								btnPPB5.setText(BPname);
 								tBPBtns.add(btnPPB5);
+								Players[10] = BPname;
 								Bp5 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][9] = 0.01;
+									scores[i+1][10] = 0;
+								}
 							} else {
 								htSubBbtn6.setText(BPname);
 								htTeamBS.remove(htSubBbtn4);
@@ -1405,8 +2114,13 @@ public class screen1 extends JFrame {
 								tBPBtns.remove(btnPPB4);
 								btnPPB6.setText(BPname);
 								tBPBtns.add(btnPPB6);
+								Players[11] = BPname;
 								Bp6 = true;
 								tBPBtns.validate();
+								for (int i = questionNum; i < 19; i++) {
+									scores[i+1][9] = 0.01;
+									scores[i+1][11] = 0;
+								}
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
@@ -1417,6 +2131,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubBbtn4, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
 								BPName, htTeamBS, tBPBtns, btnPPB4, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5,
 								btnPPB5);
+						if (BPName == btnPPB1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][9] = 0.01;
+								scores[i+1][6] = 0;
+							}
+						} else if (BPName == btnPPB2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][9] = 0.01;
+								scores[i+1][7] = 0;
+							}
+						} else if (BPName == btnPPB3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][9] = 0.01;
+								scores[i+1][8] = 0;
+							}
+						} else if (BPName == btnPPB4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][9] = 0.01;
+								scores[i+1][9] = 0;
+							}
+						} else if (BPName == btnPPB5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][9] = 0.01;
+								scores[i+1][10] = 0;
+							}
+						} else if (BPName == btnPPB6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][9] = 0.01;
+								scores[i+1][11] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
@@ -1425,6 +2170,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn4, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
 							BPName, htTeamBS, tBPBtns, btnPPB4, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5, btnPPB6);
+					if (BPName == btnPPB1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][9] = 0.01;
+							scores[i+1][6] = 0;
+						}
+					} else if (BPName == btnPPB2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][9] = 0.01;
+							scores[i+1][7] = 0;
+						}
+					} else if (BPName == btnPPB3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][9] = 0.01;
+							scores[i+1][8] = 0;
+						}
+					} else if (BPName == btnPPB4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][9] = 0.01;
+							scores[i+1][9] = 0;
+						}
+					} else if (BPName == btnPPB5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][9] = 0.01;
+							scores[i+1][10] = 0;
+						}
+					} else if (BPName == btnPPB6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][9] = 0.01;
+							scores[i+1][11] = 0;
+						}
+					}
 				}
 
 			}
@@ -1446,8 +2222,13 @@ public class screen1 extends JFrame {
 							tBPBtns.remove(btnPPB5);
 							btnPPB6.setText(BPname);
 							tBPBtns.add(btnPPB6);
+							Players[11] = BPname;
 							Bp6 = true;
 							tBPBtns.validate();
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][11] = 0;
+							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
 						Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
@@ -1457,6 +2238,37 @@ public class screen1 extends JFrame {
 						replace_sub(htSubBbtn5, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
 								BPName, htTeamBS, tBPBtns, btnPPB5, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5,
 								btnPPB6);
+						if (BPName == btnPPB1.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][6] = 0;
+							}
+						} else if (BPName == btnPPB2.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][7] = 0;
+							}
+						} else if (BPName == btnPPB3.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][8] = 0;
+							}
+						} else if (BPName == btnPPB4.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][9] = 0;
+							}
+						} else if (BPName == btnPPB5.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][10] = 0;
+							}
+						} else if (BPName == btnPPB6.getText()) {
+							for (int i = questionNum; i < 19; i++) {
+								scores[i+1][10] = 0.01;
+								scores[i+1][11] = 0;
+							}
+						}
 					}
 				} else {
 					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
@@ -1465,6 +2277,37 @@ public class screen1 extends JFrame {
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn5, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
 							BPName, htTeamBS, tBPBtns, btnPPB5, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5, btnPPB6);
+					if (BPName == btnPPB1.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][10] = 0.01;
+							scores[i+1][6] = 0;
+						}
+					} else if (BPName == btnPPB2.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][10] = 0.01;
+							scores[i+1][7] = 0;
+						}
+					} else if (BPName == btnPPB3.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][10] = 0.01;
+							scores[i+1][8] = 0;
+						}
+					} else if (BPName == btnPPB4.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][10] = 0.01;
+							scores[i+1][9] = 0;
+						}
+					} else if (BPName == btnPPB5.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][10] = 0.01;
+							scores[i+1][10] = 0;
+						}
+					} else if (BPName == btnPPB6.getText()) {
+						for (int i = questionNum; i < 19; i++) {
+							scores[i+1][10] = 0.01;
+							scores[i+1][11] = 0;
+						}
+					}
 				}
 
 			}
@@ -1478,6 +2321,37 @@ public class screen1 extends JFrame {
 						JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 				replace_sub(htSubBbtn6, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6, BPName,
 						htTeamBS, tBPBtns, btnPPB6, btnPPB1, btnPPB2, btnPPB3, btnPPB4, btnPPB5, btnPPB6);
+				if (BPName == btnPPB1.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][11] = 0.01;
+						scores[i+1][6] = 0;
+					}
+				} else if (BPName == btnPPB2.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][11] = 0.01;
+						scores[i+1][7] = 0;
+					}
+				} else if (BPName == btnPPB3.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][11] = 0.01;
+						scores[i+1][8] = 0;
+					}
+				} else if (BPName == btnPPB4.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][11] = 0.01;
+						scores[i+1][9] = 0;
+					}
+				} else if (BPName == btnPPB5.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][11] = 0.01;
+						scores[i+1][10] = 0;
+					}
+				} else if (BPName == btnPPB6.getText()) {
+					for (int i = questionNum; i < 19; i++) {
+						scores[i+1][11] = 0.01;
+						scores[i+1][11] = 0;
+					}
+				}
 			}
 		});
 

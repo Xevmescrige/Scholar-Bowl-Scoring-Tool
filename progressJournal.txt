@@ -131,6 +131,13 @@ April 5, 2018 ~ 4 hours
 		*I'll also need to set up something to indicate that someone didn't play for certain questions as well as substitutions for non-halftimes.
 		*Found a bug where if the same button is clicked twice for a substitution, something fails
 	*Substitution logic is completed - took way too long to find a bug that was the result of me duplicating a block of code.
+April 6, 2018 ~6 hours
+	*Set up timeup screen (which is really just the half-time screen with a different name)
+	*Finished all logic for substitution, including assigning values for rounds not played
+	*Overhauled the way point totals were handled to accurately reflect the score array
+		*This was a pain because I didn't realize what I was doing with nested loops would cause the bonuses to be added incorrectly -- debugging this took up 2 of the 4 hours spent today...
+	*For some reason negative scores are really bugged out and I can't figure out why -- i.e. if a team is supposed to have -5 points, it'll show as -3.
+	*Incorporated rudimentary form of scoreboard
 April 7, 2018 (TENTATIVE) - ~3 hours
 	*Test the program in an actual tournament
 		*Doing this in conjunction with my own paper scoresheet as well as a scorekeeper's scoresheet - will compare results and effectiveness
