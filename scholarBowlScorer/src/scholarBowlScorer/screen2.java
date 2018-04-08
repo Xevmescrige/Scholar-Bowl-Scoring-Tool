@@ -1,6 +1,6 @@
 package scholarBowlScorer;
 
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -8,12 +8,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+//import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class screen2 extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8548508922121393516L;
 	private JPanel contentPane;
 
 	/**

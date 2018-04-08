@@ -13,11 +13,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+//import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.CardLayout;
 //import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
+//import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
@@ -79,9 +79,10 @@ public class screen1 extends JFrame {
 		if (playerNum >= 0 && playerNum <= 5) {
 			for (int i = 0; i < 6; i++) {
 				if (scores[questionNum][i] != 0.001 && i != playerNum) {
-					if ((int)value == 10 || (int)value == 15) {
+					if ((int) value == 10 || (int) value == 15) {
 						scores[questionNum][i] = 0;
-						if (((scores[questionNum][i + 6] != -5)&& !(scores[questionNum][i + 6] != 0.0001)) || ((scores[questionNum][i + 6] != 0.0001)&&!(scores[questionNum][i + 6] != -5))) {
+						if (((scores[questionNum][i + 6] != -5) && !(scores[questionNum][i + 6] != 0.0001))
+								|| ((scores[questionNum][i + 6] != 0.0001) && !(scores[questionNum][i + 6] != -5))) {
 							scores[questionNum][i + 6] = 0;
 							scores[questionNum][playerNum + 6] = 0;
 						}
@@ -94,9 +95,10 @@ public class screen1 extends JFrame {
 		if (playerNum >= 6 && playerNum <= 11) {
 			for (int i = 6; i < 12; i++) {
 				if (scores[questionNum][i] != 0.001 && i != playerNum) {
-					if ((int)value == 10 || (int)value == 15) {
+					if ((int) value == 10 || (int) value == 15) {
 						scores[questionNum][i] = 0;
-						if (((scores[questionNum][i - 6] != -5)&& !(scores[questionNum][i - 6] != 0.0001)) || ((scores[questionNum][i - 6] != 0.0001)&&!(scores[questionNum][i - 6] != -5))) {
+						if (((scores[questionNum][i - 6] != -5) && !(scores[questionNum][i - 6] != 0.0001))
+								|| ((scores[questionNum][i - 6] != 0.0001) && !(scores[questionNum][i - 6] != -5))) {
 							scores[questionNum][i - 6] = 0;
 							scores[questionNum][playerNum - 6] = 0;
 						}
@@ -108,8 +110,6 @@ public class screen1 extends JFrame {
 		}
 		scores[questionNum][playerNum] = value;
 	}
-
-	
 
 	public void update_score() {
 		int subTotalA = 0;
@@ -344,10 +344,12 @@ public class screen1 extends JFrame {
 		htTeamAS.add(htSubAbtn4);
 
 		for (int i = 0; i < 20; i++) {
-			scores[i][4] = 0.001;
-			scores[i][5] = 0.001;
-			scores[i][10] = 0.001;
-			scores[i][11] = 0.001;
+			for (int j = 0; j < 6; j++) {
+				scores[i][j] = 0.001;
+			}
+			for (int j = 6; j < 12; j++) {
+				scores[i][j] = 0.001;
+			}
 		}
 
 		for (int i = 0; i < 12; i++) {
@@ -407,6 +409,17 @@ public class screen1 extends JFrame {
 		bonusConfirm.setText("CONFIRM");
 
 		JButton bonusBack = new JButton();
+		bonusBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				answeredA = false;
+				answeredB = false;
+				CardLayout c = (CardLayout) (contentPane.getLayout());
+				c.show(contentPane, "qP");
+				JMenuBar Menu = getJMenuBar();
+				Menu.setVisible(true);
+
+			}
+		});
 		bonusBack.setText("BACK");
 		JLabel thisTeamN = new JLabel("ANSWERING TEAM");
 		JLabel thatTeamN = new JLabel("REBOUNDING TEAM");
@@ -673,6 +686,8 @@ public class screen1 extends JFrame {
 					nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 				}
 				answeredNext();
+				lblTAScore.setText(teamAName.toUpperCase() + ": " + scoresA);
+				lblTBScore.setText(teamBName.toUpperCase() + ": " + scoresB);
 			}
 		});
 		btnAnsP.addActionListener(new ActionListener() {
@@ -734,44 +749,65 @@ public class screen1 extends JFrame {
 
 		btnAP1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String AP1name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnAP1.setText(AP1name);
-				btnPPA1.setText(AP1name);
-				htSubAbtn1.setText(AP1name);
-				Players[0] = AP1name;
+				String APName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (APName != null) {
+					btnAP1.setText(APName);
+					btnPPA1.setText(APName);
+					htSubAbtn1.setText(APName);
+					Players[0] = APName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][0] = 0;
+					}
+
+				}
 			}
 		});
 		tAPBP.add(btnAP1);
 
 		btnAP2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String AP2name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnAP2.setText(AP2name);
-				btnPPA2.setText(AP2name);
-				htSubAbtn2.setText(AP2name);
-				Players[1] = AP2name;
+				String APName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (APName != null) {
+					btnAP2.setText(APName);
+					btnPPA2.setText(APName);
+					htSubAbtn2.setText(APName);
+					Players[1] = APName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][1] = 0;
+					}
+				}
 			}
 		});
 		tAPBP.add(btnAP2);
 
 		btnAP3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String AP3name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnAP3.setText(AP3name);
-				btnPPA3.setText(AP3name);
-				htSubAbtn3.setText(AP3name);
-				Players[2] = AP3name;
+				String APName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (APName != null) {
+					btnAP3.setText(APName);
+					btnPPA3.setText(APName);
+					htSubAbtn3.setText(APName);
+					Players[2] = APName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][2] = 0;
+					}
+				}
 			}
 		});
 		tAPBP.add(btnAP3);
 
 		btnAP4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String AP4name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnAP4.setText(AP4name);
-				btnPPA4.setText(AP4name);
-				htSubAbtn4.setText(AP4name);
-				Players[3] = AP4name;
+				String APName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (APName != null) {
+					btnAP4.setText(APName);
+					btnPPA4.setText(APName);
+					htSubAbtn4.setText(APName);
+					Players[3] = APName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][3] = 0;
+					}
+				}
 			}
 		});
 		tAPBP.add(btnAP4);
@@ -796,44 +832,64 @@ public class screen1 extends JFrame {
 
 		btnBP1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String BP1name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnBP1.setText(BP1name);
-				btnPPB1.setText(BP1name);
-				htSubBbtn1.setText(BP1name);
-				Players[6] = BP1name;
+				String BPName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (BPName != null) {
+					btnBP1.setText(BPName);
+					btnPPB1.setText(BPName);
+					htSubBbtn1.setText(BPName);
+					Players[6] = BPName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][6] = 0;
+					}
+				}
 			}
 		});
 		tBPBP.add(btnBP1);
 
 		btnBP2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String BP2name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnBP2.setText(BP2name);
-				btnPPB2.setText(BP2name);
-				htSubBbtn2.setText(BP2name);
-				Players[7] = BP2name;
+				String BPName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (BPName != null) {
+					btnBP2.setText(BPName);
+					btnPPB2.setText(BPName);
+					htSubBbtn2.setText(BPName);
+					Players[7] = BPName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][7] = 0;
+					}
+				}
 			}
 		});
 		tBPBP.add(btnBP2);
 
 		btnBP3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String BP3name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnBP3.setText(BP3name);
-				btnPPB3.setText(BP3name);
-				htSubBbtn3.setText(BP3name);
-				Players[8] = BP3name;
+				String BPName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (BPName != null) {
+					btnBP3.setText(BPName);
+					btnPPB3.setText(BPName);
+					htSubBbtn3.setText(BPName);
+					Players[8] = BPName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][8] = 0;
+					}
+				}
 			}
 		});
 		tBPBP.add(btnBP3);
 
 		btnBP4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String BP4name = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
-				btnBP4.setText(BP4name);
-				btnPPB4.setText(BP4name);
-				htSubBbtn4.setText(BP4name);
-				Players[9] = BP4name;
+				String BPName = (String) JOptionPane.showInputDialog(contentPane, "ENTER PLAYER'S NAME");
+				if (BPName != null) {
+					btnBP4.setText(BPName);
+					btnPPB4.setText(BPName);
+					htSubBbtn4.setText(BPName);
+					Players[9] = BPName;
+					for (int i = 0; i < 20; i++) {
+						scores[i][9] = 0;
+					}
+				}
 			}
 		});
 		tBPBP.add(btnBP4);
