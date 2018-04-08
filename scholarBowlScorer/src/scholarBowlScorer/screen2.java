@@ -86,9 +86,9 @@ public class screen2 extends JFrame {
 	public void updateLabels(JLabel[][] l, double[][] s) {
 		for (int i = 3; i < 23; i++) {
 			for (int j = 1; j < 7; j++) {
-				if (s[i - 3][j - 1] == 0.01) {
+				if (s[i - 3][j - 1] == 0.001) {
 					l[i][j].setText("SUB");
-				} else if (s[i - 3][j - 1] == 0.001) {
+				} else if (s[i - 3][j - 1] == 0.0001) {
 					l[i][j].setText("INC");
 				} else {
 					l[i][j].setText(Double.toString(s[i - 3][j - 1]));
@@ -96,9 +96,9 @@ public class screen2 extends JFrame {
 
 			}
 			for (int j = 10; j < 16; j++) {
-				if (s[i - 3][j - 4] == 0.01) {
+				if (s[i - 3][j - 4] == 0.001) {
 					l[i][j].setText("SUB");
-				} else if (s[i - 3][j - 4] == 0.001) {
+				} else if (s[i - 3][j - 4] == 0.0001) {
 					l[i][j].setText("INC");
 				} else {
 					l[i][j].setText(Double.toString(s[i - 3][j - 4]));

@@ -132,12 +132,26 @@ April 5, 2018 ~ 4 hours
 		*Found a bug where if the same button is clicked twice for a substitution, something fails
 	*Substitution logic is completed - took way too long to find a bug that was the result of me duplicating a block of code.
 April 6, 2018 ~6 hours
-	*Set up timeup screen (which is really just the half-time screen with a different name)
+	*Set up timeout screen (which is really just the half-time screen with a different name)
 	*Finished all logic for substitution, including assigning values for rounds not played
 	*Overhauled the way point totals were handled to accurately reflect the score array
 		*This was a pain because I didn't realize what I was doing with nested loops would cause the bonuses to be added incorrectly -- debugging this took up 2 of the 4 hours spent today...
 	*For some reason negative scores are really bugged out and I can't figure out why -- i.e. if a team is supposed to have -5 points, it'll show as -3.
 	*Incorporated rudimentary form of scoreboard
-April 7, 2018 (TENTATIVE) - ~3 hours
+April 7, 2018 ~5 hours
 	*Test the program in an actual tournament
 		*Doing this in conjunction with my own paper scoresheet as well as a scorekeeper's scoresheet - will compare results and effectiveness
+	*It turns out in the (fairly common) scenario in which both teams neg or both teams get the question incorrect, or even if one wrongs the questions while the other gets it right, only the most recent score is kept.
+		*This leads to the score becoming more and more inaccurate as the game progresses
+	*The logic that determines whether or not a team is playing wasn't working properly
+	*Spoke to Jeffery Hill (A moderator at the tournament with a background in computer science) about the program -- he suggested the issue about the neg scenario (and I experienced this during the matches)
+		*Still couldn't figure out -why- negative scores were behaving that way
+		*Suggested potential issues with scores overriding each other
+		*Suggested making changes to how scores can be edited
+	*Screenshots of testing are included -- everything was tested on my school computer.  Comments have been added to the images themselves.
+		*Screenshot filenames are in the standard Apple naming convention ("Screen Shot [Date] at [Time].png")
+
+April 7, 2018 (Continued) ~4 hours 
+	*Fixed the negative number bug by casting to int -- Don't understand why that worked but I'm not going to mess with it
+	*Fixed the issue with overriding scores, as well as implemented something so that a team can't answer twice in the same round
+		*I forgot that a computer's definition of "or" is a bit different from ours -- saying if(not this or not that) where this and that are mutually exclusive basically means the same thing as if(anything)
