@@ -151,7 +151,20 @@ April 7, 2018 ~5 hours
 	*Screenshots of testing are included -- everything was tested on my school computer.  Comments have been added to the images themselves.
 		*Screenshot filenames are in the standard Apple naming convention ("Screen Shot [Date] at [Time].png")
 
-April 7, 2018 (Continued) ~4 hours 
+April 7, 2018 (Continued) ~4 hours [TOTAL AS OF NOW] 58 hours
 	*Fixed the negative number bug by casting to int -- Don't understand why that worked but I'm not going to mess with it
 	*Fixed the issue with overriding scores, as well as implemented something so that a team can't answer twice in the same round
 		*I forgot that a computer's definition of "or" is a bit different from ours -- saying if(not this or not that) where this and that are mutually exclusive basically means the same thing as if(anything)
+April 8, 2018 ~5 hours
+	*Implemented more interactions for negs to try to error-proof them
+	*Found bug where if the scorekeeper were to go back to give the other team the tossup, it wouldn't clear the original tossup.  I thought I had implemented this already, but it doesn't seem to be working.
+		*Couldn't fix it by messing with it so I just rewrote the code while stepping through what I wanted it to do in my head
+			*Lots of nested conditionals get confusing
+			*The old code for it is left as a comment for posterity's/documentation's sake
+	*...Now the bug's back for negs instead
+		*For some reason having an odd number of 'terms' for XOR (^) seems to fix the bug.  Maybe it has something to do with it being read as (a^b)^(c^d) instead of a^b^c^d?
+		*Another fix seems to be just making a set of nested if statements with each 'term' having its own 'if'
+			*...I now realize that this is the same as using &&.  I have no idea why I was using ^.
+			*I spent 3 hours on a bug that should've taken me 3 minutes.  At least now I've reviewed a bit on boolean operators from my digital electronics class?
+	*After messing with jxls fruitlessly for a few hours I figured that I can't use it without a major overhaul to how everything is structured -- so I'm trying Apache's HSSF instead
+		*I may revert the project back from a Maven project, if that's possible, or at least remove the jxls dependencies to reduce filesize

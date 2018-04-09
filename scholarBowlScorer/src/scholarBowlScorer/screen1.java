@@ -1,11 +1,17 @@
 package scholarBowlScorer;
 
-//import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
@@ -13,13 +19,24 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
-//import javax.swing.JComboBox;
+
 import javax.swing.SwingConstants;
 import java.awt.CardLayout;
-//import java.awt.FlowLayout;
-//import javax.swing.BoxLayout;
+
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -69,6 +86,7 @@ public class screen1 extends JFrame {
 	public boolean timeout = false;
 	public boolean answeredA = false;
 	public boolean answeredB = false;
+	public boolean neg = false;
 
 	public static void printArray(double mat[][]) {
 		for (double[] row : mat)
@@ -76,38 +94,85 @@ public class screen1 extends JFrame {
 	}
 
 	public void add_score(double value) {
-		if (playerNum >= 0 && playerNum <= 5) {
-			for (int i = 0; i < 6; i++) {
-				if (scores[questionNum][i] != 0.001 && i != playerNum) {
-					if ((int) value == 10 || (int) value == 15) {
-						scores[questionNum][i] = 0;
-						if (((scores[questionNum][i + 6] != -5) && !(scores[questionNum][i + 6] != 0.0001))
-								|| ((scores[questionNum][i + 6] != 0.0001) && !(scores[questionNum][i + 6] != -5))) {
-							scores[questionNum][i + 6] = 0;
-							scores[questionNum][playerNum + 6] = 0;
-						}
-					} else {
-						scores[questionNum][i] = 0;
+		for (int i = 0; i < 12; i++) {
+			if (playerNum >= 0 && playerNum <= 5 && i >= 0 && i <= 5) {
+				if ((int) value == -5) {
+					if (scores[questionNum][i + 6] != 10 && scores[questionNum][i + 6] != 15
+							&& scores[questionNum][i + 6] != 0.0001 && scores[questionNum][i + 6] != 0.001) {
+						scores[questionNum][i + 6] = 0;
 					}
+				} else if (value == 10 || value == 15) {
+					if (scores[questionNum][i + 6] != -5 && scores[questionNum][i + 6] != 0.0001
+							&& scores[questionNum][i + 6] != 0.001) {
+						scores[questionNum][i + 6] = 0;
+					}
+				} else if (value == 0.0001) {
+					if (scores[questionNum][i + 6] != 10 && scores[questionNum][i + 6] != 15
+							&& scores[questionNum][i + 6] != -5 && scores[questionNum][i + 6] != 0.0001
+							&& scores[questionNum][i + 6] != 0.001) {
+						scores[questionNum][i + 6] = 0;
+					}
+				}
+				if (scores[questionNum][i] != 0.001 && i != playerNum) {
+					scores[questionNum][i] = 0;
+				}
+			}
+			if (playerNum >= 6 && playerNum <= 11 && i >= 6 && i <= 11) {
+				if ((int) value == -5) {
+					if (scores[questionNum][i - 6] != 10 && scores[questionNum][i - 6] != 15
+							&& scores[questionNum][i - 6] != 0.0001 && scores[questionNum][i - 6] != 0.001) {
+						scores[questionNum][i - 6] = 0;
+					}
+				} else if (value == 10 || value == 15) {
+					if (scores[questionNum][i - 6] != -5 && scores[questionNum][i - 6] != 0.0001
+							&& scores[questionNum][i - 6] != 0.001) {
+						scores[questionNum][i - 6] = 0;
+					}
+				} else if (value == 0.0001) {
+					if (scores[questionNum][i - 6] != 10 && scores[questionNum][i - 6] != 15
+							&& scores[questionNum][i - 6] != -5 && scores[questionNum][i - 6] != 0.0001
+							&& scores[questionNum][i - 6] != 0.001) {
+						scores[questionNum][i - 6] = 0;
+					}
+				}
+				if (scores[questionNum][i] != 0.001 && i != playerNum) {
+					scores[questionNum][i] = 0;
 				}
 			}
 		}
-		if (playerNum >= 6 && playerNum <= 11) {
-			for (int i = 6; i < 12; i++) {
-				if (scores[questionNum][i] != 0.001 && i != playerNum) {
-					if ((int) value == 10 || (int) value == 15) {
-						scores[questionNum][i] = 0;
-						if (((scores[questionNum][i - 6] != -5) && !(scores[questionNum][i - 6] != 0.0001))
-								|| ((scores[questionNum][i - 6] != 0.0001) && !(scores[questionNum][i - 6] != -5))) {
-							scores[questionNum][i - 6] = 0;
-							scores[questionNum][playerNum - 6] = 0;
-						}
-					} else {
-						scores[questionNum][i] = 0;
-					}
-				}
-			}
-		}
+		/*
+		 * if (playerNum >= 0 && playerNum <= 5) { for (int i = 0; i < 6; i++) { if
+		 * (scores[questionNum][i] != 0.001 && i != playerNum) { if ((int) value == 10
+		 * || (int) value == 15) { scores[questionNum][i] = 0; if ((((int)
+		 * scores[questionNum][i + 6] != -5)) && ((scores[questionNum][i + 6] !=
+		 * 0.0001)) && (scores[questionNum][playerNum + 6] != -5) &&
+		 * (scores[questionNum][playerNum + 6] != 0.0001)) { scores[questionNum][i + 6]
+		 * = 0; if ((scores[questionNum][playerNum + 6] != -5) &&
+		 * (scores[questionNum][playerNum + 6] != 0.0001)) {
+		 * scores[questionNum][playerNum + 6] = 0; } } } else if ((int) value == -5) {
+		 * // AT THIS POINT: If scores[qNum][i] !=0.001 and i != pNum and value // == -5
+		 * scores[questionNum][i] = 0; // Set the current question/player to 0 if
+		 * (((scores[questionNum][i + 6] != 10)) && ((scores[questionNum][i + 6] !=
+		 * 0.0001)) // && ((scores[questionNum][i + 6] != 15))) { scores[questionNum][i
+		 * + 6] = 0; if ((scores[questionNum][playerNum + 6] != 10) &&
+		 * (scores[questionNum][playerNum + 6] != 0.0001) &&
+		 * (scores[questionNum][playerNum + 6] != 15)) { scores[questionNum][playerNum +
+		 * 6] = 0; } } } else { // This clears the rest of the points for the answering
+		 * team scores[questionNum][i] = 0; } } } } if (playerNum >= 6 && playerNum <=
+		 * 11) { for (int i = 6; i < 12; i++) { if (scores[questionNum][i] != 0.001 && i
+		 * != playerNum) { if ((int) value == 10 || (int) value == 15) {
+		 * scores[questionNum][i] = 0; if ((scores[questionNum][i - 6] != -5) &&
+		 * (scores[questionNum][i - 6] != 0.0001)) { scores[questionNum][i - 6] = 0; if
+		 * ((scores[questionNum][playerNum - 6] != -5) && (scores[questionNum][playerNum
+		 * - 6] != 0.0001)) { scores[questionNum][playerNum - 6] = 0; } } } else if
+		 * ((int) value == -5) { scores[questionNum][i] = 0; if (((scores[questionNum][i
+		 * - 6] != 10)) && ((scores[questionNum][i - 6] != 0.0001)) &&
+		 * (scores[questionNum][i - 6] != 15)) { scores[questionNum][i - 6] = 0; if
+		 * ((scores[questionNum][playerNum - 6] != 10) && (scores[questionNum][playerNum
+		 * - 6] != 0.0001) && (scores[questionNum][playerNum - 6] != 15)) {
+		 * scores[questionNum][playerNum - 6] = 0; } } } else { scores[questionNum][i] =
+		 * 0; } } } }
+		 */
 		scores[questionNum][playerNum] = value;
 	}
 
@@ -248,6 +313,7 @@ public class screen1 extends JFrame {
 		answeredB = false;
 		label2.setText(teamAName.toUpperCase() + ": " + scoresA);
 		label3.setText(teamBName.toUpperCase() + ": " + scoresB);
+		neg = false;
 	}
 
 	public void bonusDone(JLabel ttBP, JLabel thtBP) {
@@ -601,7 +667,7 @@ public class screen1 extends JFrame {
 		lblTBScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTBScore.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-		RoundID round = new RoundID("", "", "", "", "");
+		RoundID round = new RoundID("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", scores);
 		JButton buttonTNBack = new JButton("<-- BACK");
 		buttonTNBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -672,23 +738,29 @@ public class screen1 extends JFrame {
 		});
 		btnAnsN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				add_score(-5);
-				update_score();
-				if (!answeredA && !answeredB) {
-					if (playerNum >= 0 && playerNum <= 5) {
-						answeredA = true;
-					} else if (playerNum >= 6 && playerNum <= 11) {
-						answeredB = true;
+				if (!neg) {
+					add_score(-5);
+					update_score();
+					if (!answeredA && !answeredB) {
+						if (playerNum >= 0 && playerNum <= 5) {
+							answeredA = true;
+						} else if (playerNum >= 6 && playerNum <= 11) {
+							answeredB = true;
+						}
+					} else if ((answeredA && !answeredB) || (!answeredA && answeredB)) {
+						answeredA = false;
+						answeredB = false;
+						nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
 					}
-				} else if ((answeredA && !answeredB) || (!answeredA && answeredB)) {
-					answeredA = false;
-					answeredB = false;
-					nextQuestion(lblQNumber, menuBar_scoreScreen, btnFinish, lblTAScore, lblTBScore);
+					answeredNext();
+					lblTAScore.setText(teamAName.toUpperCase() + ": " + scoresA);
+					lblTBScore.setText(teamBName.toUpperCase() + ": " + scoresB);
+				} else if (neg) {
+					JOptionPane.showMessageDialog(contentPane, "The other team has already negged");
 				}
-				answeredNext();
-				lblTAScore.setText(teamAName.toUpperCase() + ": " + scoresA);
-				lblTBScore.setText(teamBName.toUpperCase() + ": " + scoresB);
+				neg = true;
 			}
+
 		});
 		btnAnsP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2507,6 +2579,152 @@ public class screen1 extends JFrame {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
 				c.show(contentPane, "qP");
 				menuBar_scoreScreen.show();
+			}
+		});
+
+		btnFinish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				round.a1Name = btnPPA1.getText();
+				round.a2Name = btnPPA2.getText();
+				round.a3Name = btnPPA3.getText();
+				round.a4Name = btnPPA4.getText();
+				round.a5Name = btnPPA5.getText();
+				round.a6Name = btnPPA6.getText();
+				round.b1Name = btnPPB1.getText();
+				round.b2Name = btnPPB2.getText();
+				round.b3Name = btnPPB3.getText();
+				round.b4Name = btnPPB4.getText();
+				round.b5Name = btnPPB5.getText();
+				round.b6Name = btnPPB6.getText();
+				round.rteamAName = teamAName;
+				round.rteamBName = teamBName;
+				round.rscores = scores;
+				FileOutputStream out;
+				@SuppressWarnings("resource")
+				Workbook wb = new HSSFWorkbook();
+				Sheet s = wb.createSheet("scoresheet_round-" + round.rrnumber + "_room-" + round.rroom + ".xls");
+				Row r = null;
+				Cell c = null;
+				for (short i = (short) 0; i < 39; i++) {
+					r = s.createRow(i);
+					for (short j = (short) 0; j < 22; j++) {
+						c = r.createCell(j);
+						if (i == 0 && j == 0) {
+							c.setCellValue("Scoresheet");
+						}
+						// SETTING TITLES
+						if (i == 2 && j == 0) {
+							c.setCellValue("Room #");
+						}
+						if (i == 2 && j == 1) {
+							c.setCellValue("Moderator");
+						}
+						if (i == 2 && j == 2) {
+							c.setCellValue("Round #");
+						}
+						if (i == 2 && j == 3) {
+							c.setCellValue("Packet");
+						}
+						if (i == 2 && j == 4) {
+							c.setCellValue("Scorekeeper");
+						}
+						// SETTING ROOM INFO
+						if (i == 3 && j == 0) {
+							c.setCellValue(round.rroom);
+						}
+						if (i == 3 && j == 1) {
+							c.setCellValue(round.rmod);
+						}
+						if (i == 3 && j == 2) {
+							c.setCellValue(round.rrnumber);
+						}
+						if (i == 3 && j == 3) {
+							c.setCellValue(round.rpacket);
+						}
+						if (i == 3 && j == 4) {
+							c.setCellValue(round.rskeep);
+						}
+						// SETTING TEAM LABELS
+						if (i == 5 && j == 1) {
+							c.setCellValue("TEAM A");
+						}
+						if (i == 5 && j == 12) {
+							c.setCellValue("TEAM B");
+						}
+						if (i == 6 && j == 1) {
+							c.setCellValue(round.rteamAName);
+						}
+						if (i == 6 && j == 12) {
+							c.setCellValue(round.rteamBName);
+						}
+						if (i == 7 && j == 0) {
+							c.setCellValue("PLAYERS");
+						}
+						if (i == 7 && j >=1 && j <=6) {
+							c.setCellValue("TeamA P" + j);
+						}
+						if (i == 7 && j >=12 && j <=17) {
+							c.setCellValue("TeamB P" + (j-11));
+						}
+						if (i == 8 && j == 1) {
+							c.setCellValue(round.a1Name);
+						}
+						if (i == 8 && j == 2) {
+							c.setCellValue(round.a2Name);
+						}
+						if (i == 8 && j == 3) {
+							c.setCellValue(round.a3Name);
+						}
+						if (i == 8 && j == 4) {
+							c.setCellValue(round.a4Name);
+						}
+						if (i == 8 && j == 5) {
+							c.setCellValue(round.a5Name);
+						}
+						if (i == 8 && j == 6) {
+							c.setCellValue(round.a6Name);
+						}
+						if (i == 8 && j == 12) {
+							c.setCellValue(round.b1Name);
+						}
+						if (i == 8 && j == 13) {
+							c.setCellValue(round.b2Name);
+						}
+						if (i == 8 && j == 14) {
+							c.setCellValue(round.b3Name);
+						}
+						if (i == 8 && j == 15) {
+							c.setCellValue(round.b4Name);
+						}
+						if (i == 8 && j == 16) {
+							c.setCellValue(round.b5Name);
+						}
+						if (i == 8 && j == 17) {
+							c.setCellValue(round.b6Name);
+						}
+						
+						//SCORES
+						if (i >= 9 && i <= 28 && j >= 1 && j <= 6) {
+							c.setCellValue(scores[i - 9][j - 1]);
+						}
+						if (i >= 9 && i <= 28 && j >= 12 && j <= 17) {
+							c.setCellValue(scores[i - 9][j - 6]);
+						}
+						if (i >=9 && i <= 28 && j == 0) {
+							c.setCellValue("Q" + (i-8));
+						}
+					}
+
+				}
+
+				try {
+					out = new FileOutputStream("target/scoresheets_room-" + round.rroom + ".xls");
+					wb.write(out);
+					out.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
