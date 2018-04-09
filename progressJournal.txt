@@ -168,3 +168,8 @@ April 8, 2018 ~5 hours
 			*I spent 3 hours on a bug that should've taken me 3 minutes.  At least now I've reviewed a bit on boolean operators from my digital electronics class?
 	*After messing with jxls fruitlessly for a few hours I figured that I can't use it without a major overhaul to how everything is structured -- so I'm trying Apache's HSSF instead
 		*I may revert the project back from a Maven project, if that's possible, or at least remove the jxls dependencies to reduce filesize
+April 9, 2018 ~3 hours
+	*Finished export function
+	*Added tiebreaker logic
+	*Apparently I need Maven for the poi.apache libraries, but I still removed the jxls libraries to conserve space (the applet was ~14 MB with them)
+	*Removed the Save and Load input in the room setup screen, as they were redundant or practically useless.
