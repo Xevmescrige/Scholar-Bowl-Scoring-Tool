@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 //import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class screen2 extends JFrame {
 
@@ -54,7 +55,7 @@ public class screen2 extends JFrame {
 		for (int i = 3; i < 23; i++) {
 			l[i][0].setText("Q" + (i - 2));
 		}
-		l[1][2].setText(screen1.teamAName);
+		l[1][1].setText(screen1.teamAName);
 		l[1][11].setText(screen1.teamBName);
 		l[2][1].setText(screen1.Players[0]);
 		l[2][2].setText(screen1.Players[1]);
@@ -152,6 +153,15 @@ public class screen2 extends JFrame {
 
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridLayout(33, 19));
+		JButton refreshBtn = new JButton("REFRESH");
+		refreshBtn.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		refreshBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				drawLabels(labels);
+				updateLabels(labels, screen1.scores);
+			}
+		});
+		contentPane.add(refreshBtn);
 		setContentPane(contentPane);
 		drawLabels(labels);
 		updateLabels(labels, screen1.scores);
@@ -161,14 +171,7 @@ public class screen2 extends JFrame {
 				contentPane.add(labels[i][j]);
 			}
 		}
-		JButton refreshBtn = new JButton("REFRESH");
-		refreshBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				drawLabels(labels);
-				updateLabels(labels, screen1.scores);
-			}
-		});
-		contentPane.add(refreshBtn);
+		
 		pack();
 
 	}
