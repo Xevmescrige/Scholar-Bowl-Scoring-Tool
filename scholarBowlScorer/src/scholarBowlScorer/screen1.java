@@ -28,7 +28,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.awt.event.ActionEvent;
@@ -72,7 +72,8 @@ public class screen1 extends JFrame {
 	public static String[] Players = new String[12];
 	public static double[][] bonusArray = new double[21][4]; // column 0-1 for team A, 2-3 for B -- 0, 2 are bonus, 1,3
 																// are
-	// rebound
+																// rebound
+	public ArrayList<Integer> protestList = new ArrayList<Integer>();
 	public boolean Ap5 = false;
 	public boolean Bp5 = false;
 	public boolean Ap6 = false;
@@ -340,7 +341,7 @@ public class screen1 extends JFrame {
 	 */
 	public screen1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 480);
+		setBounds(100, 100, 1000, 750);
 
 		contentPane = new JPanel();
 		JMenuBar menuBar_setname = new JMenuBar();
@@ -643,7 +644,6 @@ public class screen1 extends JFrame {
 		JLabel lblScorekeeper = new JLabel("SCOREKEEPER:");
 		tfScoreKeeper = new JTextField();
 
-
 		JButton btnNext = new JButton("NEXT -->");
 		JButton btnSBack = new JButton("<-- BACK TO SETUP");
 		JButton btnPQ = new JButton("<-- PREVIOUS QUESTION");
@@ -702,41 +702,41 @@ public class screen1 extends JFrame {
 
 		btnAnsC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(questionNum == 20) {
-					if(btnPPA1.getParent() != null) {
+				if (questionNum == 20) {
+					if (btnPPA1.getParent() != null) {
 						scores[questionNum][0] = 0;
 					}
-					if(btnPPA2.getParent() != null) {
+					if (btnPPA2.getParent() != null) {
 						scores[questionNum][1] = 0;
 					}
-					if(btnPPA3.getParent() != null) {
+					if (btnPPA3.getParent() != null) {
 						scores[questionNum][2] = 0;
 					}
-					if(btnPPA4.getParent() != null) {
+					if (btnPPA4.getParent() != null) {
 						scores[questionNum][3] = 0;
 					}
-					if(btnPPA5.getParent() != null) {
+					if (btnPPA5.getParent() != null) {
 						scores[questionNum][4] = 0;
 					}
-					if(btnPPA6.getParent() != null) {
+					if (btnPPA6.getParent() != null) {
 						scores[questionNum][5] = 0;
 					}
-					if(btnPPB1.getParent() != null) {
+					if (btnPPB1.getParent() != null) {
 						scores[questionNum][6] = 0;
 					}
-					if(btnPPB2.getParent() != null) {
+					if (btnPPB2.getParent() != null) {
 						scores[questionNum][7] = 0;
 					}
-					if(btnPPB3.getParent() != null) {
+					if (btnPPB3.getParent() != null) {
 						scores[questionNum][8] = 0;
 					}
-					if(btnPPB4.getParent() != null) {
+					if (btnPPB4.getParent() != null) {
 						scores[questionNum][9] = 0;
 					}
-					if(btnPPB5.getParent() != null) {
+					if (btnPPB5.getParent() != null) {
 						scores[questionNum][10] = 0;
 					}
-					if(btnPPB6.getParent() != null) {
+					if (btnPPB6.getParent() != null) {
 						scores[questionNum][11] = 0;
 					}
 				}
@@ -751,41 +751,41 @@ public class screen1 extends JFrame {
 		});
 		btnAnsI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(questionNum == 20) {
-					if(btnPPA1.getParent() != null) {
+				if (questionNum == 20) {
+					if (btnPPA1.getParent() != null) {
 						scores[questionNum][0] = 0;
 					}
-					if(btnPPA2.getParent() != null) {
+					if (btnPPA2.getParent() != null) {
 						scores[questionNum][1] = 0;
 					}
-					if(btnPPA3.getParent() != null) {
+					if (btnPPA3.getParent() != null) {
 						scores[questionNum][2] = 0;
 					}
-					if(btnPPA4.getParent() != null) {
+					if (btnPPA4.getParent() != null) {
 						scores[questionNum][3] = 0;
 					}
-					if(btnPPA5.getParent() != null) {
+					if (btnPPA5.getParent() != null) {
 						scores[questionNum][4] = 0;
 					}
-					if(btnPPA6.getParent() != null) {
+					if (btnPPA6.getParent() != null) {
 						scores[questionNum][5] = 0;
 					}
-					if(btnPPB1.getParent() != null) {
+					if (btnPPB1.getParent() != null) {
 						scores[questionNum][6] = 0;
 					}
-					if(btnPPB2.getParent() != null) {
+					if (btnPPB2.getParent() != null) {
 						scores[questionNum][7] = 0;
 					}
-					if(btnPPB3.getParent() != null) {
+					if (btnPPB3.getParent() != null) {
 						scores[questionNum][8] = 0;
 					}
-					if(btnPPB4.getParent() != null) {
+					if (btnPPB4.getParent() != null) {
 						scores[questionNum][9] = 0;
 					}
-					if(btnPPB5.getParent() != null) {
+					if (btnPPB5.getParent() != null) {
 						scores[questionNum][10] = 0;
 					}
-					if(btnPPB6.getParent() != null) {
+					if (btnPPB6.getParent() != null) {
 						scores[questionNum][11] = 0;
 					}
 				}
@@ -808,41 +808,41 @@ public class screen1 extends JFrame {
 		btnAnsN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!neg) {
-					if(questionNum == 20) {
-						if(btnPPA1.getParent() != null) {
+					if (questionNum == 20) {
+						if (btnPPA1.getParent() != null) {
 							scores[questionNum][0] = 0;
 						}
-						if(btnPPA2.getParent() != null) {
+						if (btnPPA2.getParent() != null) {
 							scores[questionNum][1] = 0;
 						}
-						if(btnPPA3.getParent() != null) {
+						if (btnPPA3.getParent() != null) {
 							scores[questionNum][2] = 0;
 						}
-						if(btnPPA4.getParent() != null) {
+						if (btnPPA4.getParent() != null) {
 							scores[questionNum][3] = 0;
 						}
-						if(btnPPA5.getParent() != null) {
+						if (btnPPA5.getParent() != null) {
 							scores[questionNum][4] = 0;
 						}
-						if(btnPPA6.getParent() != null) {
+						if (btnPPA6.getParent() != null) {
 							scores[questionNum][5] = 0;
 						}
-						if(btnPPB1.getParent() != null) {
+						if (btnPPB1.getParent() != null) {
 							scores[questionNum][6] = 0;
 						}
-						if(btnPPB2.getParent() != null) {
+						if (btnPPB2.getParent() != null) {
 							scores[questionNum][7] = 0;
 						}
-						if(btnPPB3.getParent() != null) {
+						if (btnPPB3.getParent() != null) {
 							scores[questionNum][8] = 0;
 						}
-						if(btnPPB4.getParent() != null) {
+						if (btnPPB4.getParent() != null) {
 							scores[questionNum][9] = 0;
 						}
-						if(btnPPB5.getParent() != null) {
+						if (btnPPB5.getParent() != null) {
 							scores[questionNum][10] = 0;
 						}
-						if(btnPPB6.getParent() != null) {
+						if (btnPPB6.getParent() != null) {
 							scores[questionNum][11] = 0;
 						}
 					}
@@ -871,41 +871,41 @@ public class screen1 extends JFrame {
 		});
 		btnAnsP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(questionNum == 20) {
-					if(btnPPA1.getParent() != null) {
+				if (questionNum == 20) {
+					if (btnPPA1.getParent() != null) {
 						scores[questionNum][0] = 0;
 					}
-					if(btnPPA2.getParent() != null) {
+					if (btnPPA2.getParent() != null) {
 						scores[questionNum][1] = 0;
 					}
-					if(btnPPA3.getParent() != null) {
+					if (btnPPA3.getParent() != null) {
 						scores[questionNum][2] = 0;
 					}
-					if(btnPPA4.getParent() != null) {
+					if (btnPPA4.getParent() != null) {
 						scores[questionNum][3] = 0;
 					}
-					if(btnPPA5.getParent() != null) {
+					if (btnPPA5.getParent() != null) {
 						scores[questionNum][4] = 0;
 					}
-					if(btnPPA6.getParent() != null) {
+					if (btnPPA6.getParent() != null) {
 						scores[questionNum][5] = 0;
 					}
-					if(btnPPB1.getParent() != null) {
+					if (btnPPB1.getParent() != null) {
 						scores[questionNum][6] = 0;
 					}
-					if(btnPPB2.getParent() != null) {
+					if (btnPPB2.getParent() != null) {
 						scores[questionNum][7] = 0;
 					}
-					if(btnPPB3.getParent() != null) {
+					if (btnPPB3.getParent() != null) {
 						scores[questionNum][8] = 0;
 					}
-					if(btnPPB4.getParent() != null) {
+					if (btnPPB4.getParent() != null) {
 						scores[questionNum][9] = 0;
 					}
-					if(btnPPB5.getParent() != null) {
+					if (btnPPB5.getParent() != null) {
 						scores[questionNum][10] = 0;
 					}
-					if(btnPPB6.getParent() != null) {
+					if (btnPPB6.getParent() != null) {
 						scores[questionNum][11] = 0;
 					}
 				}
@@ -1296,7 +1296,6 @@ public class screen1 extends JFrame {
 				}
 			}
 		});
-
 
 		htCont.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2702,7 +2701,23 @@ public class screen1 extends JFrame {
 			}
 		});
 
+		JButton btnProtest = new JButton("PROTEST");
+		menuBar_scoreScreen.add(btnProtest);
+		btnProtest.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(contentPane,
+						"You currently have protests on questions "
+						+ protestList + ".  Would you like to protest this question?",
+						"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					protestList.add(questionNum + 1);
+					System.out.println(protestList);
+				}
+			}
+		});
+
 		htBack.addActionListener(new ActionListener() {
+
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				CardLayout c = (CardLayout) (contentPane.getLayout());
@@ -2841,7 +2856,7 @@ public class screen1 extends JFrame {
 						if (i >= 9 && i <= 29 && j >= 12 && j <= 17) {
 							c.setCellValue(scores[i - 9][j - 6]);
 						}
-						
+
 						if (i == 7 && (j == 7 || j == 18)) {
 							c.setCellValue("BONUS");
 						}
@@ -2894,452 +2909,452 @@ public class screen1 extends JFrame {
 						if (i == 29 && j == 0) {
 							c.setCellValue("TIEBREAKER");
 						}
-						//QUESTIONS ANSWERED
-						if (i == 30 && (j == 0||j == 11)) {
+						// QUESTIONS ANSWERED
+						if (i == 30 && (j == 0 || j == 11)) {
 							c.setCellValue("QUESTIONS ANSWERED");
 						}
-						if (i == 31 && (j == 0||j == 11)) {
+						if (i == 31 && (j == 0 || j == 11)) {
 							c.setCellValue("10");
 						}
-						if (i == 32 && (j == 0||j == 11)) {
+						if (i == 32 && (j == 0 || j == 11)) {
 							c.setCellValue("15");
 						}
-						if (i == 33 && (j == 0||j == 11)) {
+						if (i == 33 && (j == 0 || j == 11)) {
 							c.setCellValue("-5");
 						}
-						if (i == 34 && (j == 0||j == 11)) {
+						if (i == 34 && (j == 0 || j == 11)) {
 							c.setCellValue("0");
 						}
-						if (i == 35 && (j == 0||j == 11)) {
+						if (i == 35 && (j == 0 || j == 11)) {
 							c.setCellValue("ROUNDS PLAYED");
 						}
-						if (i == 35 && (j == 7||j == 18)) {
+						if (i == 35 && (j == 7 || j == 18)) {
 							c.setCellValue("BONUSES EARNED");
 						}
-						if (i == 35 && (j == 8||j == 19)) {
+						if (i == 35 && (j == 8 || j == 19)) {
 							c.setCellValue("REBOUND TOTAL");
 						}
-						if (i == 36 && (j == 0||j == 11)) {
+						if (i == 36 && (j == 0 || j == 11)) {
 							c.setCellValue("PLAYER TOTALS");
 						}
-						if (i == 37 && (j == 7||j == 18)) {
+						if (i == 37 && (j == 7 || j == 18)) {
 							c.setCellValue("TOTAL BONUS");
 						}
-						if (i == 38 && (j == 0||j == 11)) {
+						if (i == 38 && (j == 0 || j == 11)) {
 							c.setCellValue("TOTAL");
 						}
-						
-						if (i ==31 && j == 1) {
+
+						if (i == 31 && j == 1) {
 							String strFormula = "COUNTIF(B10:B30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 1) {
+						if (i == 32 && j == 1) {
 							String strFormula = "COUNTIF(B10:B30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 1) {
+						if (i == 33 && j == 1) {
 							String strFormula = "COUNTIF(B10:B30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 1) {
+						if (i == 34 && j == 1) {
 							String strFormula = "COUNTIF(B10:B30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 1) {
+						if (i == 35 && j == 1) {
 							String strFormula = "21 - COUNTIF(B10:B30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 1) {
+						if (i == 36 && j == 1) {
 							String strFormula = "FLOOR(SUM(B10:B30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 2) {
+
+						if (i == 31 && j == 2) {
 							String strFormula = "COUNTIF(C10:C30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 2) {
+						if (i == 32 && j == 2) {
 							String strFormula = "COUNTIF(C10:C30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 2) {
+						if (i == 33 && j == 2) {
 							String strFormula = "COUNTIF(C10:C30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 2) {
+						if (i == 34 && j == 2) {
 							String strFormula = "COUNTIF(C10:C30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 2) {
+						if (i == 35 && j == 2) {
 							String strFormula = "21 - COUNTIF(C10:C30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 2) {
+						if (i == 36 && j == 2) {
 							String strFormula = "FLOOR(SUM(C10:C30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 3) {
+
+						if (i == 31 && j == 3) {
 							String strFormula = "COUNTIF(D10:D30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 3) {
+						if (i == 32 && j == 3) {
 							String strFormula = "COUNTIF(D10:D30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 3) {
+						if (i == 33 && j == 3) {
 							String strFormula = "COUNTIF(D10:D30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 3) {
+						if (i == 34 && j == 3) {
 							String strFormula = "COUNTIF(D10:D30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 3) {
+						if (i == 35 && j == 3) {
 							String strFormula = "21 - COUNTIF(D10:D30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 3) {
+						if (i == 36 && j == 3) {
 							String strFormula = "FLOOR(SUM(D10:D30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 4) {
+
+						if (i == 31 && j == 4) {
 							String strFormula = "COUNTIF(E10:E30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 4) {
+						if (i == 32 && j == 4) {
 							String strFormula = "COUNTIF(E10:E30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 4) {
+						if (i == 33 && j == 4) {
 							String strFormula = "COUNTIF(E10:E30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 4) {
+						if (i == 34 && j == 4) {
 							String strFormula = "COUNTIF(E10:E30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 4) {
+						if (i == 35 && j == 4) {
 							String strFormula = "21 - COUNTIF(E10:E30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 4) {
+						if (i == 36 && j == 4) {
 							String strFormula = "FLOOR(SUM(E10:E30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 5) {
+
+						if (i == 31 && j == 5) {
 							String strFormula = "COUNTIF(F10:F30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 5) {
+						if (i == 32 && j == 5) {
 							String strFormula = "COUNTIF(F10:F30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 5) {
+						if (i == 33 && j == 5) {
 							String strFormula = "COUNTIF(F10:F30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 5) {
+						if (i == 34 && j == 5) {
 							String strFormula = "COUNTIF(F10:F30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 5) {
+						if (i == 35 && j == 5) {
 							String strFormula = "21 - COUNTIF(F10:F30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 5) {
+						if (i == 36 && j == 5) {
 							String strFormula = "FLOOR(SUM(F10:F30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 6) {
+
+						if (i == 31 && j == 6) {
 							String strFormula = "COUNTIF(G10:G30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 6) {
+						if (i == 32 && j == 6) {
 							String strFormula = "COUNTIF(G10:G30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 6) {
+						if (i == 33 && j == 6) {
 							String strFormula = "COUNTIF(G10:G30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 6) {
+						if (i == 34 && j == 6) {
 							String strFormula = "COUNTIF(G10:G30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 6) {
+						if (i == 35 && j == 6) {
 							String strFormula = "21 - COUNTIF(G10:G30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 6) {
+						if (i == 36 && j == 6) {
 							String strFormula = "FLOOR(SUM(G10:G30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
 						////
-						if (i ==31 && j == 12) {
+						if (i == 31 && j == 12) {
 							String strFormula = "COUNTIF(M10:M30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 12) {
+						if (i == 32 && j == 12) {
 							String strFormula = "COUNTIF(M10:M30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 12) {
+						if (i == 33 && j == 12) {
 							String strFormula = "COUNTIF(M10:M30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 12) {
+						if (i == 34 && j == 12) {
 							String strFormula = "COUNTIF(M10:M30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 12) {
+						if (i == 35 && j == 12) {
 							String strFormula = "21 - COUNTIF(M10:M30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 12) {
+						if (i == 36 && j == 12) {
 							String strFormula = "FLOOR(SUM(M10:M30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 13) {
+
+						if (i == 31 && j == 13) {
 							String strFormula = "COUNTIF(N10:N30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 13) {
+						if (i == 32 && j == 13) {
 							String strFormula = "COUNTIF(N10:N30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 13) {
+						if (i == 33 && j == 13) {
 							String strFormula = "COUNTIF(N10:N30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 13) {
+						if (i == 34 && j == 13) {
 							String strFormula = "COUNTIF(N10:N30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 13) {
+						if (i == 35 && j == 13) {
 							String strFormula = "21 - COUNTIF(N10:N30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 13) {
+						if (i == 36 && j == 13) {
 							String strFormula = "FLOOR(SUM(N10:N30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 14) {
+
+						if (i == 31 && j == 14) {
 							String strFormula = "COUNTIF(O10:O30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 14) {
+						if (i == 32 && j == 14) {
 							String strFormula = "COUNTIF(O10:O30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 14) {
+						if (i == 33 && j == 14) {
 							String strFormula = "COUNTIF(O10:O30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 14) {
+						if (i == 34 && j == 14) {
 							String strFormula = "COUNTIF(O10:O30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 14) {
+						if (i == 35 && j == 14) {
 							String strFormula = "21 - COUNTIF(O10:O30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 14) {
+						if (i == 36 && j == 14) {
 							String strFormula = "FLOOR(SUM(O10:O30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 15) {
+
+						if (i == 31 && j == 15) {
 							String strFormula = "COUNTIF(P10:P30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 15) {
+						if (i == 32 && j == 15) {
 							String strFormula = "COUNTIF(P10:P30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 15) {
+						if (i == 33 && j == 15) {
 							String strFormula = "COUNTIF(P10:P30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 15) {
+						if (i == 34 && j == 15) {
 							String strFormula = "COUNTIF(P10:P30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 15) {
+						if (i == 35 && j == 15) {
 							String strFormula = "21 - COUNTIF(P10:P30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 15) {
+						if (i == 36 && j == 15) {
 							String strFormula = "FLOOR(SUM(P10:P30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 16) {
+
+						if (i == 31 && j == 16) {
 							String strFormula = "COUNTIF(Q10:Q30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 16) {
+						if (i == 32 && j == 16) {
 							String strFormula = "COUNTIF(Q10:Q30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 16) {
+						if (i == 33 && j == 16) {
 							String strFormula = "COUNTIF(Q10:Q30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 16) {
+						if (i == 34 && j == 16) {
 							String strFormula = "COUNTIF(Q10:Q30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 16) {
+						if (i == 35 && j == 16) {
 							String strFormula = "21 - COUNTIF(Q10:Q30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 16) {
+						if (i == 36 && j == 16) {
 							String strFormula = "FLOOR(SUM(Q10:Q30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==31 && j == 17) {
+
+						if (i == 31 && j == 17) {
 							String strFormula = "COUNTIF(R10:R30, 10)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==32 && j == 17) {
+						if (i == 32 && j == 17) {
 							String strFormula = "COUNTIF(R10:R30, 15)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==33 && j == 17) {
+						if (i == 33 && j == 17) {
 							String strFormula = "COUNTIF(R10:R30, -5)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==34 && j == 17) {
+						if (i == 34 && j == 17) {
 							String strFormula = "COUNTIF(R10:R30, 0.0001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==35 && j == 17) {
+						if (i == 35 && j == 17) {
 							String strFormula = "21 - COUNTIF(R10:R30, 0.001)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 17) {
+						if (i == 36 && j == 17) {
 							String strFormula = "FLOOR(SUM(R10:R30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==38 && j == 2) {
+
+						if (i == 38 && j == 2) {
 							String strFormula = "SUM(B37:G37)+I38";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==38 && j == 13) {
+
+						if (i == 38 && j == 13) {
 							String strFormula = "SUM(M37:R37)+T38";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==36 && j == 7) {
+
+						if (i == 36 && j == 7) {
 							String strFormula = "FLOOR(SUM(H10:H30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 8) {
+						if (i == 36 && j == 8) {
 							String strFormula = "FLOOR(SUM(I10:I30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==37 && j == 8) {
+						if (i == 37 && j == 8) {
 							String strFormula = "SUM(H37:I37)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						
-						if (i ==36 && j == 18) {
+
+						if (i == 36 && j == 18) {
 							String strFormula = "FLOOR(SUM(S10:S30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==36 && j == 19) {
+						if (i == 36 && j == 19) {
 							String strFormula = "FLOOR(SUM(T10:T30), 1)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
 						}
-						if (i ==37 && j == 19) {
+						if (i == 37 && j == 19) {
 							String strFormula = "SUM(S37:T37)";
 							c.setCellType(HSSFCell.CELL_TYPE_FORMULA);
 							c.setCellFormula(strFormula);
@@ -3351,10 +3366,13 @@ public class screen1 extends JFrame {
 				try {
 					File dir = new File("game_results_scoresheets");
 					dir.mkdir();
-					out = new FileOutputStream("game_results_scoresheets/scoresheets_room-" + round.rroom + "_round-" + round.rrnumber + ".xls");
+					out = new FileOutputStream("game_results_scoresheets/scoresheets_room-" + round.rroom + "_round-"
+							+ round.rrnumber + ".xls");
 					wb.write(out);
 					out.close();
-					JOptionPane.showMessageDialog(contentPane, "Success!  File " + "game_results_scoresheets/scoresheets_room-" + round.rroom + "_round-" + round.rrnumber + ".xls has been exported to folder game_results_scoresheets.");
+					JOptionPane.showMessageDialog(contentPane,
+							"Success!  File " + "game_results_scoresheets/scoresheets_room-" + round.rroom + "_round-"
+									+ round.rrnumber + ".xls has been exported to folder game_results_scoresheets.");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
