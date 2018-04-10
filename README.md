@@ -69,9 +69,27 @@ This screen's buttons:
 ```
 [SCOREBOARD] - Brings up the scoreboard
 [<-- BACK] - Takes the scorekeeper back to the question screen
+[CONTINUE -->] - If timeout: returns to question panel; If halftime: proceeds to next question
+[<PLAYERNAME>] - Substitution buttons
+```
+The halftime screen will appear after question 10. 
 
+Clicking on a player's name while in the timeout/halftime screen will sub them out for a new player.  If a fifth or sixth player haven't been added, the scorekeeper will be prompted on whether or not they want to add a fifth/sixth player.  If they do not wish to add a player, a dropdown menu will appear with the existing players' names.  DO NOT ADD PLAYERS THAT ARE ALREADY IN THE GAME - THIS WILL REMOVE A PLAYER AND IS NOT WORKING AS INTENDED
+
+### End Round
+Ending the round will generate a scoresheet.  Once this is done and you have gone over protests, you may exit the program and relaunch it for a new round.
 
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [POI-HSSF](https://poi.apache.org/spreadsheet/) - Apache's framework to access Microsoft's .xls files
+
+## Authors
+
+* **Viet Nguyen** - *Initial work* - [Xevmescrige](https://github.com/Xevmescrige)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the GPL-3.0 - see the [LICENSE.md](LICENSE.md) file for details
