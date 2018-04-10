@@ -2707,11 +2707,15 @@ public class screen1 extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				if (JOptionPane.showConfirmDialog(contentPane,
-						"You currently have protests on questions "
-						+ protestList + ".  Would you like to protest this question?",
+						"You currently have protests on questions " + protestList
+								+ ".  Would you like to protest this question?",
 						"Question", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					protestList.add(questionNum + 1);
-					System.out.println(protestList);
+					if (protestList.contains(questionNum + 1)) {
+						JOptionPane.showMessageDialog(contentPane, "You have already protested this question.");
+					} else {
+						protestList.add(questionNum + 1);
+						System.out.println(protestList);
+					}
 				}
 			}
 		});
