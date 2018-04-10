@@ -52,10 +52,12 @@ On this screen's menubar, you should see:
 [PROTEST] - This button will bring up a dialog prompting you about protests
 ```
 On the screen itself, there are buttons corresponding to each player.  When a player buzzes in, click the button corresponding to their name.
-If the question goes dead (if either zero or one team answers), click the
+If the question goes dead (if either zero or one team answers), click the  
 [NEXT QUESTION -->] button.
-//////////TO BE CONTINUED
+
 However, if both teams answer incorrectly, the tool will automatically progress to the next question.
+
+If you find that you have made an error in a question, you may click the [<-- PREVIOUS QUESTION] button until you've returned to the erroneous question and make the adjustment.  A correct or power answer will override any other correct/powers in for that question, and a neg will override any negs for that question.  Any answer will override all other values for that question for the answering team. For example, if Team A's player 3 has answered incorrectly (no neg), and you correct it so that Team A's player 1 powered, Team A player 3 will no longer have that incorrect mark and any other correct/powers for that question will be overridden.
 
 ## Built With
 
