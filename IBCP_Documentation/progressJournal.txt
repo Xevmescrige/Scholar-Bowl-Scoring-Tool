@@ -173,3 +173,7 @@ April 9, 2018 ~3 hours
 	*Added tiebreaker logic
 	*Apparently I need Maven for the poi.apache libraries, but I still removed the jxls libraries to conserve space (the applet was ~14 MB with them)
 	*Removed the Save and Load input in the room setup screen, as they were redundant or practically useless.
+April 10, 2018 ~2 hours
+	*Add failsafes to substitution logic
+	*Fixed visual bug with scorescreen
+	*Added README.md 
