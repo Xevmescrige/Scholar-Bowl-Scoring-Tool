@@ -94,3 +94,11 @@ See also the list of [contributors](https://github.com/your/project/contributors
 ## License
 
 This project is licensed under the GPL-3.0 - see the [LICENSE.md](https://github.com/Xevmescrige/Scholar-Bowl-Scoring-Tool/blob/master/LICENSE) file for details
+
+## Acknowedgements
+
+* L. McKenzie
+* P. O'Keefe
+* J. Hill
+* B. Ritter
+
