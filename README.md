@@ -75,7 +75,7 @@ This screen's buttons:
 ```
 The halftime screen will appear after question 10. 
 
-Clicking on a player's name while in the timeout/halftime screen will sub them out for a new player.  If a fifth or sixth player haven't been added, the scorekeeper will be prompted on whether or not they want to add a fifth/sixth player.  If they do not wish to add a player, a dropdown menu will appear with the existing players' names.  DO NOT ADD PLAYERS THAT ARE ALREADY IN THE GAME - THIS WILL REMOVE A PLAYER AND IS NOT WORKING AS INTENDED
+Clicking on a player's name while in the timeout/halftime screen will sub them out for a new player.  If a fifth or sixth player haven't been added, the scorekeeper will be prompted on whether or not they want to add a fifth/sixth player.  If they do not wish to add a player, a dropdown menu will appear with the existing players' names. 
 
 ### End Round
 Ending the round will generate a scoresheet.  Once this is done and you have gone over protests, you may exit the program and relaunch it for a new round.
