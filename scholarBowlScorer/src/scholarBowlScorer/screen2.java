@@ -1,6 +1,5 @@
 package scholarBowlScorer;
 
-//import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -8,10 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-//import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.BoxLayout;
 
 public class screen2 extends JFrame {
 
@@ -152,23 +151,25 @@ public class screen2 extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		contentPane = new JPanel();
-		contentPane.setLayout(new GridLayout(33, 19));
+		JPanel scorePane = new JPanel(new GridLayout(33,19));
 		JButton refreshBtn = new JButton("REFRESH");
-		refreshBtn.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		refreshBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		refreshBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drawLabels(labels);
 				updateLabels(labels, screen1.scores);
 			}
 		});
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		contentPane.add(refreshBtn);
+		contentPane.add(scorePane);
 		setContentPane(contentPane);
 		drawLabels(labels);
 		updateLabels(labels, screen1.scores);
 		// showGUI(labels, contentPane);
 		for (int i = 0; i < labels.length; i++) {
 			for (int j = 0; j < labels[i].length; j++) {
-				contentPane.add(labels[i][j]);
+				scorePane.add(labels[i][j]);
 			}
 		}
 		

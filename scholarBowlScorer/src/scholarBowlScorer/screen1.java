@@ -30,7 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -82,6 +82,43 @@ public class screen1 extends JFrame {
 	public boolean answeredA = false;
 	public boolean answeredB = false;
 	public boolean neg = false;
+
+	public boolean active[] = new boolean[12];
+
+	public List<JButton> buttonList = new ArrayList<JButton>();
+
+	public void setPoss(Object[] p, JButton a1, JButton a2, JButton a3, JButton a4, JButton a5, JButton a6, JButton b1,
+			JButton b2, JButton b3, JButton b4, JButton b5, JButton b6, boolean tf) {
+		buttonList.clear();
+		buttonList.add(a1);
+		buttonList.add(a2);
+		buttonList.add(a3);
+		buttonList.add(a4);
+		buttonList.add(a5);
+		buttonList.add(a6);
+		buttonList.add(b1);
+		buttonList.add(b2);
+		buttonList.add(b3);
+		buttonList.add(b4);
+		buttonList.add(b5);
+		buttonList.add(b6);
+		int j = 0;
+		if (tf) {
+			for (int i = 0; i < 6; i++) {
+				if (!active[i]) {
+					p[j] = buttonList.get(i).getText();
+					j += 1;
+				}
+			}
+		} else if (!tf) {
+			for (int i = 6; i < 12; i++) {
+				if (!active[i]) {
+					p[j] = buttonList.get(i).getText();
+					j += 1;
+				}
+			}
+		}
+	}
 
 	public static void printArray(double mat[][]) {
 		for (double[] row : mat)
@@ -609,6 +646,27 @@ public class screen1 extends JFrame {
 		JButton btnPPB4 = new JButton("P4");
 		JButton btnPPB5 = new JButton("P5");
 		JButton btnPPB6 = new JButton("P6");
+		buttonList.add(btnPPA1);
+		buttonList.add(btnPPA2);
+		buttonList.add(btnPPA3);
+		buttonList.add(btnPPA4);
+		buttonList.add(btnPPA5);
+		buttonList.add(btnPPA6);
+		buttonList.add(btnPPB1);
+		buttonList.add(btnPPB2);
+		buttonList.add(btnPPB3);
+		buttonList.add(btnPPB4);
+		buttonList.add(btnPPB5);
+		buttonList.add(btnPPB6);
+
+		active[0] = true;
+		active[1] = true;
+		active[2] = true;
+		active[3] = true;
+		active[6] = true;
+		active[7] = true;
+		active[8] = true;
+		active[9] = true;
 
 		JLabel lblTeamA = new JLabel("TEAM A");
 		JLabel lblTeamB = new JLabel("TEAM B");
@@ -972,6 +1030,7 @@ public class screen1 extends JFrame {
 					btnPPA1.setText(APName);
 					htSubAbtn1.setText(APName);
 					Players[0] = APName;
+					active[0] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][0] = 0;
 					}
@@ -989,6 +1048,7 @@ public class screen1 extends JFrame {
 					btnPPA2.setText(APName);
 					htSubAbtn2.setText(APName);
 					Players[1] = APName;
+					active[1] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][1] = 0;
 					}
@@ -1005,6 +1065,7 @@ public class screen1 extends JFrame {
 					btnPPA3.setText(APName);
 					htSubAbtn3.setText(APName);
 					Players[2] = APName;
+					active[2] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][2] = 0;
 					}
@@ -1021,6 +1082,7 @@ public class screen1 extends JFrame {
 					btnPPA4.setText(APName);
 					htSubAbtn4.setText(APName);
 					Players[3] = APName;
+					active[3] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][3] = 0;
 					}
@@ -1055,6 +1117,7 @@ public class screen1 extends JFrame {
 					btnPPB1.setText(BPName);
 					htSubBbtn1.setText(BPName);
 					Players[6] = BPName;
+					active[6] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][6] = 0;
 					}
@@ -1071,6 +1134,7 @@ public class screen1 extends JFrame {
 					btnPPB2.setText(BPName);
 					htSubBbtn2.setText(BPName);
 					Players[7] = BPName;
+					active[7] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][7] = 0;
 					}
@@ -1087,6 +1151,7 @@ public class screen1 extends JFrame {
 					btnPPB3.setText(BPName);
 					htSubBbtn3.setText(BPName);
 					Players[8] = BPName;
+					active[8] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][8] = 0;
 					}
@@ -1103,6 +1168,7 @@ public class screen1 extends JFrame {
 					btnPPB4.setText(BPName);
 					htSubBbtn4.setText(BPName);
 					Players[9] = BPName;
+					active[9] = true;
 					for (int i = 0; i < 20; i++) {
 						scores[i][9] = 0;
 					}
@@ -1430,6 +1496,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA5);
 								Players[4] = APname;
 								Ap5 = true;
+								active[0] = false;
+								active[4] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][0] = 0.001;
@@ -1445,6 +1513,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA6);
 								Players[5] = APname;
 								Ap6 = true;
+								active[0] = false;
+								active[5] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][0] = 0.001;
@@ -1453,8 +1523,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-								btnPPA4.getText(), btnPPA5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 						String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 						replace_sub(htSubAbtn1, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
@@ -1465,36 +1536,49 @@ public class screen1 extends JFrame {
 								scores[i + 1][0] = 0.001;
 								scores[i + 1][0] = 0;
 							}
+							active[0] = false;
+							active[0] = true;
 						} else if (APName == btnPPA2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][0] = 0.001;
 								scores[i + 1][1] = 0;
 							}
+							active[0] = false;
+							active[1] = true;
 						} else if (APName == btnPPA3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][0] = 0.001;
 								scores[i + 1][2] = 0;
 							}
+							active[0] = false;
+							active[2] = true;
 						} else if (APName == btnPPA4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][0] = 0.001;
 								scores[i + 1][3] = 0;
 							}
+							active[0] = false;
+							active[3] = true;
 						} else if (APName == btnPPA5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][0] = 0.001;
 								scores[i + 1][4] = 0;
 							}
+							active[0] = false;
+							active[4] = true;
 						} else if (APName == btnPPA6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][0] = 0.001;
 								scores[i + 1][5] = 0;
 							}
+							active[0] = false;
+							active[5] = true;
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-							btnPPA4.getText(), btnPPA5.getText(), btnPPA6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 					String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn1, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
@@ -1503,31 +1587,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][0] = 0.001;
 							scores[i + 1][0] = 0;
+							active[0] = false;
+							active[0] = true;
 						}
 					} else if (APName == btnPPA2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][0] = 0.001;
 							scores[i + 1][1] = 0;
+							active[0] = false;
+							active[1] = true;
 						}
 					} else if (APName == btnPPA3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][0] = 0.001;
 							scores[i + 1][2] = 0;
+							active[0] = false;
+							active[2] = true;
 						}
 					} else if (APName == btnPPA4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][0] = 0.001;
 							scores[i + 1][3] = 0;
+							active[0] = false;
+							active[3] = true;
 						}
 					} else if (APName == btnPPA5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][0] = 0.001;
 							scores[i + 1][4] = 0;
+							active[0] = false;
+							active[4] = true;
 						}
 					} else if (APName == btnPPA6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][0] = 0.001;
 							scores[i + 1][5] = 0;
+							active[0] = false;
+							active[5] = true;
 						}
 					}
 				}
@@ -1554,6 +1650,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA5);
 								Players[4] = APname;
 								Ap5 = true;
+								active[1] = false;
+								active[4] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][1] = 0.001;
@@ -1569,6 +1667,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA6);
 								Players[5] = APname;
 								Ap6 = true;
+								active[1] = false;
+								active[5] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][1] = 0.001;
@@ -1577,8 +1677,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-								btnPPA4.getText(), btnPPA5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 						String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 						replace_sub(htSubAbtn2, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
@@ -1588,37 +1689,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][1] = 0.001;
 								scores[i + 1][0] = 0;
+								active[1] = false;
+								active[0] = true;
 							}
 						} else if (APName == btnPPA2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][1] = 0.001;
 								scores[i + 1][1] = 0;
+								active[1] = false;
+								active[1] = true;
 							}
 						} else if (APName == btnPPA3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][1] = 0.001;
 								scores[i + 1][2] = 0;
+								active[1] = false;
+								active[2] = true;
 							}
 						} else if (APName == btnPPA4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][1] = 0.001;
 								scores[i + 1][3] = 0;
+								active[1] = false;
+								active[3] = true;
 							}
 						} else if (APName == btnPPA5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][1] = 0.001;
 								scores[i + 1][4] = 0;
+								active[1] = false;
+								active[4] = true;
 							}
 						} else if (APName == btnPPA6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][1] = 0.001;
 								scores[i + 1][5] = 0;
+								active[1] = false;
+								active[5] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-							btnPPA4.getText(), btnPPA5.getText(), btnPPA6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 					String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn2, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
@@ -1627,31 +1741,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][1] = 0.001;
 							scores[i + 1][0] = 0;
+							active[1] = false;
+							active[0] = true;
 						}
 					} else if (APName == btnPPA2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][1] = 0.001;
 							scores[i + 1][1] = 0;
+							active[1] = false;
+							active[1] = true;
 						}
 					} else if (APName == btnPPA3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][1] = 0.001;
 							scores[i + 1][2] = 0;
+							active[1] = false;
+							active[2] = true;
 						}
 					} else if (APName == btnPPA4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][1] = 0.001;
 							scores[i + 1][3] = 0;
+							active[1] = false;
+							active[3] = true;
 						}
 					} else if (APName == btnPPA5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][1] = 0.001;
 							scores[i + 1][4] = 0;
+							active[1] = false;
+							active[4] = true;
 						}
 					} else if (APName == btnPPA6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][1] = 0.001;
 							scores[i + 1][5] = 0;
+							active[1] = false;
+							active[5] = true;
 						}
 					}
 				}
@@ -1678,6 +1804,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA5);
 								Players[4] = APname;
 								Ap5 = true;
+								active[2] = false;
+								active[4] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][2] = 0.001;
@@ -1693,6 +1821,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA6);
 								Players[5] = APname;
 								Ap6 = true;
+								active[2] = false;
+								active[5] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][2] = 0.001;
@@ -1701,8 +1831,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-								btnPPA4.getText(), btnPPA5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 						String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 						replace_sub(htSubAbtn3, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
@@ -1712,37 +1843,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][2] = 0.001;
 								scores[i + 1][0] = 0;
+								active[2] = false;
+								active[0] = true;
 							}
 						} else if (APName == btnPPA2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][2] = 0.001;
 								scores[i + 1][1] = 0;
+								active[2] = false;
+								active[1] = true;
 							}
 						} else if (APName == btnPPA3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][2] = 0.001;
 								scores[i + 1][2] = 0;
+								active[2] = false;
+								active[2] = true;
 							}
 						} else if (APName == btnPPA4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][2] = 0.001;
 								scores[i + 1][3] = 0;
+								active[2] = false;
+								active[3] = true;
 							}
 						} else if (APName == btnPPA5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][2] = 0.001;
 								scores[i + 1][4] = 0;
+								active[2] = false;
+								active[4] = true;
 							}
 						} else if (APName == btnPPA6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][2] = 0.001;
 								scores[i + 1][5] = 0;
+								active[2] = false;
+								active[5] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-							btnPPA4.getText(), btnPPA5.getText(), btnPPA6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 					String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn3, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
@@ -1751,31 +1895,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][2] = 0.001;
 							scores[i + 1][0] = 0;
+							active[2] = false;
+							active[0] = true;
 						}
 					} else if (APName == btnPPA2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][2] = 0.001;
 							scores[i + 1][1] = 0;
+							active[2] = false;
+							active[1] = true;
 						}
 					} else if (APName == btnPPA3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][2] = 0.001;
 							scores[i + 1][2] = 0;
+							active[2] = false;
+							active[2] = true;
 						}
 					} else if (APName == btnPPA4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][2] = 0.001;
 							scores[i + 1][3] = 0;
+							active[2] = false;
+							active[3] = true;
 						}
 					} else if (APName == btnPPA5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][2] = 0.001;
 							scores[i + 1][4] = 0;
+							active[2] = false;
+							active[4] = true;
 						}
 					} else if (APName == btnPPA6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][2] = 0.001;
 							scores[i + 1][5] = 0;
+							active[2] = false;
+							active[5] = true;
 						}
 					}
 				}
@@ -1802,6 +1958,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA5);
 								Players[4] = APname;
 								Ap5 = true;
+								active[3] = false;
+								active[4] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][3] = 0.001;
@@ -1817,6 +1975,8 @@ public class screen1 extends JFrame {
 								tAPBtns.add(btnPPA6);
 								Players[5] = APname;
 								Ap6 = true;
+								active[3] = false;
+								active[5] = true;
 								tAPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][3] = 0.001;
@@ -1825,8 +1985,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-								btnPPA4.getText(), btnPPA5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 						String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 						replace_sub(htSubAbtn4, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
@@ -1836,37 +1997,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][3] = 0.001;
 								scores[i + 1][0] = 0;
+								active[3] = false;
+								active[0] = true;
 							}
 						} else if (APName == btnPPA2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][3] = 0.001;
 								scores[i + 1][1] = 0;
+								active[3] = false;
+								active[1] = true;
 							}
 						} else if (APName == btnPPA3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][3] = 0.001;
 								scores[i + 1][2] = 0;
+								active[3] = false;
+								active[2] = true;
 							}
 						} else if (APName == btnPPA4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][3] = 0.001;
 								scores[i + 1][3] = 0;
+								active[3] = false;
+								active[3] = true;
 							}
 						} else if (APName == btnPPA5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][3] = 0.001;
 								scores[i + 1][4] = 0;
+								active[3] = false;
+								active[4] = true;
 							}
 						} else if (APName == btnPPA6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][3] = 0.001;
 								scores[i + 1][5] = 0;
+								active[3] = false;
+								active[5] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-							btnPPA4.getText(), btnPPA5.getText(), btnPPA6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 					String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn4, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
@@ -1875,31 +2049,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][3] = 0.001;
 							scores[i + 1][0] = 0;
+							active[3] = false;
+							active[0] = true;
 						}
 					} else if (APName == btnPPA2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][3] = 0.001;
 							scores[i + 1][1] = 0;
+							active[3] = false;
+							active[1] = true;
 						}
 					} else if (APName == btnPPA3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][3] = 0.001;
 							scores[i + 1][2] = 0;
+							active[3] = false;
+							active[2] = true;
 						}
 					} else if (APName == btnPPA4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][3] = 0.001;
 							scores[i + 1][3] = 0;
+							active[3] = false;
+							active[3] = true;
 						}
 					} else if (APName == btnPPA5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][3] = 0.001;
 							scores[i + 1][4] = 0;
+							active[3] = false;
+							active[4] = true;
 						}
 					} else if (APName == btnPPA6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][3] = 0.001;
 							scores[i + 1][5] = 0;
+							active[3] = false;
+							active[5] = true;
 						}
 					}
 				}
@@ -1925,6 +2111,8 @@ public class screen1 extends JFrame {
 							tAPBtns.add(btnPPA6);
 							Players[5] = APname;
 							Ap6 = true;
+							active[4] = false;
+							active[5] = true;
 							tAPBtns.validate();
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
@@ -1932,8 +2120,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-								btnPPA4.getText(), btnPPA5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 						String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 						replace_sub(htSubAbtn5, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn5,
@@ -1943,37 +2132,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
 								scores[i + 1][0] = 0;
+								active[4] = false;
+								active[0] = true;
 							}
 						} else if (APName == btnPPA2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
 								scores[i + 1][1] = 0;
+								active[4] = false;
+								active[1] = true;
 							}
 						} else if (APName == btnPPA3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
 								scores[i + 1][2] = 0;
+								active[4] = false;
+								active[2] = true;
 							}
 						} else if (APName == btnPPA4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
 								scores[i + 1][3] = 0;
+								active[4] = false;
+								active[3] = true;
 							}
 						} else if (APName == btnPPA5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
 								scores[i + 1][4] = 0;
+								active[4] = false;
+								active[4] = true;
 							}
 						} else if (APName == btnPPA6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][4] = 0.001;
 								scores[i + 1][5] = 0;
+								active[4] = false;
+								active[5] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(),
-							btnPPA4.getText(), btnPPA5.getText(), btnPPA6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, true);
 					String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 					replace_sub(htSubAbtn5, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6,
@@ -1982,31 +2184,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][4] = 0.001;
 							scores[i + 1][0] = 0;
+							active[4] = false;
+							active[0] = true;
 						}
 					} else if (APName == btnPPA2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][4] = 0.001;
 							scores[i + 1][1] = 0;
+							active[4] = false;
+							active[1] = true;
 						}
 					} else if (APName == btnPPA3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][4] = 0.001;
 							scores[i + 1][2] = 0;
+							active[4] = false;
+							active[2] = true;
 						}
 					} else if (APName == btnPPA4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][4] = 0.001;
 							scores[i + 1][3] = 0;
+							active[4] = false;
+							active[3] = true;
 						}
 					} else if (APName == btnPPA5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][4] = 0.001;
 							scores[i + 1][4] = 0;
+							active[4] = false;
+							active[4] = true;
 						}
 					} else if (APName == btnPPA6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][4] = 0.001;
 							scores[i + 1][5] = 0;
+							active[4] = false;
+							active[5] = true;
 						}
 					}
 				}
@@ -2016,8 +2230,9 @@ public class screen1 extends JFrame {
 
 		htSubAbtn6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object[] possibilities = { btnPPA1.getText(), btnPPA2.getText(), btnPPA3.getText(), btnPPA4.getText(),
-						btnPPA5.getText(), btnPPA6.getText() };
+				Object[] possibilities = new Object[6];
+				setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2, btnPPB3,
+						btnPPB4, btnPPB5, btnPPB6, true);
 				String APName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?", "SUBSTITUTION",
 						JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPA1.getText());
 				replace_sub(htSubAbtn6, htSubAbtn1, htSubAbtn2, htSubAbtn3, htSubAbtn4, htSubAbtn5, htSubAbtn6, APName,
@@ -2026,31 +2241,43 @@ public class screen1 extends JFrame {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][5] = 0.001;
 						scores[i + 1][0] = 0;
+						active[5] = false;
+						active[0] = true;
 					}
 				} else if (APName == btnPPA2.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][5] = 0.001;
 						scores[i + 1][1] = 0;
+						active[5] = false;
+						active[1] = true;
 					}
 				} else if (APName == btnPPA3.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][5] = 0.001;
 						scores[i + 1][2] = 0;
+						active[5] = false;
+						active[2] = true;
 					}
 				} else if (APName == btnPPA4.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][5] = 0.001;
 						scores[i + 1][3] = 0;
+						active[5] = false;
+						active[3] = true;
 					}
 				} else if (APName == btnPPA5.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][5] = 0.001;
 						scores[i + 1][4] = 0;
+						active[5] = false;
+						active[4] = true;
 					}
 				} else if (APName == btnPPA6.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][5] = 0.001;
 						scores[i + 1][5] = 0;
+						active[5] = false;
+						active[5] = true;
 					}
 				}
 			}
@@ -2075,6 +2302,8 @@ public class screen1 extends JFrame {
 								tBPBtns.add(btnPPB5);
 								Players[10] = BPname;
 								Bp5 = true;
+								active[6] = false;
+								active[10] = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][6] = 0.001;
@@ -2090,6 +2319,8 @@ public class screen1 extends JFrame {
 								tBPBtns.add(btnPPB6);
 								Players[11] = BPname;
 								Bp6 = true;
+								active[6] = false;
+								active[11] = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][6] = 0.001;
@@ -2098,8 +2329,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-								btnPPB4.getText(), btnPPB5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 						String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 						replace_sub(htSubBbtn1, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
@@ -2109,37 +2341,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][6] = 0.001;
 								scores[i + 1][6] = 0;
+								active[6] = false;
+								active[6] = true;
 							}
 						} else if (BPName == btnPPB2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][6] = 0.001;
 								scores[i + 1][7] = 0;
+								active[6] = false;
+								active[7] = true;
 							}
 						} else if (BPName == btnPPB3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][6] = 0.001;
 								scores[i + 1][8] = 0;
+								active[6] = false;
+								active[8] = true;
 							}
 						} else if (BPName == btnPPB4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][6] = 0.001;
 								scores[i + 1][9] = 0;
+								active[6] = false;
+								active[9] = true;
 							}
 						} else if (BPName == btnPPB5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][6] = 0.001;
 								scores[i + 1][10] = 0;
+								active[6] = false;
+								active[10] = true;
 							}
 						} else if (BPName == btnPPB6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][6] = 0.001;
 								scores[i + 1][11] = 0;
+								active[6] = false;
+								active[11] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-							btnPPB4.getText(), btnPPB5.getText(), btnPPB6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 					String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn1, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
@@ -2148,31 +2393,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][6] = 0.001;
 							scores[i + 1][6] = 0;
+							active[6] = false;
+							active[6] = true;
 						}
 					} else if (BPName == btnPPB2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][6] = 0.001;
 							scores[i + 1][7] = 0;
+							active[6] = false;
+							active[7] = true;
 						}
 					} else if (BPName == btnPPB3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][6] = 0.001;
 							scores[i + 1][8] = 0;
+							active[6] = false;
+							active[8] = true;
 						}
 					} else if (BPName == btnPPB4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][6] = 0.001;
 							scores[i + 1][9] = 0;
+							active[6] = false;
+							active[9] = true;
 						}
 					} else if (BPName == btnPPB5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][6] = 0.001;
 							scores[i + 1][10] = 0;
+							active[6] = false;
+							active[10] = true;
 						}
 					} else if (BPName == btnPPB6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][6] = 0.001;
 							scores[i + 1][11] = 0;
+							active[6] = false;
+							active[11] = true;
 						}
 					}
 				}
@@ -2198,6 +2455,8 @@ public class screen1 extends JFrame {
 								btnPPB5.setText(BPname);
 								tBPBtns.add(btnPPB5);
 								Players[10] = BPname;
+								active[7] = false;
+								active[10] = true;
 								Bp5 = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
@@ -2214,6 +2473,8 @@ public class screen1 extends JFrame {
 								tBPBtns.add(btnPPB6);
 								Players[11] = BPname;
 								Bp6 = true;
+								active[7] = false;
+								active[11] = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][7] = 0.001;
@@ -2222,8 +2483,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-								btnPPB4.getText(), btnPPB5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 						String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 						replace_sub(htSubBbtn2, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
@@ -2233,37 +2495,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][7] = 0.001;
 								scores[i + 1][6] = 0;
+								active[7] = false;
+								active[6] = true;
 							}
 						} else if (BPName == btnPPB2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][7] = 0.001;
 								scores[i + 1][7] = 0;
+								active[7] = false;
+								active[7] = true;
 							}
 						} else if (BPName == btnPPB3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][7] = 0.001;
 								scores[i + 1][8] = 0;
+								active[7] = false;
+								active[8] = true;
 							}
 						} else if (BPName == btnPPB4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][7] = 0.001;
 								scores[i + 1][9] = 0;
+								active[7] = false;
+								active[9] = true;
 							}
 						} else if (BPName == btnPPB5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][7] = 0.001;
 								scores[i + 1][10] = 0;
+								active[7] = false;
+								active[10] = true;
 							}
 						} else if (BPName == btnPPB6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][7] = 0.001;
 								scores[i + 1][11] = 0;
+								active[7] = false;
+								active[11] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-							btnPPB4.getText(), btnPPB5.getText(), btnPPB6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 					String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn2, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
@@ -2272,31 +2547,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][7] = 0.001;
 							scores[i + 1][6] = 0;
+							active[7] = false;
+							active[6] = true;
 						}
 					} else if (BPName == btnPPB2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][7] = 0.001;
 							scores[i + 1][7] = 0;
+							active[7] = false;
+							active[7] = true;
 						}
 					} else if (BPName == btnPPB3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][7] = 0.001;
 							scores[i + 1][8] = 0;
+							active[7] = false;
+							active[8] = true;
 						}
 					} else if (BPName == btnPPB4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][7] = 0.001;
 							scores[i + 1][9] = 0;
+							active[7] = false;
+							active[9] = true;
 						}
 					} else if (BPName == btnPPB5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][7] = 0.001;
 							scores[i + 1][10] = 0;
+							active[7] = false;
+							active[10] = true;
 						}
 					} else if (BPName == btnPPB6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][7] = 0.001;
 							scores[i + 1][11] = 0;
+							active[7] = false;
+							active[11] = true;
 						}
 					}
 				}
@@ -2323,6 +2610,8 @@ public class screen1 extends JFrame {
 								tBPBtns.add(btnPPB5);
 								Players[10] = BPname;
 								Bp5 = true;
+								active[8] = false;
+								active[10] = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
 									scores[i + 1][8] = 0.001;
@@ -2337,6 +2626,8 @@ public class screen1 extends JFrame {
 								btnPPB6.setText(BPname);
 								tBPBtns.add(btnPPB6);
 								Players[11] = BPname;
+								active[8] = false;
+								active[11] = true;
 								Bp6 = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
@@ -2346,8 +2637,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-								btnPPB4.getText(), btnPPB5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 						String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 						replace_sub(htSubBbtn3, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
@@ -2357,37 +2649,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][8] = 0.001;
 								scores[i + 1][6] = 0;
+								active[8] = false;
+								active[6] = true;
 							}
 						} else if (BPName == btnPPB2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][8] = 0.001;
 								scores[i + 1][7] = 0;
+								active[8] = false;
+								active[7] = true;
 							}
 						} else if (BPName == btnPPB3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][8] = 0.001;
 								scores[i + 1][8] = 0;
+								active[8] = false;
+								active[8] = true;
 							}
 						} else if (BPName == btnPPB4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][8] = 0.001;
 								scores[i + 1][9] = 0;
+								active[8] = false;
+								active[9] = true;
 							}
 						} else if (BPName == btnPPB5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][8] = 0.001;
 								scores[i + 1][10] = 0;
+								active[8] = false;
+								active[10] = true;
 							}
 						} else if (BPName == btnPPB6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][8] = 0.001;
 								scores[i + 1][11] = 0;
+								active[8] = false;
+								active[11] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-							btnPPB4.getText(), btnPPB5.getText(), btnPPB6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 					String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn3, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
@@ -2396,31 +2701,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][8] = 0.001;
 							scores[i + 1][6] = 0;
+							active[8] = false;
+							active[6] = true;
 						}
 					} else if (BPName == btnPPB2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][8] = 0.001;
 							scores[i + 1][7] = 0;
+							active[8] = false;
+							active[7] = true;
 						}
 					} else if (BPName == btnPPB3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][8] = 0.001;
 							scores[i + 1][8] = 0;
+							active[8] = false;
+							active[8] = true;
 						}
 					} else if (BPName == btnPPB4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][8] = 0.001;
 							scores[i + 1][9] = 0;
+							active[8] = false;
+							active[9] = true;
 						}
 					} else if (BPName == btnPPB5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][8] = 0.001;
 							scores[i + 1][10] = 0;
+							active[8] = false;
+							active[10] = true;
 						}
 					} else if (BPName == btnPPB6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][8] = 0.001;
 							scores[i + 1][11] = 0;
+							active[8] = false;
+							active[11] = true;
 						}
 					}
 				}
@@ -2446,6 +2763,8 @@ public class screen1 extends JFrame {
 								btnPPB5.setText(BPname);
 								tBPBtns.add(btnPPB5);
 								Players[10] = BPname;
+								active[9] = false;
+								active[10] = true;
 								Bp5 = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
@@ -2461,6 +2780,8 @@ public class screen1 extends JFrame {
 								btnPPB6.setText(BPname);
 								tBPBtns.add(btnPPB6);
 								Players[11] = BPname;
+								active[9] = false;
+								active[11] = true;
 								Bp6 = true;
 								tBPBtns.validate();
 								for (int i = questionNum; i < 19; i++) {
@@ -2470,8 +2791,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-								btnPPB4.getText(), btnPPB5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 						String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 						replace_sub(htSubBbtn4, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
@@ -2481,37 +2803,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][9] = 0.001;
 								scores[i + 1][6] = 0;
+								active[9] = false;
+								active[6] = true;
 							}
 						} else if (BPName == btnPPB2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][9] = 0.001;
 								scores[i + 1][7] = 0;
+								active[9] = false;
+								active[7] = true;
 							}
 						} else if (BPName == btnPPB3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][9] = 0.001;
 								scores[i + 1][8] = 0;
+								active[9] = false;
+								active[8] = true;
 							}
 						} else if (BPName == btnPPB4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][9] = 0.001;
 								scores[i + 1][9] = 0;
+								active[9] = false;
+								active[9] = true;
 							}
 						} else if (BPName == btnPPB5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][9] = 0.001;
 								scores[i + 1][10] = 0;
+								active[9] = false;
+								active[10] = true;
 							}
 						} else if (BPName == btnPPB6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][9] = 0.001;
 								scores[i + 1][11] = 0;
+								active[9] = false;
+								active[11] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-							btnPPB4.getText(), btnPPB5.getText(), btnPPB6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 					String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn4, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
@@ -2520,31 +2855,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][9] = 0.001;
 							scores[i + 1][6] = 0;
+							active[9] = false;
+							active[6] = true;
 						}
 					} else if (BPName == btnPPB2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][9] = 0.001;
 							scores[i + 1][7] = 0;
+							active[9] = false;
+							active[7] = true;
 						}
 					} else if (BPName == btnPPB3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][9] = 0.001;
 							scores[i + 1][8] = 0;
+							active[9] = false;
+							active[8] = true;
 						}
 					} else if (BPName == btnPPB4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][9] = 0.001;
 							scores[i + 1][9] = 0;
+							active[9] = false;
+							active[9] = true;
 						}
 					} else if (BPName == btnPPB5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][9] = 0.001;
 							scores[i + 1][10] = 0;
+							active[9] = false;
+							active[10] = true;
 						}
 					} else if (BPName == btnPPB6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][9] = 0.001;
 							scores[i + 1][11] = 0;
+							active[9] = false;
+							active[11] = true;
 						}
 					}
 				}
@@ -2569,6 +2916,8 @@ public class screen1 extends JFrame {
 							btnPPB6.setText(BPname);
 							tBPBtns.add(btnPPB6);
 							Players[11] = BPname;
+							active[10] = false;
+							active[11] = true;
 							Bp6 = true;
 							tBPBtns.validate();
 							for (int i = questionNum; i < 19; i++) {
@@ -2577,8 +2926,9 @@ public class screen1 extends JFrame {
 							}
 						}
 					} else if (value == JOptionPane.NO_OPTION) {
-						Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-								btnPPB4.getText(), btnPPB5.getText() };
+						Object[] possibilities = new Object[6];
+						setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+								btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 						String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 								"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 						replace_sub(htSubBbtn5, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn5,
@@ -2588,37 +2938,50 @@ public class screen1 extends JFrame {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][10] = 0.001;
 								scores[i + 1][6] = 0;
+								active[10] = false;
+								active[6] = true;
 							}
 						} else if (BPName == btnPPB2.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][10] = 0.001;
 								scores[i + 1][7] = 0;
+								active[10] = false;
+								active[7] = true;
 							}
 						} else if (BPName == btnPPB3.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][10] = 0.001;
 								scores[i + 1][8] = 0;
+								active[10] = false;
+								active[8] = true;
 							}
 						} else if (BPName == btnPPB4.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][10] = 0.001;
 								scores[i + 1][9] = 0;
+								active[10] = false;
+								active[9] = true;
 							}
 						} else if (BPName == btnPPB5.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][10] = 0.001;
 								scores[i + 1][10] = 0;
+								active[10] = false;
+								active[10] = true;
 							}
 						} else if (BPName == btnPPB6.getText()) {
 							for (int i = questionNum; i < 19; i++) {
 								scores[i + 1][10] = 0.001;
 								scores[i + 1][11] = 0;
+								active[10] = false;
+								active[11] = true;
 							}
 						}
 					}
 				} else {
-					Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(),
-							btnPPB4.getText(), btnPPB5.getText(), btnPPB6.getText() };
+					Object[] possibilities = new Object[6];
+					setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2,
+							btnPPB3, btnPPB4, btnPPB5, btnPPB6, false);
 					String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?",
 							"SUBSTITUTION", JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 					replace_sub(htSubBbtn5, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6,
@@ -2627,31 +2990,43 @@ public class screen1 extends JFrame {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][10] = 0.001;
 							scores[i + 1][6] = 0;
+							active[10] = false;
+							active[6] = true;
 						}
 					} else if (BPName == btnPPB2.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][10] = 0.001;
 							scores[i + 1][7] = 0;
+							active[10] = false;
+							active[7] = true;
 						}
 					} else if (BPName == btnPPB3.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][10] = 0.001;
 							scores[i + 1][8] = 0;
+							active[10] = false;
+							active[8] = true;
 						}
 					} else if (BPName == btnPPB4.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][10] = 0.001;
 							scores[i + 1][9] = 0;
+							active[10] = false;
+							active[9] = true;
 						}
 					} else if (BPName == btnPPB5.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][10] = 0.001;
 							scores[i + 1][10] = 0;
+							active[10] = false;
+							active[10] = true;
 						}
 					} else if (BPName == btnPPB6.getText()) {
 						for (int i = questionNum; i < 19; i++) {
 							scores[i + 1][10] = 0.001;
 							scores[i + 1][11] = 0;
+							active[10] = false;
+							active[11] = true;
 						}
 					}
 				}
@@ -2661,8 +3036,9 @@ public class screen1 extends JFrame {
 
 		htSubBbtn6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object[] possibilities = { btnPPB1.getText(), btnPPB2.getText(), btnPPB3.getText(), btnPPB4.getText(),
-						btnPPB5.getText(), btnPPB6.getText() };
+				Object[] possibilities = new Object[6];
+				setPoss(possibilities, btnPPA1, btnPPA2, btnPPA3, btnPPA4, btnPPA5, btnPPA6, btnPPB1, btnPPB2, btnPPB3,
+						btnPPB4, btnPPB5, btnPPB6, false);
 				String BPName = (String) JOptionPane.showInputDialog(contentPane, "Who's subbing in?", "SUBSTITUTION",
 						JOptionPane.PLAIN_MESSAGE, null, possibilities, btnPPB1.getText());
 				replace_sub(htSubBbtn6, htSubBbtn1, htSubBbtn2, htSubBbtn3, htSubBbtn4, htSubBbtn5, htSubBbtn6, BPName,
@@ -2671,31 +3047,43 @@ public class screen1 extends JFrame {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][11] = 0.001;
 						scores[i + 1][6] = 0;
+						active[11] = false;
+						active[6] = true;
 					}
 				} else if (BPName == btnPPB2.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][11] = 0.001;
 						scores[i + 1][7] = 0;
+						active[11] = false;
+						active[7] = true;
 					}
 				} else if (BPName == btnPPB3.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][11] = 0.001;
 						scores[i + 1][8] = 0;
+						active[11] = false;
+						active[8] = true;
 					}
 				} else if (BPName == btnPPB4.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][11] = 0.001;
 						scores[i + 1][9] = 0;
+						active[11] = false;
+						active[9] = true;
 					}
 				} else if (BPName == btnPPB5.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][11] = 0.001;
 						scores[i + 1][10] = 0;
+						active[11] = false;
+						active[10] = true;
 					}
 				} else if (BPName == btnPPB6.getText()) {
 					for (int i = questionNum; i < 19; i++) {
 						scores[i + 1][11] = 0.001;
 						scores[i + 1][11] = 0;
+						active[11] = false;
+						active[11] = true;
 					}
 				}
 			}
