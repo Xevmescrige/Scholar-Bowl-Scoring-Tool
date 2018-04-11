@@ -26,20 +26,21 @@ PACKET: The scorekeeper may enter the round number or some other info about the 
 SCOREKEEPER: This is the scorekeeper's name.  This may be the same as the moderator's name.
 ```
 
-When the scorekeeper is done, click the [NEXT -->] button at the top of the screen.
+When the scorekeeper is done, click the `[NEXT -->]` button at the top of the screen.
 
 ### Team Setup Screen
 On this screen's menubar, the scorekeeper should see:
 ```
-[<-- BACK] - This button will take the scorekeeper back to the setup screen
+
+<-- BACK] - This button will take the scorekeeper back to the setup screen
 [TEAM A] - This button will set the team that's currently being edited to team A.
 [TEAM B] - This button will set the team that's currently being edited to team B.
     [TEAM A] and [TEAM B]'s text will change once team A and B's names have been changed.
 [START MATCH] - This button will start the match and take the scorekeeper to the question screen.
 ```
-On the screen itself, there are buttons corresponding to the team's name and the 4 player's names.  The screen will initialize to team A by default, so click on these buttons and set the team and player names, then click the [TEAM B] button at the top of the screen and repeat this process.  If there are fewer than 4 players on a team, don't set more names than there are players.  For example, if there are 2 players, only click on 2 buttons to set player names -- the remaining "players" will be marked as substitutes
+On the screen itself, there are buttons corresponding to the team's name and the 4 player's names.  The screen will initialize to team A by default, so click on these buttons and set the team and player names, then click the `[TEAM B]` button at the top of the screen and repeat this process.  If there are fewer than 4 players on a team, don't set more names than there are players.  For example, if there are 2 players, only click on 2 buttons to set player names -- the remaining "players" will be marked as substitutes
 
-Once the scorekeeper has done this, click the [START MATCH] button.
+Once the scorekeeper has done this, click the `[START MATCH]` button.
 
 ### Match Screen
 On this screen's menubar, the scorekeeper should see: 
@@ -53,15 +54,15 @@ On this screen's menubar, the scorekeeper should see:
 ```
 On the screen itself, there are buttons corresponding to each player.  When a player buzzes in, click the button corresponding to their name.
 If the question goes dead (if either zero or one team answers), click the  
-[NEXT QUESTION -->] button.
+`[NEXT QUESTION -->]` button.
 
 However, if both teams answer incorrectly, the tool will automatically progress to the next question.
 
-If the scorekeeper finds that they have made an error in a question, they may click the [<-- PREVIOUS QUESTION] button until they've returned to the erroneous question and make the adjustment.  A correct or power answer will override any other correct/powers in for that question, and a neg will override any negs for that question.  Any answer will override all other values for that question for the answering team. For example, if Team A's player 3 has answered incorrectly (no neg), and the scorekeeper corrects it so that Team A's player 1 powered, Team A player 3 will no longer have that incorrect mark and any other correct/powers for that question will be overridden.
+If the scorekeeper finds that they have made an error in a question, they may click the `[<-- PREVIOUS QUESTION]` button until they've returned to the erroneous question and make the adjustment.  A correct or power answer will override any other correct/powers in for that question, and a neg will override any negs for that question.  Any answer will override all other values for that question for the answering team. For example, if Team A's player 3 has answered incorrectly (no neg), and the scorekeeper corrects it so that Team A's player 1 powered, Team A player 3 will no longer have that incorrect mark and any other correct/powers for that question will be overridden.
 
-If a team protests a question, click the [PROTEST] button and verify the protest.  At the end of the match, click the [PROTEST] button again to check what questions have been protested - that is, if the protest would affect the outcome of the match.
+If a team protests a question, click the `[PROTEST]` button and verify the protest.  At the end of the match, click the `[PROTEST]` button again to check what questions have been protested - that is, if the protest would affect the outcome of the match.
 
-[VIEW SCOREBOARD] brings up a new window -- there's a button to [REFRESH] the scores if the scoreboard is outdated.
+`[VIEW SCOREBOARD]` brings up a new window -- there's a button to `[REFRESH]` the scores if the scoreboard is outdated.
 
 ### Timeout and Halftime
 The timeout and halftime screens are the same in terms of functionality.  
