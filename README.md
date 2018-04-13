@@ -79,6 +79,8 @@ Clicking on a player's name while in the timeout/halftime screen will sub them o
 ### End Round
 Ending the round will generate a scoresheet.  Once this is done and you have gone over protests, you may exit the program and relaunch it for a new round.
 
+On the final scoresheet, "0.001" indicates a round in which a player has been substituted, "0.0001" indicates an incorrect - no neg question.
+
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
