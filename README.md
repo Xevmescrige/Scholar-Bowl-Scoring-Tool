@@ -31,7 +31,6 @@ When the scorekeeper is done, click the `[NEXT -->]` button at the top of the sc
 ### Team Setup Screen
 On this screen's menubar, the scorekeeper should see:
 ```
-
 <-- BACK] - This button will take the scorekeeper back to the setup screen
 [TEAM A] - This button will set the team that's currently being edited to team A.
 [TEAM B] - This button will set the team that's currently being edited to team B.
@@ -89,7 +88,7 @@ Ending the round will generate a scoresheet.  Once this is done and you have gon
 
 * **Viet Nguyen** - *Initial work* - [Xevmescrige](https://github.com/Xevmescrige)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Xevmescrige/Scholar-Bowl-Scoring-Tool/graphs/contributors) who participated in this project.
 
 ## License
 
